@@ -1,0 +1,45 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\All_of_my_projrcts\\Erp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0000D7EB-4301-4570-8A4B-DC8C7F5FD6C7}|Erp.Api\\Erp.Api.csproj|e:\\all_of_my_projrcts\\erp\\erp.api\\erp.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{0000D7EB-4301-4570-8A4B-DC8C7F5FD6C7}|Erp.Api\\Erp.Api.csproj|solutionrelative:erp.api\\erp.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{74946827-37a0-11d2-a273-00c04f8ef4ff}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{fbcae063-e2c0-4ab1-a516-996ea3dafb72}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Erp.Api",
+              "DocumentMoniker": "E:\\All_of_my_projrcts\\Erp\\Erp.Api\\Erp.Api.csproj",
+              "RelativeDocumentMoniker": "Erp.Api\\Erp.Api.csproj",
+              "ToolTip": "E:\\All_of_my_projrcts\\Erp\\Erp.Api\\Erp.Api.csproj",
+              "RelativeToolTip": "Erp.Api\\Erp.Api.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-11-22T22:21:05.681Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
