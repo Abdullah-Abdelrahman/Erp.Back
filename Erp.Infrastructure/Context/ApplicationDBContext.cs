@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Erp.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Name.Data.Entities;
 
@@ -17,31 +18,22 @@ namespace Name.Infrastructure.Data
         }
 
         #region Dbsets
-        public DbSet<Account> Accounts { get; set; }
-        public DbSet<Attendance> Attendances { get; set; }
-        public DbSet<BankAccount> BankAccounts { get; set; }
-        public DbSet<BankTransaction> BankTransactions { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<CompanyModule> CompanyModules { get; set; }
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Inventory> Inventories { get; set; }
-        public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
-        public DbSet<InvoiceItem> InvoiceItems { get; set; }
-        public DbSet<JobType> JobTypes { get; set; }
-        public DbSet<JournalEntry> JournalEntries { get; set; }
-        public DbSet<JournalEntryDetail> JournalEntryDetails { get; set; }
-        public DbSet<Leave> Leaves { get; set; }
-        public DbSet<Module> Modules { get; set; }
-        public DbSet<Payroll> Payrolls { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<TransactionDetail> TransactionDetails { get; set; }
-        public DbSet<UserBase> Users { get; set; }
-        public DbSet<Vendor> Vendors { get; set; }
-        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<UserBase> userBases { get; set; }
 
+
+        //Inventory Module
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<StockTransaction> StockTransactions { get; set; }
+        public DbSet<DeliveryVoucher> DeliveryVouchers { get; set; }
+        public DbSet<ReceivingVoucher> ReceivingVouchers { get; set; }
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
+        public DbSet<SalesOrder> SalesOrders { get; set; }
+        public DbSet<SalesOrderItem> SalesOrderItems { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
 
         #endregion
@@ -56,6 +48,35 @@ namespace Name.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             // modelBuilder.UseEncryption(_encryptionProvider);
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.StockTransactions)
+                .WithOne(st => st.Product)
+                .HasForeignKey(st => st.ProductId);
+
+            modelBuilder.Entity<StockTransaction>()
+                .HasOne(st => st.Warehouse)
+                .WithMany(w => w.StockTransactions)
+                .HasForeignKey(st => st.WarehouseId);
+
+            modelBuilder.Entity<PurchaseOrder>().
+                HasMany(po => po.PurchaseOrderItems).
+                WithOne(poi => poi.PurchaseOrder).
+                HasForeignKey(poi => poi.PurchaseOrderId);
+
+            modelBuilder.Entity<PurchaseOrderItem>()
+                .HasOne(poi => poi.Product)
+                .WithMany()
+                .HasForeignKey(poi => poi.ProductId);
+
+            modelBuilder.Entity<SalesOrder>().
+                HasMany(so => so.SalesOrderItems).
+                WithOne(soi => soi.SalesOrder).
+                HasForeignKey(soi => soi.SalesOrderId);
+
+            modelBuilder.Entity<SalesOrderItem>()
+                .HasOne(soi => soi.Product)
+                .WithMany()
+                .HasForeignKey(soi => soi.ProductId);
 
 
         }

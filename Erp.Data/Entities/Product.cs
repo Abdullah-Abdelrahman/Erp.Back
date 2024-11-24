@@ -1,27 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Erp.Data.Entities;
 
 namespace Name.Data.Entities
 {
     public class Product
     {
-        [Key]
-        public int ProductID { get; set; }
-
-        [Required]
-        [StringLength(100)]
-        public string ProductName { get; set; }
-
-        public string Description { get; set; }
-
-        [Required]
-        [Column(TypeName = "decimal(15, 2)")]
-        public decimal UnitPrice { get; set; }
-
-        [Required]
+        public int ProductId { get; set; }
+        public string ProductName { get; set; } = null!;
+        public string? Description { get; set; }
+        public decimal Price { get; set; }
         public int StockQuantity { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        // Foreign Key
+        public int CategoryId { get; set; }
+        public Category Category { get; set; } = null!;
+
+        // Navigation Property
+        public ICollection<StockTransaction> StockTransactions { get; set; } = new List<StockTransaction>();
     }
+
 }

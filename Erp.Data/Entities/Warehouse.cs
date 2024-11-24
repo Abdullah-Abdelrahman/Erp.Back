@@ -1,20 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Erp.Data.Entities;
 
 namespace Name.Data.Entities
 {
     public class Warehouse
     {
-        [Key]
-        public int WarehouseID { get; set; }
+        public int WarehouseId { get; set; }
+        public string WarehouseName { get; set; } = null!;
+        public string? Address { get; set; }
 
-        [Required]
-        [MaxLength(100)]
-        public string WarehouseName { get; set; }
-
-        public string Location { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        // Navigation Property
+        public ICollection<StockTransaction> StockTransactions { get; set; } = new List<StockTransaction>();
     }
+
 }
