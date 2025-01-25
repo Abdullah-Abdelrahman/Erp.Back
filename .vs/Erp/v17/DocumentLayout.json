@@ -1,10 +1,30 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\All_of_my_projrcts\\Erp\\",
+  "WorkspaceRootPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B8A12357-3646-4357-9BC1-E62B4F81A58B}|Erp.Infrastructure\\Erp.Infrastructure.csproj|e:\\all_of_my_projrcts\\erp\\erp.infrastructure\\context\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B8A12357-3646-4357-9BC1-E62B4F81A58B}|Erp.Infrastructure\\Erp.Infrastructure.csproj|solutionrelative:erp.infrastructure\\context\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|e:\\all_of_my_projrcts\\graduationproject\\graduation-project\\backend\\erp\\erp.core\\features\\transformvoucher\\commands\\validations\\addtransformvouchervalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|solutionrelative:erp.core\\features\\transformvoucher\\commands\\validations\\addtransformvouchervalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|e:\\all_of_my_projrcts\\graduationproject\\graduation-project\\backend\\erp\\erp.core\\features\\transformvoucher\\queries\\handlers\\transformvoucherqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|solutionrelative:erp.core\\features\\transformvoucher\\queries\\handlers\\transformvoucherqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|e:\\all_of_my_projrcts\\graduationproject\\graduation-project\\backend\\erp\\erp.core\\features\\transformvoucher\\queries\\models\\gettransformvoucherlistquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|solutionrelative:erp.core\\features\\transformvoucher\\queries\\models\\gettransformvoucherlistquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|e:\\all_of_my_projrcts\\graduationproject\\graduation-project\\backend\\erp\\erp.core\\features\\transformvoucher\\queries\\models\\gettransformvoucherbyidquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|solutionrelative:erp.core\\features\\transformvoucher\\queries\\models\\gettransformvoucherbyidquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0000D7EB-4301-4570-8A4B-DC8C7F5FD6C7}|Erp.Api\\Erp.Api.csproj|e:\\all_of_my_projrcts\\graduationproject\\graduation-project\\backend\\erp\\erp.api\\controllers\\transformvouchercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0000D7EB-4301-4570-8A4B-DC8C7F5FD6C7}|Erp.Api\\Erp.Api.csproj|solutionrelative:erp.api\\controllers\\transformvouchercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0000D7EB-4301-4570-8A4B-DC8C7F5FD6C7}|Erp.Api\\Erp.Api.csproj|e:\\all_of_my_projrcts\\graduationproject\\graduation-project\\backend\\erp\\erp.api\\controllers\\receivingvouchercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0000D7EB-4301-4570-8A4B-DC8C7F5FD6C7}|Erp.Api\\Erp.Api.csproj|solutionrelative:erp.api\\controllers\\receivingvouchercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,14 +47,79 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ApplicationDBContext.cs",
-              "DocumentMoniker": "E:\\All_of_my_projrcts\\Erp\\Erp.Infrastructure\\Context\\ApplicationDBContext.cs",
-              "RelativeDocumentMoniker": "Erp.Infrastructure\\Context\\ApplicationDBContext.cs",
-              "ToolTip": "E:\\All_of_my_projrcts\\Erp\\Erp.Infrastructure\\Context\\ApplicationDBContext.cs",
-              "RelativeToolTip": "Erp.Infrastructure\\Context\\ApplicationDBContext.cs",
-              "ViewState": "AQIAAEIAAAAAAAAAAAAUwBQAAAAoAAAA",
+              "Title": "AddTransformVoucherValidator.cs",
+              "DocumentMoniker": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\TransformVoucher\\Commands\\Validations\\AddTransformVoucherValidator.cs",
+              "RelativeDocumentMoniker": "Erp.Core\\Features\\TransformVoucher\\Commands\\Validations\\AddTransformVoucherValidator.cs",
+              "ToolTip": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\TransformVoucher\\Commands\\Validations\\AddTransformVoucherValidator.cs",
+              "RelativeToolTip": "Erp.Core\\Features\\TransformVoucher\\Commands\\Validations\\AddTransformVoucherValidator.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-24T17:57:32.48Z",
+              "WhenOpened": "2025-01-25T01:55:47.76Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GetTransformVoucherListQuery.cs",
+              "DocumentMoniker": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\TransformVoucher\\Queries\\Models\\GetTransformVoucherListQuery.cs",
+              "RelativeDocumentMoniker": "Erp.Core\\Features\\TransformVoucher\\Queries\\Models\\GetTransformVoucherListQuery.cs",
+              "ToolTip": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\TransformVoucher\\Queries\\Models\\GetTransformVoucherListQuery.cs",
+              "RelativeToolTip": "Erp.Core\\Features\\TransformVoucher\\Queries\\Models\\GetTransformVoucherListQuery.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAABLAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-25T01:55:29.597Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GetTransformVoucherByIdQuery.cs",
+              "DocumentMoniker": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\TransformVoucher\\Queries\\Models\\GetTransformVoucherByIdQuery.cs",
+              "RelativeDocumentMoniker": "Erp.Core\\Features\\TransformVoucher\\Queries\\Models\\GetTransformVoucherByIdQuery.cs",
+              "ToolTip": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\TransformVoucher\\Queries\\Models\\GetTransformVoucherByIdQuery.cs",
+              "RelativeToolTip": "Erp.Core\\Features\\TransformVoucher\\Queries\\Models\\GetTransformVoucherByIdQuery.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAABJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-25T01:55:22.554Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TransformVoucherQueryHandler.cs",
+              "DocumentMoniker": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\TransformVoucher\\Queries\\Handlers\\TransformVoucherQueryHandler.cs",
+              "RelativeDocumentMoniker": "Erp.Core\\Features\\TransformVoucher\\Queries\\Handlers\\TransformVoucherQueryHandler.cs",
+              "ToolTip": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\TransformVoucher\\Queries\\Handlers\\TransformVoucherQueryHandler.cs",
+              "RelativeToolTip": "Erp.Core\\Features\\TransformVoucher\\Queries\\Handlers\\TransformVoucherQueryHandler.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAkAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-25T01:54:30.031Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ReceivingVoucherController.cs",
+              "DocumentMoniker": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Api\\Controllers\\ReceivingVoucherController.cs",
+              "RelativeDocumentMoniker": "Erp.Api\\Controllers\\ReceivingVoucherController.cs",
+              "ToolTip": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Api\\Controllers\\ReceivingVoucherController.cs",
+              "RelativeToolTip": "Erp.Api\\Controllers\\ReceivingVoucherController.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAoAAAA9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-25T01:52:20.594Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TransformVoucherController.cs",
+              "DocumentMoniker": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Api\\Controllers\\TransformVoucherController.cs",
+              "RelativeDocumentMoniker": "Erp.Api\\Controllers\\TransformVoucherController.cs",
+              "ToolTip": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Api\\Controllers\\TransformVoucherController.cs",
+              "RelativeToolTip": "Erp.Api\\Controllers\\TransformVoucherController.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAUwBkAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-25T01:52:08.594Z",
               "EditorCaption": ""
             }
           ]

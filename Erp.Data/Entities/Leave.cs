@@ -1,49 +1,49 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Name.Data.Entities
+namespace Erp.Data.Entities
 {
-    public class Leave
-    {
-        [Key]
-        public int LeaveID { get; set; }
+  public class Leave
+  {
+    [Key]
+    public int LeaveID { get; set; }
 
-        [ForeignKey("Employee")]
-        public int EmployeeID { get; set; }
+    [ForeignKey("Employee")]
+    public int EmployeeID { get; set; }
 
-        [Required]
-        [EnumDataType(typeof(LeaveType))]
-        public LeaveType LeaveType { get; set; }
+    [Required]
+    [EnumDataType(typeof(LeaveType))]
+    public LeaveType LeaveType { get; set; }
 
-        [Required]
-        public DateTime StartDate { get; set; }
+    [Required]
+    public DateTime StartDate { get; set; }
 
-        [Required]
-        public DateTime EndDate { get; set; }
+    [Required]
+    public DateTime EndDate { get; set; }
 
-        [Required]
-        [EnumDataType(typeof(LeaveStatus))]
-        public LeaveStatus Status { get; set; } = LeaveStatus.PENDING;
+    [Required]
+    [EnumDataType(typeof(LeaveStatus))]
+    public LeaveStatus Status { get; set; } = LeaveStatus.PENDING;
 
-        public string Description { get; set; }
+    public string Description { get; set; }
 
-        // Navigation property
-        public Employee Employee { get; set; }
-    }
+    // Navigation property
+    public Employee Employee { get; set; }
+  }
 
-    public enum LeaveType
-    {
-        SICK,
-        VACATION,
-        MATERNITY,
-        UNPAID,
-        EMERGENCY
-    }
+  public enum LeaveType
+  {
+    SICK,
+    VACATION,
+    MATERNITY,
+    UNPAID,
+    EMERGENCY
+  }
 
-    public enum LeaveStatus
-    {
-        PENDING,
-        APPROVED,
-        REJECTED
-    }
+  public enum LeaveStatus
+  {
+    PENDING,
+    APPROVED,
+    REJECTED
+  }
 }

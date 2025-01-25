@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Erp.Data
-build_property.ProjectDir = E:\All_of_my_projrcts\Erp\Erp.Data\
+build_property.ProjectDir = E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

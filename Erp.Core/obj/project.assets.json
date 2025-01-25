@@ -5248,11 +5248,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\All_of_my_projrcts\\Erp\\Erp.Core\\Erp.Core.csproj",
+      "projectUniqueName": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Erp.Core.csproj",
       "projectName": "Erp.Core",
-      "projectPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Core\\Erp.Core.csproj",
+      "projectPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Erp.Core.csproj",
       "packagesPath": "C:\\Users\\tcnob\\.nuget\\packages\\",
-      "outputPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Core\\obj\\",
+      "outputPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\tcnob\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5270,14 +5270,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "E:\\All_of_my_projrcts\\Erp\\Erp.Data\\Erp.Data.csproj": {
-              "projectPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Data\\Erp.Data.csproj"
+            "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Data\\Erp.Data.csproj": {
+              "projectPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Data\\Erp.Data.csproj"
             },
-            "E:\\All_of_my_projrcts\\Erp\\Erp.Infrastructure\\Erp.Infrastructure.csproj": {
-              "projectPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Infrastructure\\Erp.Infrastructure.csproj"
+            "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Infrastructure\\Erp.Infrastructure.csproj": {
+              "projectPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Infrastructure\\Erp.Infrastructure.csproj"
             },
-            "E:\\All_of_my_projrcts\\Erp\\Erp.Service\\Erp.Service.csproj": {
-              "projectPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Service\\Erp.Service.csproj"
+            "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Service\\Erp.Service.csproj": {
+              "projectPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Service\\Erp.Service.csproj"
             }
           }
         }

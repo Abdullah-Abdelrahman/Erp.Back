@@ -16,3 +16,57 @@ E:\All_of_my_projrcts\Erp\Erp.Infrastructure\obj\Debug\net8.0\refint\Erp.Infrast
 E:\All_of_my_projrcts\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.pdb
 E:\All_of_my_projrcts\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.genruntimeconfig.cache
 E:\All_of_my_projrcts\Erp\Erp.Infrastructure\obj\Debug\net8.0\ref\Erp.Infrastructure.dll
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.deps.json
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.runtimeconfig.json
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.dll
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.pdb
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Data.dll
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Data.pdb
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.csproj.AssemblyReference.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.AssemblyInfoInputs.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.AssemblyInfo.cs
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.csproj.CoreCompileInputs.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.sourcelink.json
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infr.597F2FC8.Up2Date
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.dll
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\refint\Erp.Infrastructure.dll
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.pdb
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.genruntimeconfig.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\ref\Erp.Infrastructure.dll
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.deps.json
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.runtimeconfig.json
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.dll
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.pdb
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Data.dll
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Data.pdb
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.csproj.AssemblyReference.cache
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.AssemblyInfoInputs.cache
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.AssemblyInfo.cs
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.csproj.CoreCompileInputs.cache
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.sourcelink.json
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infr.597F2FC8.Up2Date
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.dll
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\refint\Erp.Infrastructure.dll
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.pdb
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.genruntimeconfig.cache
+E:\grad copy\Graduation-Project\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\ref\Erp.Infrastructure.dll
+E:\grad copy\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.deps.json
+E:\grad copy\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.runtimeconfig.json
+E:\grad copy\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.dll
+E:\grad copy\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Infrastructure.pdb
+E:\grad copy\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Data.dll
+E:\grad copy\Backend\Erp\Erp.Infrastructure\bin\Debug\net8.0\Erp.Data.pdb
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.csproj.AssemblyReference.cache
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.AssemblyInfoInputs.cache
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.AssemblyInfo.cs
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.csproj.CoreCompileInputs.cache
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.sourcelink.json
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infr.597F2FC8.Up2Date
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.dll
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\refint\Erp.Infrastructure.dll
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.pdb
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\Erp.Infrastructure.genruntimeconfig.cache
+E:\grad copy\Backend\Erp\Erp.Infrastructure\obj\Debug\net8.0\ref\Erp.Infrastructure.dll

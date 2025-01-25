@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5Ml2X6tYW2I=",
+  "dgSpecHash": "860BusnCxCk=",
   "success": true,
-  "projectFilePath": "E:\\All_of_my_projrcts\\Erp\\Erp.Service\\Erp.Service.csproj",
+  "projectFilePath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Service\\Erp.Service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tcnob\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\tcnob\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

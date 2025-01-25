@@ -1,43 +1,43 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Name.Data.Entities
+namespace Erp.Data.Entities
 {
-    public class Payroll
-    {
-        [Key]
-        public int PayrollID { get; set; }
+  public class Payroll
+  {
+    [Key]
+    public int PayrollID { get; set; }
 
-        [ForeignKey("Employee")]
-        public int EmployeeID { get; set; }
+    [ForeignKey("Employee")]
+    public int EmployeeID { get; set; }
 
-        [Required]
-        [Column(TypeName = "decimal(15, 2)")]
-        public decimal Salary { get; set; }
+    [Required]
+    [Column(TypeName = "decimal(15, 2)")]
+    public decimal Salary { get; set; }
 
-        [Column(TypeName = "decimal(15, 2)")]
-        public decimal Bonus { get; set; } = 0.00m;
+    [Column(TypeName = "decimal(15, 2)")]
+    public decimal Bonus { get; set; } = 0.00m;
 
-        [Column(TypeName = "decimal(15, 2)")]
-        public decimal Deductions { get; set; } = 0.00m;
+    [Column(TypeName = "decimal(15, 2)")]
+    public decimal Deductions { get; set; } = 0.00m;
 
-        [NotMapped]
-        public decimal NetSalary => Salary + Bonus - Deductions;  // Calculated property
+    [NotMapped]
+    public decimal NetSalary => Salary + Bonus - Deductions;  // Calculated property
 
-        public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
+    public DateTime PaymentDate { get; set; } = DateTime.UtcNow;
 
-        [Required]
-        [EnumDataType(typeof(PaymentStatus))]
-        public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.PENDING;
+    [Required]
+    [EnumDataType(typeof(PaymentStatus))]
+    public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.PENDING;
 
-        // Navigation properties
-        public Employee Employee { get; set; }
-    }
+    // Navigation properties
+    public Employee Employee { get; set; }
+  }
 
-    public enum PaymentStatus
-    {
-        PAID,
-        PENDING,
-        CANCELLED
-    }
+  public enum PaymentStatus
+  {
+    PAID,
+    PENDING,
+    CANCELLED
+  }
 }

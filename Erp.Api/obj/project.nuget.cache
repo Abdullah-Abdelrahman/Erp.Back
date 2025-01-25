@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "20bbgkPMT48=",
+  "dgSpecHash": "Jp8DxivbwfA=",
   "success": true,
-  "projectFilePath": "E:\\All_of_my_projrcts\\Erp\\Erp.Api\\Erp.Api.csproj",
+  "projectFilePath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Api\\Erp.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\tcnob\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\tcnob\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

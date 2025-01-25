@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\All_of_my_projrcts\\Erp\\Erp.Data\\Erp.Data.csproj": {}
+    "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Data\\Erp.Data.csproj": {}
   },
   "projects": {
-    "E:\\All_of_my_projrcts\\Erp\\Erp.Data\\Erp.Data.csproj": {
+    "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Data\\Erp.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\All_of_my_projrcts\\Erp\\Erp.Data\\Erp.Data.csproj",
+        "projectUniqueName": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Data\\Erp.Data.csproj",
         "projectName": "Erp.Data",
-        "projectPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Data\\Erp.Data.csproj",
+        "projectPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Data\\Erp.Data.csproj",
         "packagesPath": "C:\\Users\\tcnob\\.nuget\\packages\\",
-        "outputPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Data\\obj\\",
+        "outputPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\tcnob\\AppData\\Roaming\\NuGet\\NuGet.Config",

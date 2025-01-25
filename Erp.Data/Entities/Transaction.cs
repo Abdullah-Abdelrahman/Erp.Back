@@ -1,19 +1,19 @@
-﻿namespace Name.Data.Entities
+namespace Erp.Data.Entities
 {
-    public class Transaction
-    {
-        public int TransactionID { get; set; }
+  public class Transaction
+  {
+    public int TransactionID { get; set; }
 
-        public int CompanyID { get; set; }
+    public int CompanyID { get; set; }
 
-        public DateTime TransactionDate { get; set; } = DateTime.UtcNow;
+    public DateTime TransactionDate { get; set; } = DateTime.UtcNow;
 
-        public string? Description { get; set; }
+    public string? Description { get; set; }
 
-        public decimal TotalAmount { get; set; }
+    public decimal TotalAmount { get; set; }
 
-        // Navigation property
-        public Company Company { get; set; } = null!;
-    }
+    // Navigation property
+    public Company Company { get; set; } = null!;
+  }
 
 }

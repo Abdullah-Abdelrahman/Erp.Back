@@ -6822,11 +6822,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\All_of_my_projrcts\\Erp\\Erp.Api\\Erp.Api.csproj",
+      "projectUniqueName": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Api\\Erp.Api.csproj",
       "projectName": "Erp.Api",
-      "projectPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Api\\Erp.Api.csproj",
+      "projectPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Api\\Erp.Api.csproj",
       "packagesPath": "C:\\Users\\tcnob\\.nuget\\packages\\",
-      "outputPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Api\\obj\\",
+      "outputPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\tcnob\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -6844,11 +6844,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "E:\\All_of_my_projrcts\\Erp\\Erp.Core\\Erp.Core.csproj": {
-              "projectPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Core\\Erp.Core.csproj"
+            "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Erp.Core.csproj": {
+              "projectPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Erp.Core.csproj"
             },
-            "E:\\All_of_my_projrcts\\Erp\\Erp.Infrastructure\\Erp.Infrastructure.csproj": {
-              "projectPath": "E:\\All_of_my_projrcts\\Erp\\Erp.Infrastructure\\Erp.Infrastructure.csproj"
+            "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Infrastructure\\Erp.Infrastructure.csproj": {
+              "projectPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Infrastructure\\Erp.Infrastructure.csproj"
             }
           }
         }

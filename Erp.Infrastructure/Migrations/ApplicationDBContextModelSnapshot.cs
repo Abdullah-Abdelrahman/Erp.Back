@@ -62,6 +62,33 @@ namespace Erp.Infrastructure.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("Erp.Data.Entities.DebitNote", b =>
+                {
+                    b.Property<int>("DebitNoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DebitNoteId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("NoteDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PurchaseInvoiceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DebitNoteId");
+
+                    b.HasIndex("PurchaseInvoiceId");
+
+                    b.ToTable("DebitNotes");
+                });
+
             modelBuilder.Entity("Erp.Data.Entities.DeliveryVoucher", b =>
                 {
                     b.Property<int>("DeliveryVoucherId")
@@ -76,59 +103,25 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SalesOrderId")
+                    b.Property<int>("WarehouseId")
                         .HasColumnType("int");
 
                     b.HasKey("DeliveryVoucherId");
 
-                    b.HasIndex("SalesOrderId");
+                    b.HasIndex("WarehouseId");
 
                     b.ToTable("DeliveryVouchers");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.PurchaseOrder", b =>
+            modelBuilder.Entity("Erp.Data.Entities.DeliveryVoucherItem", b =>
                 {
-                    b.Property<int>("PurchaseOrderId")
+                    b.Property<int>("DeliveryVoucherItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseOrderId"));
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("PurchaseOrderId");
-
-                    b.HasIndex("SupplierId");
-
-                    b.ToTable("PurchaseOrders");
-                });
-
-            modelBuilder.Entity("Erp.Data.Entities.PurchaseOrderItem", b =>
-                {
-                    b.Property<int>("PurchaseOrderItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseOrderItemId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeliveryVoucherItemId"));
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PurchaseOrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -137,13 +130,159 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("PurchaseOrderItemId");
+                    b.Property<int>("deliveryVoucherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DeliveryVoucherItemId");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("PurchaseOrderId");
+                    b.HasIndex("deliveryVoucherId");
 
-                    b.ToTable("PurchaseOrderItems");
+                    b.ToTable("deliveryVoucherItems");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseInoviceSettings", b =>
+                {
+                    b.Property<int>("PurchaseInoviceSettingsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseInoviceSettingsId"));
+
+                    b.HasKey("PurchaseInoviceSettingsId");
+
+                    b.ToTable("purchaseInoviceSettings");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseInvoice", b =>
+                {
+                    b.Property<int>("PurchaseInvoiceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseInvoiceId"));
+
+                    b.Property<DateTime>("InvoiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("PurchaseInvoiceId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("PurchaseInvoices");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseInvoiceItem", b =>
+                {
+                    b.Property<int>("PurchaseInvoiceItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseInvoiceItemId"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchaseInvoiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("PurchaseInvoiceItemId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseInvoiceId");
+
+                    b.ToTable("PurchaseInvoiceItems");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseReturn", b =>
+                {
+                    b.Property<int>("PurchaseReturnId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseReturnId"));
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PurchaseInvoiceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReturnDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("PurchaseReturnId");
+
+                    b.HasIndex("PurchaseInvoiceId");
+
+                    b.ToTable("PurchaseReturns");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseReturnItem", b =>
+                {
+                    b.Property<int>("PurchaseReturnItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseReturnItemId"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchaseReturnId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Tax")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("discount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("PurchaseReturnItemId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseReturnId");
+
+                    b.ToTable("PurchaseReturnItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.ReceivingVoucher", b =>
@@ -157,57 +296,31 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PurchaseOrderId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ReceivingDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WarehouseId")
+                        .HasColumnType("int");
+
                     b.HasKey("ReceivingVoucherId");
 
-                    b.HasIndex("PurchaseOrderId");
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("WarehouseId");
 
                     b.ToTable("ReceivingVouchers");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.SalesOrder", b =>
+            modelBuilder.Entity("Erp.Data.Entities.ReceivingVoucherItem", b =>
                 {
-                    b.Property<int>("SalesOrderId")
+                    b.Property<int>("ReceivingVoucherItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalesOrderId"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("SalesOrderId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("SalesOrders");
-                });
-
-            modelBuilder.Entity("Erp.Data.Entities.SalesOrderItem", b =>
-                {
-                    b.Property<int>("SalesOrderItemId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalesOrderItemId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReceivingVoucherItemId"));
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -215,19 +328,19 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("SalesOrderId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("SalesOrderItemId");
+                    b.Property<int>("receivingVoucherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReceivingVoucherItemId");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("SalesOrderId");
+                    b.HasIndex("receivingVoucherId");
 
-                    b.ToTable("SalesOrderItems");
+                    b.ToTable("receivingVoucherItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.StockTransaction", b =>
@@ -284,6 +397,88 @@ namespace Erp.Infrastructure.Migrations
                     b.HasKey("SupplierId");
 
                     b.ToTable("Suppliers");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.SupplierPayment", b =>
+                {
+                    b.Property<int>("SupplierPaymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupplierPaymentId"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SupplierPaymentId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("SupplierPayments");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.TransformVoucher", b =>
+                {
+                    b.Property<int>("TransformVoucherId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransformVoucherId"));
+
+                    b.Property<int?>("FromWarehouseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ToWarehouseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TransformDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("TransformVoucherId");
+
+                    b.HasIndex("FromWarehouseId");
+
+                    b.HasIndex("ToWarehouseId");
+
+                    b.ToTable("transformVouchers");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.TransformVoucherItem", b =>
+                {
+                    b.Property<int>("TransformVoucherItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransformVoucherItemId"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("transformVoucherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TransformVoucherItemId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("transformVoucherId");
+
+                    b.ToTable("transformVoucherItems");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -433,6 +628,9 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -442,6 +640,9 @@ namespace Erp.Infrastructure.Migrations
 
                     b.Property<int>("StockQuantity")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("ProductId");
 
@@ -551,21 +752,51 @@ namespace Erp.Infrastructure.Migrations
                     b.ToTable("Warehouses");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.DeliveryVoucher", b =>
+            modelBuilder.Entity("Erp.Data.Entities.DebitNote", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.SalesOrder", "SalesOrder")
+                    b.HasOne("Erp.Data.Entities.PurchaseInvoice", "PurchaseInvoice")
                         .WithMany()
-                        .HasForeignKey("SalesOrderId")
+                        .HasForeignKey("PurchaseInvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SalesOrder");
+                    b.Navigation("PurchaseInvoice");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.PurchaseOrder", b =>
+            modelBuilder.Entity("Erp.Data.Entities.DeliveryVoucher", b =>
+                {
+                    b.HasOne("Name.Data.Entities.Warehouse", "Warehouse")
+                        .WithMany("deliveryVouchers")
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.DeliveryVoucherItem", b =>
+                {
+                    b.HasOne("Name.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Erp.Data.Entities.DeliveryVoucher", "deliveryVoucher")
+                        .WithMany("deliveryVoucherItems")
+                        .HasForeignKey("deliveryVoucherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("deliveryVoucher");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseInvoice", b =>
                 {
                     b.HasOne("Erp.Data.Entities.Supplier", "Supplier")
-                        .WithMany()
+                        .WithMany("PurchaseInvoices")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -573,7 +804,7 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.PurchaseOrderItem", b =>
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseInvoiceItem", b =>
                 {
                     b.HasOne("Name.Data.Entities.Product", "Product")
                         .WithMany()
@@ -581,40 +812,67 @@ namespace Erp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Erp.Data.Entities.PurchaseOrder", "PurchaseOrder")
-                        .WithMany("PurchaseOrderItems")
-                        .HasForeignKey("PurchaseOrderId")
+                    b.HasOne("Erp.Data.Entities.PurchaseInvoice", "PurchaseInvoice")
+                        .WithMany("Items")
+                        .HasForeignKey("PurchaseInvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
 
-                    b.Navigation("PurchaseOrder");
+                    b.Navigation("PurchaseInvoice");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseReturn", b =>
+                {
+                    b.HasOne("Erp.Data.Entities.PurchaseInvoice", "PurchaseInvoice")
+                        .WithMany()
+                        .HasForeignKey("PurchaseInvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PurchaseInvoice");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseReturnItem", b =>
+                {
+                    b.HasOne("Name.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Erp.Data.Entities.PurchaseReturn", "PurchaseReturn")
+                        .WithMany("Items")
+                        .HasForeignKey("PurchaseReturnId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("PurchaseReturn");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.ReceivingVoucher", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.PurchaseOrder", "PurchaseOrder")
+                    b.HasOne("Erp.Data.Entities.Supplier", "Supplier")
                         .WithMany()
-                        .HasForeignKey("PurchaseOrderId")
+                        .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PurchaseOrder");
-                });
-
-            modelBuilder.Entity("Erp.Data.Entities.SalesOrder", b =>
-                {
-                    b.HasOne("Erp.Data.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
+                    b.HasOne("Name.Data.Entities.Warehouse", "Warehouse")
+                        .WithMany("receivingVouchers")
+                        .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("Supplier");
+
+                    b.Navigation("Warehouse");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.SalesOrderItem", b =>
+            modelBuilder.Entity("Erp.Data.Entities.ReceivingVoucherItem", b =>
                 {
                     b.HasOne("Name.Data.Entities.Product", "Product")
                         .WithMany()
@@ -622,15 +880,15 @@ namespace Erp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Erp.Data.Entities.SalesOrder", "SalesOrder")
-                        .WithMany("SalesOrderItems")
-                        .HasForeignKey("SalesOrderId")
+                    b.HasOne("Erp.Data.Entities.ReceivingVoucher", "receivingVoucher")
+                        .WithMany("receivingVoucherItems")
+                        .HasForeignKey("receivingVoucherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
 
-                    b.Navigation("SalesOrder");
+                    b.Navigation("receivingVoucher");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.StockTransaction", b =>
@@ -650,6 +908,53 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.SupplierPayment", b =>
+                {
+                    b.HasOne("Erp.Data.Entities.Supplier", "Supplier")
+                        .WithMany("SupplierPayments")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.TransformVoucher", b =>
+                {
+                    b.HasOne("Name.Data.Entities.Warehouse", "FromWarehouse")
+                        .WithMany()
+                        .HasForeignKey("FromWarehouseId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Name.Data.Entities.Warehouse", "ToWarehouse")
+                        .WithMany()
+                        .HasForeignKey("ToWarehouseId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("FromWarehouse");
+
+                    b.Navigation("ToWarehouse");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.TransformVoucherItem", b =>
+                {
+                    b.HasOne("Name.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Erp.Data.Entities.TransformVoucher", "transformVoucher")
+                        .WithMany("TransformItems")
+                        .HasForeignKey("transformVoucherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("transformVoucher");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -719,14 +1024,36 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.PurchaseOrder", b =>
+            modelBuilder.Entity("Erp.Data.Entities.DeliveryVoucher", b =>
                 {
-                    b.Navigation("PurchaseOrderItems");
+                    b.Navigation("deliveryVoucherItems");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.SalesOrder", b =>
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseInvoice", b =>
                 {
-                    b.Navigation("SalesOrderItems");
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.PurchaseReturn", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.ReceivingVoucher", b =>
+                {
+                    b.Navigation("receivingVoucherItems");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.Supplier", b =>
+                {
+                    b.Navigation("PurchaseInvoices");
+
+                    b.Navigation("SupplierPayments");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.TransformVoucher", b =>
+                {
+                    b.Navigation("TransformItems");
                 });
 
             modelBuilder.Entity("Name.Data.Entities.Product", b =>
@@ -737,6 +1064,10 @@ namespace Erp.Infrastructure.Migrations
             modelBuilder.Entity("Name.Data.Entities.Warehouse", b =>
                 {
                     b.Navigation("StockTransactions");
+
+                    b.Navigation("deliveryVouchers");
+
+                    b.Navigation("receivingVouchers");
                 });
 #pragma warning restore 612, 618
         }

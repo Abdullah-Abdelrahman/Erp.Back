@@ -1,16 +1,16 @@
-﻿namespace Name.Data.Entities
+namespace Erp.Data.Entities
 {
-    public class Module
-    {
-        public int ModuleID { get; set; }
+  public class Module
+  {
+    public int ModuleID { get; set; }
 
-        public string ModuleName { get; set; } = string.Empty;
+    public string ModuleName { get; set; } = string.Empty;
 
-        public string? Description { get; set; }
+    public string? Description { get; set; }
 
-        public bool IsActive { get; set; } = true;
+    public bool IsActive { get; set; } = true;
 
-        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
-    }
+    public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+  }
 
 }
