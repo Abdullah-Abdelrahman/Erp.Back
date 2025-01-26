@@ -1,0 +1,13 @@
+using Erp.Core.Features.Product.Commands.Models;
+using Entitis = Erp.Data.Entities;
+namespace Erp.Core.Mapping.Product
+{
+  public partial class ProductProfile
+  {
+    public void AddProductMapping()
+    {
+      CreateMap<AddProductCommand, Entitis.Product>()
+        .ForMember(destnation => destnation.Description, opt => opt.MapFrom(src => src.Description));
+    }
+  }
+}

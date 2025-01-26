@@ -1,0 +1,10 @@
+using Erp.Core.Features.Product.Queries.Results;
+using MediatR;
+using Name.Core.Bases;
+
+namespace Erp.Core.Features.Product.Queries.Models
+{
+  public class GetProductListQuery : IRequest<Response<List<GetProductByIdResult>>>
+  {
+  }
+}
