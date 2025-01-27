@@ -1,0 +1,17 @@
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\bin\Debug\net8.0\OiFounder.Service.deps.json
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\bin\Debug\net8.0\OiFounder.Service.dll
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\bin\Debug\net8.0\OiFounder.Service.pdb
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\bin\Debug\net8.0\OiFounder.Data.dll
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\bin\Debug\net8.0\OiFounder.Infrastructure.dll
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\bin\Debug\net8.0\OiFounder.Data.pdb
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\bin\Debug\net8.0\OiFounder.Infrastructure.pdb
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\obj\Debug\net8.0\OiFounder.Service.csproj.AssemblyReference.cache
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\obj\Debug\net8.0\OiFounder.Service.GeneratedMSBuildEditorConfig.editorconfig
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\obj\Debug\net8.0\OiFounder.Service.AssemblyInfoInputs.cache
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\obj\Debug\net8.0\OiFounder.Service.AssemblyInfo.cs
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\obj\Debug\net8.0\OiFounder.Service.csproj.CoreCompileInputs.cache
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\obj\Debug\net8.0\OiFounde.D2F8927F.Up2Date
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\obj\Debug\net8.0\OiFounder.Service.dll
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\obj\Debug\net8.0\refint\OiFounder.Service.dll
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\obj\Debug\net8.0\OiFounder.Service.pdb
+E:\All_of_my_projrcts\OiFounder\OiFounder.Service\obj\Debug\net8.0\ref\OiFounder.Service.dll
