@@ -19,7 +19,9 @@ namespace Erp.Data.Entities.AccountsModule
     [MaxLength(255)]
     public string Description { get; set; }
 
-    public List<JournalEntryDetail>? details { get; set; } = new();
+
+    public ICollection<JournalEntryDetail> details { get; set; } = new List<JournalEntryDetail>();
+
 
   }
 }

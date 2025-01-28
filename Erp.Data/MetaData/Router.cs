@@ -263,9 +263,9 @@ namespace Name.Data.MetaData
 
     }
 
-    public static class QuizRouter
+    public static class JournalEntryRouter
     {
-      public const string prefix = Rule + "Quiz/";
+      public const string prefix = Rule + "JournalEntry/";
 
       public const string GetList = prefix + "List";
 
@@ -277,13 +277,30 @@ namespace Name.Data.MetaData
 
       public const string Delete = prefix + "Delete/{Id}";
 
-      public const string Open = prefix + "Open";
-
-      public const string Close = prefix + "Close";
 
 
     }
 
+    public static class CostCenterRouter
+    {
+      public const string prefix = Rule + "CostCenter/";
+
+      public const string GetCostCenterTypeById = prefix + "GetCostCenterTypeById/{Id}";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "Create";
+
+      public const string GetMainCostCentersList = prefix + "MainCostCentersList";
+
+      public const string Edit = prefix + "Edit";
+
+      public const string GetSecondaryCostCenterById = prefix + "GetSecondaryCostCenterById/{Id}";
+      public const string GetPrimaryCostCenterById = prefix + "GetPrimaryCostCenterById/{Id}";
+
+      public const string Delete = prefix + "Delete/{Id}";
+
+    }
 
     public static class PaymentRouter
     {

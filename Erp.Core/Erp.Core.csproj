@@ -27,6 +27,7 @@
     <Folder Include="Mapping\Authorization\CommandMapping\" />
     <Folder Include="Mapping\DeliveryVoucher\QueryMapping\" />
     <Folder Include="Mapping\DebitNote\QueryMapping\" />
+    <Folder Include="Mapping\JournalEntry\QueryMapping\" />
     <Folder Include="Mapping\PurchaseReturn\QueryMapping\" />
     <Folder Include="Mapping\PurchaseInvoice\QueryMapping\" />
     <Folder Include="Mapping\ReceivingVoucher\QueryMapping\" />

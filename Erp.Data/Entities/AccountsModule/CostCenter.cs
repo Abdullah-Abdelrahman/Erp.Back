@@ -14,4 +14,6 @@ namespace Erp.Data.Entities.AccountsModule
     [ForeignKey("ParentCostCenterID")]
     public CostCenter? ParentCostCenter { get; set; }
   }
+
+
 }

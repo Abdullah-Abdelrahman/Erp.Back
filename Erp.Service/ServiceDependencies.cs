@@ -1,7 +1,9 @@
 using Erp.Service.Abstracts;
 using Erp.Service.Abstracts.AccountsModule;
+using Erp.Service.Abstracts.CostCentersModule;
 using Erp.Service.Implementations;
 using Erp.Service.Implementations.AccountsModule;
+using Erp.Service.Implementations.CostCentersModule;
 using Microsoft.Extensions.DependencyInjection;
 using Name.Service.Abstracts;
 using Name.Service.Implementations;
@@ -49,6 +51,14 @@ namespace Name.Service
       services.AddTransient<IDebitNoteItemService, DebitNoteItemService>();
 
       services.AddTransient<IAccountService, AccountService>();
+
+
+      services.AddTransient<IJournalEntryService, JournalEntryService>();
+      services.AddTransient<IJournalEntryDetailService, JournalEntryDetailService>();
+
+
+
+      services.AddTransient<ICostCenterService, CostCenterService>();
 
       return services;
     }

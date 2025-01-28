@@ -12,18 +12,18 @@ namespace Erp.Service.Implementations.AccountsModule
     private readonly IAccountRepository<PrimaryAccount> _primaryAccountRepository;
     private readonly IAccountRepository<SecondaryAccount> _secondaryAccountRepository;
 
-    //private readonly IJournalEntryDetailRepository _JournalEntryDetailRepository;
+    private readonly IJournalEntryDetailRepository _JournalEntryDetailRepository;
 
 
     // Constructor that injects the repository
     public AccountService(IAccountRepository<Account> accountRepository, IAccountRepository<PrimaryAccount> primaryAccountRepository,
-            IAccountRepository<SecondaryAccount> secondaryAccountRepository)
+            IAccountRepository<SecondaryAccount> secondaryAccountRepository, IJournalEntryDetailRepository journalEntryDetailRepository)
     {
       _accountRepository = accountRepository;
 
       _primaryAccountRepository = primaryAccountRepository;
       _secondaryAccountRepository = secondaryAccountRepository;
-      // _JournalEntryDetailRepository = journalEntryDetailRepository;
+      _JournalEntryDetailRepository = journalEntryDetailRepository;
     }
 
     public async Task<string> AddAccountAsync(Account account)
@@ -115,7 +115,7 @@ namespace Erp.Service.Implementations.AccountsModule
       {
         var result = await _secondaryAccountRepository.GetTableNoTracking().Where(x => x.AccountID == id).Include(x => x.journalEntryDetails).SingleOrDefaultAsync();
 
-        //result.journalEntryDetails = _JournalEntryDetailRepository.GetTableNoTracking().Where(x => x.AccountID == result.AccountID);
+        result.journalEntryDetails = await _JournalEntryDetailRepository.GetTableNoTracking().Where(x => x.AccountID == result.AccountID).Include(x => x.Account).Include(x => x.CostCenter).ToListAsync();
 
 
         return result;

@@ -22,7 +22,8 @@ namespace Name.Infrastructure.Data
     public DbSet<UserBase> userBases { get; set; }
 
 
-    //Inventory Module
+
+    // -------------------Inventory Module-----------------------//
     public DbSet<Product> Products { get; set; }// المنتجات
     public DbSet<Category> Categories { get; set; }// نوع النتج
     public DbSet<Warehouse> Warehouses { get; set; } // المخزن
@@ -95,12 +96,19 @@ namespace Name.Infrastructure.Data
 
 
 
+    // -------------------Customers Module-----------------------//
+
+    public DbSet<Customer> Customers { get; set; }
+
+
+
+
+
 
 
 
     // Not from invetory module
 
-    public DbSet<Customer> Customers { get; set; }
 
 
     #endregion
