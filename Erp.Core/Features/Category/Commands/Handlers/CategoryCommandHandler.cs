@@ -25,7 +25,7 @@ namespace Erp.Core.Features.Category.Commands.Handlers
 
     public async Task<Response<string>> Handle(AddCategoryCommand request, CancellationToken cancellationToken)
     {
-      var CategoryMapper = _mapper.Map<Entitis.Category>(request);
+      var CategoryMapper = _mapper.Map<Entitis.InventoryModule.Category>(request);
       var result = await _categoryService.AddCategoryAsync(CategoryMapper);
 
       if (result == MessageCenter.CrudMessage.Exist)
@@ -44,7 +44,7 @@ namespace Erp.Core.Features.Category.Commands.Handlers
 
     public async Task<Response<string>> Handle(EditCategoryCommand request, CancellationToken cancellationToken)
     {
-      var CategoryMapper = _mapper.Map<Entitis.Category>(request);
+      var CategoryMapper = _mapper.Map<Entitis.InventoryModule.Category>(request);
       var result = await _categoryService.UpdateAsync(CategoryMapper);
 
       if (result == MessageCenter.CrudMessage.Success)
@@ -59,7 +59,7 @@ namespace Erp.Core.Features.Category.Commands.Handlers
 
     public async Task<Response<string>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
-      var CategoryMapper = _mapper.Map<Entitis.Category>(request);
+      var CategoryMapper = _mapper.Map<Entitis.InventoryModule.Category>(request);
       var result = await _categoryService.DeleteAsync(CategoryMapper);
 
       if (result == MessageCenter.CrudMessage.Success)

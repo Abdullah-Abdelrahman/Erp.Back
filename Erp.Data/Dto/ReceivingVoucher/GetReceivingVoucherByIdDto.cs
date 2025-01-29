@@ -1,4 +1,5 @@
-using Erp.Data.Entities;
+using Erp.Data.Entities.InventoryModule;
+using Erp.Data.Entities.PurchasesModule;
 
 namespace Erp.Data.Dto.ReceivingVoucher
 {

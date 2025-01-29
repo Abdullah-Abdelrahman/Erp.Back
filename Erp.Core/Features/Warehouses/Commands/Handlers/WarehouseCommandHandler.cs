@@ -1,5 +1,6 @@
 using AutoMapper;
 using Erp.Core.Features.Warehouses.Commands.Models;
+using Erp.Data.Entities.InventoryModule;
 using Erp.Data.MetaData;
 using Erp.Service.Abstracts;
 using MediatR;
@@ -23,7 +24,7 @@ namespace Erp.Core.Features.Warehouses.Commands.Handlers
 
     public async Task<Response<string>> Handle(AddWarehouseCommand request, CancellationToken cancellationToken)
     {
-      var warehouseMapper = _mapper.Map<Entitis.Warehouse>(request);
+      var warehouseMapper = _mapper.Map<Warehouse>(request);
       var result = await _warehouseService.AddWarehouse(warehouseMapper);
 
       if (result == MessageCenter.CrudMessage.Exist)
@@ -70,7 +71,7 @@ namespace Erp.Core.Features.Warehouses.Commands.Handlers
 
     public async Task<Response<string>> Handle(EditWarehouseCommand request, CancellationToken cancellationToken)
     {
-      var warehouseMapper = _mapper.Map<Entitis.Warehouse>(request);
+      var warehouseMapper = _mapper.Map<Warehouse>(request);
       var result = await _warehouseService.UpdateAsync(warehouseMapper);
 
       if (result == MessageCenter.CrudMessage.Success)

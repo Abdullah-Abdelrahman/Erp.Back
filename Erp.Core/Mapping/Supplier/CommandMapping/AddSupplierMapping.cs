@@ -6,7 +6,7 @@ namespace Erp.Core.Mapping.Supplier
   {
     public void AddSupplierMapping()
     {
-      CreateMap<AddSupplierCommand, Entitis.Supplier>()
+      CreateMap<AddSupplierCommand, Entitis.PurchasesModule.Supplier>()
         .ForMember(destnation => destnation.Address, opt => opt.MapFrom(src => src.Address));
     }
   }

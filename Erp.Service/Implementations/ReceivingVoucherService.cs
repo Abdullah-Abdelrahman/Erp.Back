@@ -1,5 +1,6 @@
 using Erp.Data.Dto.ReceivingVoucher;
 using Erp.Data.Entities;
+using Erp.Data.Entities.InventoryModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
 using Erp.Service.Abstracts;

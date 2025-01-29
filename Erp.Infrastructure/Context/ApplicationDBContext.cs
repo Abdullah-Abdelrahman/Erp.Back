@@ -1,5 +1,8 @@
-using Erp.Data.Entities;
 using Erp.Data.Entities.AccountsModule;
+using Erp.Data.Entities.CustomersModule;
+using Erp.Data.Entities.InventoryModule;
+using Erp.Data.Entities.PurchasesModule;
+using Erp.Data.Entities.SalesModule;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Name.Data.Entities;
@@ -24,6 +27,8 @@ namespace Name.Infrastructure.Data
 
 
     // -------------------Inventory Module-----------------------//
+
+    #region InventoryDbsets
     public DbSet<Product> Products { get; set; }// المنتجات
     public DbSet<Category> Categories { get; set; }// نوع النتج
     public DbSet<Warehouse> Warehouses { get; set; } // المخزن
@@ -49,12 +54,11 @@ namespace Name.Infrastructure.Data
 
 
 
-
-
-
+    #endregion
 
     // -------------------Purchases Module-----------------------//
 
+    #region PurchasesDbsets
     //فاتوره شراء
     public DbSet<PurchaseInvoice> PurchaseInvoices { get; set; }
     //المنتجات الموجوده في فاتوره الشراء
@@ -78,9 +82,10 @@ namespace Name.Infrastructure.Data
     // اعدادات فاتوره الشراء
     public DbSet<PurchaseInoviceSettings> purchaseInoviceSettings { get; set; }
 
-
+    #endregion
 
     // -------------------Accounts Module-----------------------//
+    #region AccountsDbsets
     public DbSet<Account> Accounts { get; set; }
     public DbSet<SecondaryAccount> secondaryAccounts { get; set; }
     public DbSet<PrimaryAccount> primaryAccounts { get; set; }
@@ -95,23 +100,47 @@ namespace Name.Infrastructure.Data
     public DbSet<JournalEntryDetail> journalEntryDetails { get; set; }
 
 
-
+    #endregion
     // -------------------Customers Module-----------------------//
-
+    #region CustomersDbsets
     public DbSet<Customer> Customers { get; set; }
+    public DbSet<CommercialCustomer> commercialCustomers { get; set; }
+    public DbSet<IndividualCustomer> individualCustomers { get; set; }
+    public DbSet<ContactList> contactLists { get; set; }
+    public DbSet<CustomerClassification> customerClassifications { get; set; }
+    #endregion
 
 
+    // -------------------Sales Module-----------------------//
 
+    #region SalesDbsets
+    public DbSet<Invoice> invoices { get; set; }
+    public DbSet<InvoiceItem> InvoiceItems { get; set; }
+    public DbSet<Quotation> Quotations { get; set; }
+    public DbSet<QuotationItem> QuotationItems { get; set; }
+    public DbSet<RecurringInvoice> RecurringInvoices { get; set; }
+    public DbSet<RecurringInvoiceItem> recurringInvoiceItems { get; set; }
+    public DbSet<CreditNote> CreditNotes { get; set; }
+    public DbSet<CreditNoteItem> creditNoteItems { get; set; }
+    public DbSet<CustomerPayment> CustomerPayments { get; set; }
 
+    #endregion
+    // -------------------Finance Module-----------------------//
+    #region FinanceDbsets
 
+    #endregion
+    // -------------------HumanResources Module-----------------------//
 
-
-
-    // Not from invetory module
-
+    #region HumanResources
 
 
     #endregion
+
+
+    #endregion
+
+
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -122,6 +151,8 @@ namespace Name.Infrastructure.Data
     {
       base.OnModelCreating(modelBuilder);
 
+      // -------------------Inventory Module-----------------------//
+      #region Inventory
       // modelBuilder.UseEncryption(_encryptionProvider);
       modelBuilder.Entity<Product>()
           .HasMany(p => p.StockTransactions)
@@ -178,16 +209,15 @@ namespace Name.Infrastructure.Data
           .OnDelete(DeleteBehavior.Restrict);
 
 
-
+      #endregion
 
 
       // -------------------Accounts Module-----------------------//
-
-
+      #region Accounts
       modelBuilder.Entity<Account>()
-           .HasDiscriminator<string>("AccountType")
-           .HasValue<PrimaryAccount>("Primary")
-           .HasValue<SecondaryAccount>("Secondary");
+          .HasDiscriminator<string>("AccountType")
+          .HasValue<PrimaryAccount>("Primary")
+          .HasValue<SecondaryAccount>("Secondary");
 
 
       modelBuilder.Entity<CostCenter>()
@@ -214,6 +244,27 @@ namespace Name.Infrastructure.Data
           .WithMany()
           .HasForeignKey(jd => jd.CostCenterId)
           .OnDelete(DeleteBehavior.Restrict);
+      #endregion
+
+      // -------------------Customers Module-----------------------//
+
+      #region Customers
+      modelBuilder.Entity<Customer>()
+          .HasDiscriminator<string>("CustomerType")
+          .HasValue<CommercialCustomer>("Commercial")
+          .HasValue<IndividualCustomer>("Individual");
+
+
+
+      modelBuilder.Entity<ContactList>()
+        .HasOne(jd => jd.Customer).WithMany(i => i.ContactLists)
+        .HasForeignKey(jd => jd.CustomerId)
+        .OnDelete(DeleteBehavior.Restrict); // Prevents cascading delete
+
+
+      #endregion
+      // ------------------- Module-----------------------//
+
     }
 
   }

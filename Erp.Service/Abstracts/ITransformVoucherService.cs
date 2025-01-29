@@ -1,6 +1,6 @@
 using Erp.Data.Dto.TransformVoucher;
 using Erp.Data.Dto.TransformVoucher.cs;
-using Erp.Data.Entities;
+using Erp.Data.Entities.InventoryModule;
 
 namespace Erp.Service.Abstracts
 {

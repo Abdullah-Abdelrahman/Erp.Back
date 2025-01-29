@@ -6,7 +6,7 @@ namespace Erp.Core.Mapping.Supplier
   {
     public void GetSupplierByIdMapping()
     {
-      CreateMap<Entitis.Supplier, GetSupplierByIdResult>().
+      CreateMap<Entitis.PurchasesModule.Supplier, GetSupplierByIdResult>().
         ForMember(destnation => destnation.SupplierId, opt => opt.MapFrom(src => src.SupplierId)).
         ForMember(destnation => destnation.PurchaseInvoices, opt => opt.MapFrom(src => src.PurchaseInvoices));
     }

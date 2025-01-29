@@ -7,7 +7,7 @@ namespace Erp.Core.Mapping.Category
 
     public void AddCategoryMapping()
     {
-      CreateMap<AddCategoryCommand, Entitis.Category>()
+      CreateMap<AddCategoryCommand, Entitis.InventoryModule.Category>()
        .ForMember(destnation => destnation.CategoryName, opt => opt.MapFrom(src => src.CategoryName));
     }
   }

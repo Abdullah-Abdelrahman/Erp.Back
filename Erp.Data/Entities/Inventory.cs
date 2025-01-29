@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Erp.Data.Entities.InventoryModule;
 
 namespace Erp.Data.Entities
 {

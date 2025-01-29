@@ -1,4 +1,4 @@
-using Erp.Data.Entities;
+using Erp.Data.Entities.InventoryModule;
 using Erp.Infrastructure.Abstracts;
 using Microsoft.EntityFrameworkCore;
 using Name.Data.Entities;

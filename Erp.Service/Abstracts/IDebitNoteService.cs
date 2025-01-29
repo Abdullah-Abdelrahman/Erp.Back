@@ -1,5 +1,5 @@
 using Erp.Data.Dto.DebitNote;
-using Erp.Data.Entities;
+using Erp.Data.Entities.PurchasesModule;
 
 namespace Erp.Service.Abstracts
 {

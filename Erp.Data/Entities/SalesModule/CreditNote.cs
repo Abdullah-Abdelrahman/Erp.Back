@@ -1,0 +1,36 @@
+using Erp.Data.Entities.CustomersModule;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Erp.Data.Entities.SalesModule
+{
+  //اشعار داءن
+  public class CreditNote
+  {
+    [Key]
+    public int CreditNoteID { get; set; }
+
+    //[ForeignKey("Company")]
+    //public int CompanyID { get; set; }
+    //public Company Company { get; set; }
+
+    public int CustomerID { get; set; }
+
+    [ForeignKey("CustomerID")]
+    public Customer Customer { get; set; }
+
+    public DateTime CreditNoteDate { get; set; } = DateTime.Now;
+
+    public DateTime ReleaseDate { get; set; }
+
+
+    public decimal Discount { get; set; }
+
+    public decimal Total { get; set; }
+
+    public InvoiceStatus Status { get; set; } = InvoiceStatus.Draft;
+
+    public ICollection<CreditNoteItem> Items { get; set; } = new List<CreditNoteItem>();
+    public string? Reason { get; set; } = string.Empty;
+  }
+}

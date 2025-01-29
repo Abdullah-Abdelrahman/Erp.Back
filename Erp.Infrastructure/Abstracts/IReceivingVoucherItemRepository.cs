@@ -1,4 +1,4 @@
-using Erp.Data.Entities;
+using Erp.Data.Entities.InventoryModule;
 using Name.Data.Entities;
 using Name.Infrastructure.Bases;
 

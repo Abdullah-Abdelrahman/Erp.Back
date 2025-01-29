@@ -1,4 +1,4 @@
-using Erp.Data.Entities;
+using Erp.Data.Entities.PurchasesModule;
 using Microsoft.AspNetCore.Http;
 
 namespace Erp.Service.Abstracts

@@ -1,4 +1,4 @@
-using Erp.Data.Entities;
+using Erp.Data.Entities.InventoryModule;
 
 namespace Erp.Data.Dto.DeliveryVoucher
 {

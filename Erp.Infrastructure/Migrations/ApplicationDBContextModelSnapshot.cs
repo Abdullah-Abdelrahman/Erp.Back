@@ -195,7 +195,40 @@ namespace Erp.Infrastructure.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.Customer", b =>
+            modelBuilder.Entity("Erp.Data.Entities.CustomersModule.ContactList", b =>
+                {
+                    b.Property<int>("ContactListId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContactListId"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Landline")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ContactListId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("contactLists");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.CustomersModule.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
@@ -203,19 +236,73 @@ namespace Erp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ContactInfo")
+                    b.Property<int?>("ClassificationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CustomerName")
+                    b.Property<string>("CustomerType")
                         .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Landline")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("billingMethod")
+                        .HasColumnType("int");
+
+                    b.Property<string>("postcode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("zone")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
 
+                    b.HasIndex("ClassificationId");
+
                     b.ToTable("Customers");
+
+                    b.HasDiscriminator<string>("CustomerType").HasValue("Customer");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.CustomersModule.CustomerClassification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("customerClassifications");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.DebitNote", b =>
@@ -947,6 +1034,40 @@ namespace Erp.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("Secondary");
                 });
 
+            modelBuilder.Entity("Erp.Data.Entities.CustomersModule.CommercialCustomer", b =>
+                {
+                    b.HasBaseType("Erp.Data.Entities.CustomersModule.Customer");
+
+                    b.Property<string>("CommercialName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Commercialregister")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaxCard")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Commercial");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.CustomersModule.IndividualCustomer", b =>
+                {
+                    b.HasBaseType("Erp.Data.Entities.CustomersModule.Customer");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Individual");
+                });
+
             modelBuilder.Entity("Erp.Data.Entities.AccountsModule.Account", b =>
                 {
                     b.HasOne("Erp.Data.Entities.AccountsModule.Account", "ParentAccount")
@@ -1005,6 +1126,26 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("CostCenter");
 
                     b.Navigation("JournalEntry");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.CustomersModule.ContactList", b =>
+                {
+                    b.HasOne("Erp.Data.Entities.CustomersModule.Customer", "Customer")
+                        .WithMany("ContactLists")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.CustomersModule.Customer", b =>
+                {
+                    b.HasOne("Erp.Data.Entities.CustomersModule.CustomerClassification", "Classification")
+                        .WithMany()
+                        .HasForeignKey("ClassificationId");
+
+                    b.Navigation("Classification");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.DebitNote", b =>
@@ -1290,6 +1431,11 @@ namespace Erp.Infrastructure.Migrations
             modelBuilder.Entity("Erp.Data.Entities.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.CustomersModule.Customer", b =>
+                {
+                    b.Navigation("ContactLists");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.DebitNote", b =>

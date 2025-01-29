@@ -1,4 +1,4 @@
-using Erp.Data.Entities;
+using Erp.Data.Entities.InventoryModule;
 using Microsoft.AspNetCore.Http;
 
 namespace Erp.Service.Abstracts

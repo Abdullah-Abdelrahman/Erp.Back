@@ -6,7 +6,7 @@ namespace Erp.Core.Mapping.Product
   {
     public void GetProductByIdMapping()
     {
-      CreateMap<Entitis.Product, GetProductByIdResult>().
+      CreateMap<Entitis.InventoryModule.Product, GetProductByIdResult>().
         ForMember(destnation => destnation.CategoryId, opt => opt.MapFrom(src => src.Category.CategoryId)).
         ForMember(destnation => destnation.CategoryName, opt => opt.MapFrom(src => src.Category.CategoryName)).ForMember(destnation => destnation.ImageFile, opt => opt.MapFrom(src => src.ImageFile));
     }

@@ -1,5 +1,6 @@
 using Erp.Data.Dto.DebitNote;
 using Erp.Data.Entities;
+using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
 using Erp.Service.Abstracts;

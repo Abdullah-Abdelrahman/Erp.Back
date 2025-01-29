@@ -1,4 +1,4 @@
-using Erp.Data.Entities;
+using Erp.Data.Entities.InventoryModule;
 using Entitis = Erp.Data.Entities;
 
 namespace Erp.Core.Features.Warehouses.Queries.Results
@@ -11,8 +11,8 @@ namespace Erp.Core.Features.Warehouses.Queries.Results
 
     // Navigation Property
     public ICollection<StockTransaction> StockTransactions { get; set; } = new List<StockTransaction>();
-    public ICollection<Entitis.ReceivingVoucher> receivingVouchers { get; set; } = new List<Entitis.ReceivingVoucher>();
+    public ICollection<Entitis.InventoryModule.ReceivingVoucher> receivingVouchers { get; set; } = new List<Entitis.InventoryModule.ReceivingVoucher>();
 
-    public ICollection<Entitis.DeliveryVoucher> deliveryVouchers { get; set; } = new List<Entitis.DeliveryVoucher>();
+    public ICollection<Entitis.InventoryModule.DeliveryVoucher> deliveryVouchers { get; set; } = new List<Entitis.InventoryModule.DeliveryVoucher>();
   }
 }

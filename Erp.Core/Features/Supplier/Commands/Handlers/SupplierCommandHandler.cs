@@ -24,7 +24,7 @@ namespace Erp.Core.Features.Supplier.Commands.Handlers
 
     public async Task<Response<string>> Handle(AddSupplierCommand request, CancellationToken cancellationToken)
     {
-      var SupplierMapper = _mapper.Map<Entitis.Supplier>(request);
+      var SupplierMapper = _mapper.Map<Entitis.PurchasesModule.Supplier>(request);
       var result = await _SupplierService.AddSupplierAsync(SupplierMapper);
 
       if (result == MessageCenter.CrudMessage.Exist)
@@ -43,7 +43,7 @@ namespace Erp.Core.Features.Supplier.Commands.Handlers
 
     public async Task<Response<string>> Handle(EditSupplierCommand request, CancellationToken cancellationToken)
     {
-      var SupplierMapper = _mapper.Map<Entitis.Supplier>(request);
+      var SupplierMapper = _mapper.Map<Entitis.PurchasesModule.Supplier>(request);
       var result = await _SupplierService.UpdateAsync(SupplierMapper);
 
       if (result == MessageCenter.CrudMessage.Success)

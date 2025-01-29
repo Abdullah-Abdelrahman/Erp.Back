@@ -7,7 +7,7 @@ namespace Erp.Core.Mapping.Category
 
     public void GetCategoryByIdMapping()
     {
-      CreateMap<Entitis.Category, GetCategoryByIdResult>().
+      CreateMap<Entitis.InventoryModule.Category, GetCategoryByIdResult>().
      ForMember(destnation => destnation.CategoryId, opt => opt.MapFrom(src => src.CategoryId)).ForMember(destnation => destnation.CategoryName, opt => opt.MapFrom(src => src.CategoryName));
 
 

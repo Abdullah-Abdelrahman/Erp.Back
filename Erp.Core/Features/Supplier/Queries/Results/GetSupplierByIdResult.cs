@@ -10,7 +10,7 @@ namespace Erp.Core.Features.Supplier.Queries.Results
     public string? Address { get; set; }
 
     // Navigation Properties
-    public ICollection<Entitis.PurchaseInvoice> PurchaseInvoices { get; set; } = new List<Entitis.PurchaseInvoice>();
+    public ICollection<Entitis.PurchasesModule.PurchaseInvoice> PurchaseInvoices { get; set; } = new List<Entitis.PurchasesModule.PurchaseInvoice>();
 
 
 

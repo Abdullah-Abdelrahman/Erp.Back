@@ -1,5 +1,5 @@
 using Erp.Data.Dto.ReceivingVoucher;
-using Erp.Data.Entities;
+using Erp.Data.Entities.InventoryModule;
 
 namespace Erp.Service.Abstracts
 {
