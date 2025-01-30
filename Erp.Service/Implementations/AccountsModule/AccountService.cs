@@ -73,10 +73,9 @@ namespace Erp.Service.Implementations.AccountsModule
         var account = await _accountRepository.GetAccountByIdAsync(id);
         if (account != null)
         {
-          // Deleting the account (or you could add extra logic here)
-          // Ideally, you'd add a Delete method in the repository if needed
-          account.IsActive = false;
-          return await _accountRepository.UpdateAccountAsync(account);
+
+          await _accountRepository.DeleteAsync(account);
+          return MessageCenter.CrudMessage.Success;
         }
         return MessageCenter.CrudMessage.DoesNotExist;
       }

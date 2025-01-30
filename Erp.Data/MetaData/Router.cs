@@ -302,6 +302,58 @@ namespace Name.Data.MetaData
 
     }
 
+
+
+    public static class CustomerRouter
+    {
+      public const string prefix = Rule + "Customer/";
+
+      public const string GetCustomerTypeById = prefix + "GetCustomerTypeById/{Id}";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "Create";
+
+      public const string Edit = prefix + "Edit";
+
+      public const string GetIndividualCustomerById = prefix + "GetIndividualCustomerById/{Id}";
+      public const string GetCommercialCustomerById = prefix + "GetCommercialCustomerById/{Id}";
+
+      public const string Delete = prefix + "Delete/{Id}";
+
+    }
+
+    public static class CustomerClassificationRouter
+    {
+      public const string prefix = Rule + "CustomerClassification/";
+
+      public const string GetList = prefix + "List";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "Create";
+
+      public const string Edit = prefix + "Edit";
+
+      public const string Delete = prefix + "Delete/{Id}";
+
+
+    }
+    public static class ContactListRouter
+    {
+      public const string prefix = Rule + "ContactList/";
+
+      public const string GetList = prefix + "List";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "Create";
+
+      public const string Edit = prefix + "Edit";
+
+      public const string Delete = prefix + "Delete/{Id}";
+
+    }
     public static class PaymentRouter
     {
       public const string prefix = Rule + "Payment/";

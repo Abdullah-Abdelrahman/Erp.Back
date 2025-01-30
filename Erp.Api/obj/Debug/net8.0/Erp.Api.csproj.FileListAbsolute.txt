@@ -347,7 +347,6 @@ E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\o
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.AssemblyInfoInputs.cache
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.AssemblyInfo.cs
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.csproj.CoreCompileInputs.cache
-E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.MvcApplicationPartsAssemblyInfo.cs
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.MvcApplicationPartsAssemblyInfo.cache
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.sourcelink.json
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\staticwebassets.build.json
@@ -726,3 +725,4 @@ E:\grad copy\Backend\Erp\Erp.Api\obj\Debug\net8.0\scopedcss\bundle\Erp.Api.style
 E:\grad copy\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.csproj.Up2Date
 E:\grad copy\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.genruntimeconfig.cache
 E:\grad copy\Backend\Erp\Erp.Api\obj\Debug\net8.0\ref\Erp.Api.dll
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.MvcApplicationPartsAssemblyInfo.cs

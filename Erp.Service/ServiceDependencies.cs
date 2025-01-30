@@ -1,9 +1,11 @@
 using Erp.Service.Abstracts;
 using Erp.Service.Abstracts.AccountsModule;
 using Erp.Service.Abstracts.CostCentersModule;
+using Erp.Service.Abstracts.CustomersModule;
 using Erp.Service.Implementations;
 using Erp.Service.Implementations.AccountsModule;
 using Erp.Service.Implementations.CostCentersModule;
+using Erp.Service.Implementations.CustomersModule;
 using Microsoft.Extensions.DependencyInjection;
 using Name.Service.Abstracts;
 using Name.Service.Implementations;
@@ -59,6 +61,16 @@ namespace Name.Service
 
 
       services.AddTransient<ICostCenterService, CostCenterService>();
+
+
+
+
+
+      services.AddTransient<ICustomerService, CustomerService>();
+      services.AddTransient<ICustomerClassificationService, CustomerClassificationService>();
+
+      services.AddTransient<IContactListService, ContactListService>();
+
 
       return services;
     }
