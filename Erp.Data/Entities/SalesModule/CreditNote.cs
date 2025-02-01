@@ -1,3 +1,4 @@
+using Erp.Data.Dto.CreditNote;
 using Erp.Data.Entities.CustomersModule;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,9 +29,32 @@ namespace Erp.Data.Entities.SalesModule
 
     public decimal Total { get; set; }
 
-    public InvoiceStatus Status { get; set; } = InvoiceStatus.Draft;
+    public string? Reason { get; set; } = string.Empty;
 
     public ICollection<CreditNoteItem> Items { get; set; } = new List<CreditNoteItem>();
-    public string? Reason { get; set; } = string.Empty;
+
+
+    public CreditNote(AddCreditNoteRequest Request)
+    {
+      CustomerID = Request.CustomerID;
+      CreditNoteDate = Request.CreditNoteDate;
+      ReleaseDate = Request.ReleaseDate;
+      Reason = Request.Reason;
+      Discount = Request.Discount;
+      Total = Request.Total;
+
+
+    }
+
+    public CreditNote(UpdateCreditNoteRequest Request)
+    {
+      CreditNoteID = Request.CreditNoteId;
+      CustomerID = Request.CustomerID;
+      CreditNoteDate = Request.CreditNoteDate;
+      ReleaseDate = Request.ReleaseDate;
+      Discount = Request.Discount;
+      Total = Request.Total;
+
+    }
   }
 }

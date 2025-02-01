@@ -1,3 +1,4 @@
+using Erp.Data.Dto.Quotation;
 using Erp.Data.Entities.InventoryModule;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -32,6 +33,32 @@ namespace Erp.Data.Entities.SalesModule
     public decimal Discount { get; set; }
     public decimal Tax { get; set; }
     public decimal Total => (UnitPrice * Quantity) - Discount + Tax;
+
+
+    public QuotationItem(QuotationItemDT0 itemDT0, int quotationID)
+    {
+      QuotationId = quotationID;
+      ProductId = itemDT0.ProductId;
+      Description = itemDT0.Description;
+      Quantity = itemDT0.Quantity;
+      UnitPrice = itemDT0.UnitPrice;
+      Discount = itemDT0.discount;
+      Tax = itemDT0.Tax;
+
+
+    }
+
+    public QuotationItem(QuotationItemUpdateDT0 itemDT0)
+    {
+      Id = itemDT0.QuotationItemId;
+      QuotationId = itemDT0.QuotationId;
+      ProductId = itemDT0.ProductId;
+      Description = itemDT0.Description;
+      Quantity = itemDT0.Quantity;
+      UnitPrice = itemDT0.UnitPrice;
+      Discount = itemDT0.discount;
+      Tax = itemDT0.Tax;
+    }
   }
 
 }

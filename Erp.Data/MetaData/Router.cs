@@ -366,7 +366,59 @@ namespace Name.Data.MetaData
 
     }
 
+    public static class InvoiceRouter
+    {
+      public const string prefix = Rule + "Invoice/";
 
+      public const string GetList = prefix + "List";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "Create";
+
+      public const string Edit = prefix + "Edit";
+
+      public const string Delete = prefix + "Delete/{Id}";
+
+
+
+    }
+
+    public static class QuotationRouter
+    {
+      public const string prefix = Rule + "Quotation/";
+
+      public const string GetList = prefix + "List";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "Create";
+
+      public const string Edit = prefix + "Edit";
+
+      public const string Delete = prefix + "Delete/{Id}";
+
+
+
+    }
+
+    public static class CreditNoteRouter
+    {
+      public const string prefix = Rule + "CreditNote/";
+
+      public const string GetList = prefix + "List";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "Create";
+
+      public const string Edit = prefix + "Edit";
+
+      public const string Delete = prefix + "Delete/{Id}";
+
+
+
+    }
     public static class EnrollmentRouter
     {
       public const string prefix = Rule + "Enrollment/";

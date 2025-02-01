@@ -2,6 +2,7 @@ using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.CustomersModule;
 using Erp.Data.Entities.InventoryModule;
 using Erp.Data.Entities.PurchasesModule;
+using Erp.Data.Entities.SalesModule;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Name.Data.Entities;
@@ -113,15 +114,15 @@ namespace Name.Infrastructure.Data
     // -------------------Sales Module-----------------------//
 
     #region SalesDbsets
-    //public DbSet<Invoice> invoices { get; set; }
-    //public DbSet<InvoiceItem> InvoiceItems { get; set; }
-    //public DbSet<Quotation> Quotations { get; set; }
-    //public DbSet<QuotationItem> QuotationItems { get; set; }
-    //public DbSet<RecurringInvoice> RecurringInvoices { get; set; }
-    //public DbSet<RecurringInvoiceItem> recurringInvoiceItems { get; set; }
-    //public DbSet<CreditNote> CreditNotes { get; set; }
-    //public DbSet<CreditNoteItem> creditNoteItems { get; set; }
-    //public DbSet<CustomerPayment> CustomerPayments { get; set; }
+    public DbSet<Invoice> invoices { get; set; }
+    public DbSet<InvoiceItem> InvoiceItems { get; set; }
+    public DbSet<Quotation> Quotations { get; set; }
+    public DbSet<QuotationItem> QuotationItems { get; set; }
+    public DbSet<RecurringInvoice> RecurringInvoices { get; set; }
+    public DbSet<RecurringInvoiceItem> recurringInvoiceItems { get; set; }
+    public DbSet<CreditNote> CreditNotes { get; set; }
+    public DbSet<CreditNoteItem> creditNoteItems { get; set; }
+    public DbSet<CustomerPayment> CustomerPayments { get; set; }
 
     #endregion
     // -------------------Finance Module-----------------------//

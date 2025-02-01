@@ -4,10 +4,12 @@ using Erp.Infrastructure.Abstracts;
 using Erp.Infrastructure.Abstracts.AccountsModule;
 using Erp.Infrastructure.Abstracts.CostCentersModule;
 using Erp.Infrastructure.Abstracts.CustomersModule;
+using Erp.Infrastructure.Abstracts.SalesModule;
 using Erp.Infrastructure.Repositories;
 using Erp.Infrastructure.Repositories.AccountsModule;
 using Erp.Infrastructure.Repositories.CostCentersModule;
 using Erp.Infrastructure.Repositories.CustomersModule;
+using Erp.Infrastructure.Repositories.SalesModule;
 using Microsoft.Extensions.DependencyInjection;
 using Name.Infrastructure.Bases;
 
@@ -74,6 +76,18 @@ namespace Name.Infrastructure
       services.AddTransient<ICustomerClassificationRepository, CustomerClassificationRepository>();
 
       services.AddTransient<IContactListRepository, ContactListRepository>();
+
+
+
+      services.AddTransient<IInvoiceRepository, InvoiceRepository>();
+      services.AddTransient<IInvoiceItemRepository, InvoiceItemRepository>();
+
+      services.AddTransient<IQuotationRepository, QuotationRepository>();
+      services.AddTransient<IQuotationItemRepository, QuotationItemRepository>();
+
+
+      services.AddTransient<ICreditNoteRepository, CreditNoteRepository>();
+      services.AddTransient<ICreditNoteItemRepository, CreditNoteItemRepository>();
 
       services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       return services;
