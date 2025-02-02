@@ -1,9 +1,9 @@
-﻿using Name.Core.Features.UserBase.Queries.Results;
-using Name.Data.Entities;
+﻿using Erp.Data.Entities.MainModule;
+using Name.Core.Features.UserBase.Queries.Results;
 
 namespace Name.Core.Mapping.User
 {
-    public partial class UserBaseProfile
+  public partial class UserBaseProfile
     {
 
         public void GetUserListMapping()

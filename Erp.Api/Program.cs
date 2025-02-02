@@ -1,7 +1,6 @@
 
 using Name.Core;
 using Name.Core.Middleware;
-using Name.Data.Entities;
 using Name.Infrastructure;
 using Name.Infrastructure.Data;
 using Name.Service;
@@ -13,10 +12,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Erp.Data.Entities.MainModule;
 
 namespace Name.Api
 {
-    public class Program
+  public class Program
     {
         public static void Main(string[] args)
         {

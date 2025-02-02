@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Erp.Data.Entities.MainModule;
 using Name.Core.Features.UserBase.Queries.Results;
-using Name.Data.Entities;
 
 namespace Name.Core.Mapping.User
 {
-    public partial class UserBaseProfile : Profile
+  public partial class UserBaseProfile : Profile
     {
         public void GetUserByIdMapping()
         {

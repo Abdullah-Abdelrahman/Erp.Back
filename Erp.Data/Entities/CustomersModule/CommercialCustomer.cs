@@ -4,6 +4,10 @@ namespace Erp.Data.Entities.CustomersModule
 {
   public class CommercialCustomer : Customer
   {
+    public CommercialCustomer()
+    {
+
+    }
     public CommercialCustomer(AddCustomerRequest request) : base(request)
     {
       this.CommercialName = request.CommercialName;

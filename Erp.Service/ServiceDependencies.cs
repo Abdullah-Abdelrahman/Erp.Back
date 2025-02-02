@@ -84,6 +84,13 @@ namespace Name.Service
 
       services.AddTransient<ICreditNoteService, CreditNoteService>();
       //services.AddTransient<ICreditNoteItemService, CreditNoteItemService>();
+
+
+
+      services.AddTransient<IRecurringInvoiceService, RecurringInvoiceService>();
+      services.AddTransient<IRecurringInvoiceItemService, RecurringInvoiceItemService>();
+
+      services.AddTransient<ICustomerPaymentService, CustomerPaymentService>();
       return services;
     }
   }

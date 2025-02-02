@@ -6,6 +6,7 @@ namespace Erp.Data.Entities.CustomersModule
   //قاءمه اتصال
   public class ContactList
   {
+
     public int ContactListId { get; set; }
     public string? FirstName { get; set; } = null!;
 
@@ -42,7 +43,10 @@ namespace Erp.Data.Entities.CustomersModule
       this.Email = UpdateContactListDT0.Email;
       this.CustomerId = UpdateContactListDT0.CustomerId;
     }
+    public ContactList()
+    {
 
+    }
 
   }
 }

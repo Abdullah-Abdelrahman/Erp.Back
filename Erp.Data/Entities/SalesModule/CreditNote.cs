@@ -56,5 +56,10 @@ namespace Erp.Data.Entities.SalesModule
       Total = Request.Total;
 
     }
+
+    public CreditNote()
+    {
+
+    }
   }
 }

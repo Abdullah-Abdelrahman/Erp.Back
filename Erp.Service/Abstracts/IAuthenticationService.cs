@@ -1,8 +1,8 @@
-﻿using Name.Data.Entities;
+﻿using Erp.Data.Entities.MainModule;
 
 namespace Name.Service.Abstracts
 {
-    public interface IAuthenticationService
+  public interface IAuthenticationService
     {
 
         public Task<string> GetJWTtoken(UserBase user);

@@ -1,11 +1,11 @@
 using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.CustomersModule;
 using Erp.Data.Entities.InventoryModule;
+using Erp.Data.Entities.MainModule;
 using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.Entities.SalesModule;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Name.Data.Entities;
 
 namespace Name.Infrastructure.Data
 {
@@ -22,6 +22,9 @@ namespace Name.Infrastructure.Data
     }
 
     #region Dbsets
+
+    /// -------------------Main Module-----------------------///
+
     public DbSet<UserBase> userBases { get; set; }
 
 
@@ -263,8 +266,56 @@ namespace Name.Infrastructure.Data
 
 
       #endregion
-      // ------------------- Module-----------------------//
+      // -------------------Sales Module-----------------------//
 
+
+
+      modelBuilder.Entity<Invoice>().
+          HasMany(po => po.Items).
+          WithOne(poi => poi.Invoice).
+          HasForeignKey(poi => poi.InvoiceID);
+
+      modelBuilder.Entity<InvoiceItem>()
+          .HasOne(poi => poi.product)
+          .WithMany()
+          .HasForeignKey(poi => poi.productID);
+
+      modelBuilder.Entity<CreditNote>().
+          HasMany(po => po.Items).
+          WithOne(poi => poi.creditNote).
+          HasForeignKey(poi => poi.CreditNoteID);
+
+      modelBuilder.Entity<CreditNoteItem>()
+          .HasOne(poi => poi.product)
+          .WithMany()
+          .HasForeignKey(poi => poi.productID);
+
+
+      modelBuilder.Entity<Quotation>().
+          HasMany(po => po.Items).
+          WithOne(poi => poi.Quotation).
+          HasForeignKey(poi => poi.QuotationId);
+
+      modelBuilder.Entity<QuotationItem>()
+          .HasOne(poi => poi.Product)
+          .WithMany()
+          .HasForeignKey(poi => poi.ProductId);
+
+      modelBuilder.Entity<RecurringInvoice>().
+         HasMany(po => po.Items).
+         WithOne(poi => poi.RInvoice).
+         HasForeignKey(poi => poi.RInvoiceID);
+
+      modelBuilder.Entity<RecurringInvoiceItem>()
+          .HasOne(poi => poi.product)
+          .WithMany()
+          .HasForeignKey(poi => poi.productID);
+
+      modelBuilder.Entity<CustomerPayment>()
+        .HasOne(cp => cp.Invoice)
+        .WithMany(i => i.payments)
+        .HasForeignKey(cp => cp.InvoiceId)
+        .OnDelete(DeleteBehavior.Restrict);
     }
 
   }

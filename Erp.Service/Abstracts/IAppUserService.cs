@@ -1,8 +1,8 @@
-﻿using Name.Data.Entities;
+﻿using Erp.Data.Entities.MainModule;
 
 namespace Name.Service.Abstracts
 {
-    public interface IUserBaseService
+  public interface IUserBaseService
     {
         public Task<string> AddUserAsync(UserBase UserBase, string password);
 

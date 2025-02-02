@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Erp.Data.Entities.SalesModule;
+using Name.Infrastructure.Bases;
 
 namespace Erp.Infrastructure.Abstracts.SalesModule
 {
-  internal interface IRecurringInvoiceRepository
+  public interface IRecurringInvoiceRepository : IGenericRepository<RecurringInvoice>
   {
+    public Task<string> AddRecurringInvoiceAsync(RecurringInvoice RecurringInvoice);
+
+    public Task<RecurringInvoice> GetRecurringInvoiceByIdAsync(int id);
+
+    public Task<string> UpdateRecurringInvoiceAsync(RecurringInvoice request);
   }
 }

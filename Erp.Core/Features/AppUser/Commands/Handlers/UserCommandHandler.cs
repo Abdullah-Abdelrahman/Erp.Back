@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using Name.Core.Bases;
 using Name.Core.Features.UserBase.Commands.Models;
 using Name.Service.Abstracts;
-using US = Name.Data.Entities;
 
 
 
@@ -25,9 +24,9 @@ namespace Name.Core.Features.UserBase.Commands.Handlers
     private readonly IMapper _mapper;
     private readonly IUserBaseService _UserBaseService;
 
-    private readonly UserManager<US.UserBase> _userManager;
+    private readonly UserManager<Erp.Data.Entities.MainModule.UserBase> _userManager;
 
-    public UserCommandHandler(IMapper mapper, IUserBaseService UserBaseService, UserManager<US.UserBase> userManager)
+    public UserCommandHandler(IMapper mapper, IUserBaseService UserBaseService, UserManager<Erp.Data.Entities.MainModule.UserBase> userManager)
     {
       _UserBaseService = UserBaseService;
       _userManager = userManager;
@@ -37,7 +36,7 @@ namespace Name.Core.Features.UserBase.Commands.Handlers
     public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
     {
 
-      var user = _mapper.Map<AddUserCommand, US.UserBase>(request);
+      var user = _mapper.Map<AddUserCommand, Erp.Data.Entities.MainModule.UserBase>(request);
 
       var result = await _UserBaseService.AddUserAsync(user, request.Password);
 

@@ -59,8 +59,8 @@ namespace Erp.Core.Features.Category.Commands.Handlers
 
     public async Task<Response<string>> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
-      var CategoryMapper = _mapper.Map<Entitis.InventoryModule.Category>(request);
-      var result = await _categoryService.DeleteAsync(CategoryMapper);
+      var Category = await _categoryService.GetCategoryByIdAsync(request.CategoryId);
+      var result = await _categoryService.DeleteAsync(Category);
 
       if (result == MessageCenter.CrudMessage.Success)
       {

@@ -1,7 +1,6 @@
 using Erp.Data.Entities.InventoryModule;
 using Erp.Service.Abstracts;
 using Microsoft.AspNetCore.Http;
-using Name.Data.Entities;
 
 namespace Erp.Service.Implementations
 {

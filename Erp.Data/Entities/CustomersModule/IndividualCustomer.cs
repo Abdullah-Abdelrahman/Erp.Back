@@ -12,6 +12,10 @@ namespace Erp.Data.Entities.CustomersModule
     {
       this.FullName = request.FullName;
     }
+    public IndividualCustomer()
+    {
+
+    }
     public string FullName { get; set; } = null!;
 
   }

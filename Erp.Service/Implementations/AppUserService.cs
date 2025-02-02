@@ -1,12 +1,12 @@
-﻿using Name.Data.Entities;
-using Name.Infrastructure.Data;
+﻿using Name.Infrastructure.Data;
 using Name.Service.Abstracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Erp.Data.Entities.MainModule;
 
 namespace Name.Service.Implementations
 {
-    public class UserBaseService : IUserBaseService
+  public class UserBaseService : IUserBaseService
     {
         private readonly UserManager<UserBase> _userManager;
         private readonly IEmailService _emailService;

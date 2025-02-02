@@ -59,5 +59,9 @@ namespace Erp.Data.Entities.SalesModule
       Discount = itemDT0.discount;
       Tax = itemDT0.Tax;
     }
+    public CreditNoteItem()
+    {
+
+    }
   }
 }

@@ -419,9 +419,10 @@ namespace Name.Data.MetaData
 
 
     }
-    public static class EnrollmentRouter
+
+    public static class RecurringInvoiceRouter
     {
-      public const string prefix = Rule + "Enrollment/";
+      public const string prefix = Rule + "RecurringInvoice/";
 
       public const string GetList = prefix + "List";
 
@@ -429,7 +430,31 @@ namespace Name.Data.MetaData
 
       public const string Create = prefix + "Create";
 
+      public const string Edit = prefix + "Edit";
+
+      public const string Delete = prefix + "Delete/{Id}";
+
+
+
     }
+
+
+    public static class CustomerPaymentRouter
+    {
+      public const string prefix = Rule + "CustomerPayment/";
+
+      public const string GetList = prefix + "List";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "Create";
+
+      public const string Edit = prefix + "Edit";
+
+      public const string Delete = prefix + "Delete/{Id}";
+
+    }
+
 
     public static class EmailRouter
     {

@@ -13,7 +13,7 @@ namespace Erp.Data.Entities.SalesModule
 
     [ForeignKey(nameof(InvoiceId))]
     public Invoice Invoice { get; set; } = null!;
-    public string CustomerId { get; set; }
+    public int CustomerId { get; set; }
     [ForeignKey("CustomerId")]
     public Customer Customer { get; set; }
 

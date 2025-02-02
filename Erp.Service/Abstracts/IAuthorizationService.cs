@@ -1,10 +1,10 @@
 ﻿using Name.Data.Dto;
-using Name.Data.Entities;
 using Microsoft.AspNetCore.Identity;
+using Erp.Data.Entities.MainModule;
 
 namespace Name.Service.Abstracts
 {
-    public interface IAuthorizationService
+  public interface IAuthorizationService
     {
         public Task<bool> IsRoleExistByName(string roleName);
 

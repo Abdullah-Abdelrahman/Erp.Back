@@ -1,5 +1,4 @@
-﻿using Name.Data.Entities;
-using Name.Infrastructure.Data;
+﻿using Name.Infrastructure.Data;
 using Name.Service.Abstracts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -7,10 +6,11 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Erp.Data.Entities.MainModule;
 
 namespace Name.Service.Implementations
 {
-    public class AuthenticationService : IAuthenticationService
+  public class AuthenticationService : IAuthenticationService
     {
         private readonly IConfiguration _configuration;
         private readonly UserManager<UserBase> _userManager;

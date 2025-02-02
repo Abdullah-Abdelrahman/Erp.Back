@@ -34,7 +34,10 @@ namespace Erp.Data.Entities.CustomersModule
 
     public ICollection<ContactList> ContactLists { get; set; } = new List<ContactList>();
 
+    public Customer()
+    {
 
+    }
     public Customer(AddCustomerRequest request)
     {
 

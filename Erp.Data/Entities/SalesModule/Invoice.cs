@@ -35,7 +35,7 @@ namespace Erp.Data.Entities.SalesModule
     public InvoiceStatus Status { get; set; } = InvoiceStatus.Draft;
 
     public ICollection<InvoiceItem> Items { get; set; } = new List<InvoiceItem>();
-
+    public ICollection<CustomerPayment> payments { get; set; } = new List<CustomerPayment>();
 
     public Invoice(AddInvoiceRequest InvoiceRequest)
     {
@@ -61,6 +61,10 @@ namespace Erp.Data.Entities.SalesModule
       Discount = InvoiceRequest.Discount;
       Total = InvoiceRequest.Total;
       Status = InvoiceRequest.Status;
+    }
+    public Invoice()
+    {
+
     }
   }
 

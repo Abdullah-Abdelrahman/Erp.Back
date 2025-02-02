@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Erp.Data.Entities.SalesModule;
 
 namespace Erp.Service.Abstracts.SalesModule
 {
-  internal interface ICustomerPaymentService
+  public interface ICustomerPaymentService
   {
+    public Task<List<CustomerPayment>> GetCustomerPaymentsListAsync();
+
+    public Task<CustomerPayment> GetCustomerPaymentByIdAsync(int id);
+
+    public Task<string> AddCustomerPaymentAsync(CustomerPayment CustomerPayment);
+
+    public Task<string> UpdateAsync(CustomerPayment CustomerPayment);
+
+    public Task<string> DeleteAsync(CustomerPayment CustomerPayment);
   }
 }

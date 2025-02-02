@@ -25,6 +25,7 @@
     <Folder Include="Features\Authentication\Queries\Results\" />
     <Folder Include="Features\Warehouses\Commands\Validations\" />
     <Folder Include="Mapping\Authorization\CommandMapping\" />
+    <Folder Include="Mapping\RecurringInvoice\QueryMapping\" />
     <Folder Include="Mapping\DeliveryVoucher\QueryMapping\" />
     <Folder Include="Mapping\DebitNote\QueryMapping\" />
     <Folder Include="Mapping\CreditNote\QueryMapping\" />

@@ -1,5 +1,4 @@
 using Erp.Data.Entities.InventoryModule;
-using Name.Data.Entities;
 using Name.Infrastructure.Bases;
 
 namespace Erp.Infrastructure.Abstracts

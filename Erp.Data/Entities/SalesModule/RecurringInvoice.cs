@@ -1,3 +1,4 @@
+using Erp.Data.Dto.RecurringInvoice;
 using Erp.Data.Entities.CustomersModule;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -45,6 +46,77 @@ namespace Erp.Data.Entities.SalesModule
     public decimal Discount { get; set; }
 
     public decimal Total { get; set; }
+    public ICollection<RecurringInvoiceItem> Items { get; set; } = new List<RecurringInvoiceItem>();
+
+
+    public RecurringInvoice(AddRecurringInvoiceRequest Request)
+    {
+      CustomerId = Request.CustomerId;
+      StartDate = Request.StartDate;
+      IssueEvery = Request.IssueEvery;
+      Frequency = Request.Frequency;
+      Tax = Request.Tax;
+      Discount = Request.Discount;
+      Total = Request.Total;
+      sendEmail = Request.sendEmail;
+      automaticPayment = Request.automaticPayment;
+      DisplayRange = Request.DisplayRange;
+      IsActive = Request.IsActive;
+
+      if (Request.Frequency == Frequency.Monthly)
+      {
+        NextInvoiceDate = Request.StartDate.AddMonths(1 * Request.IssueEvery);
+      }
+      else if (Request.Frequency == Frequency.Yearly)
+      {
+        NextInvoiceDate = Request.StartDate.AddYears(1 * Request.IssueEvery);
+
+      }
+      else
+      {
+        NextInvoiceDate = Request.StartDate.AddMonths(3 * Request.IssueEvery);
+
+      }
+
+    }
+
+    public RecurringInvoice(UpdateRecurringInvoiceRequest Request)
+    {
+      Id = Request.RecurringInvoiceId;
+      CustomerId = Request.CustomerId;
+      StartDate = Request.StartDate;
+      NextInvoiceDate = Request.NextInvoiceDate;
+      IssueEvery = Request.IssueEvery;
+      Frequency = Request.Frequency;
+      Tax = Request.Tax;
+      Discount = Request.Discount;
+      Total = Request.Total;
+      sendEmail = Request.sendEmail;
+      automaticPayment = Request.automaticPayment;
+      DisplayRange = Request.DisplayRange;
+      IsActive = Request.IsActive;
+
+      if (Request.Frequency == Frequency.Monthly)
+      {
+        NextInvoiceDate = Request.StartDate.AddMonths(1 * Request.IssueEvery);
+      }
+      else if (Request.Frequency == Frequency.Yearly)
+      {
+        NextInvoiceDate = Request.StartDate.AddYears(1 * Request.IssueEvery);
+
+      }
+      else
+      {
+        NextInvoiceDate = Request.StartDate.AddMonths(3 * Request.IssueEvery);
+
+      }
+
+    }
+
+    public RecurringInvoice()
+    {
+
+    }
 
   }
 

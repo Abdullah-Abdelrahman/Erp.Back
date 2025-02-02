@@ -89,6 +89,13 @@ namespace Name.Infrastructure
       services.AddTransient<ICreditNoteRepository, CreditNoteRepository>();
       services.AddTransient<ICreditNoteItemRepository, CreditNoteItemRepository>();
 
+
+
+      services.AddTransient<IRecurringInvoiceRepository, RecurringInvoiceRepository>();
+      services.AddTransient<IRecurringInvoiceItemRepository, RecurringInvoiceItemRepository>();
+
+      services.AddTransient<ICustomerPaymentRepository, CustomerPaymentRepository>();
+
       services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       return services;
     }

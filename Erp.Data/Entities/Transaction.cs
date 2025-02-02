@@ -1,3 +1,5 @@
+using Erp.Data.Entities.MainModule;
+
 namespace Erp.Data.Entities
 {
   public class Transaction

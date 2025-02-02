@@ -53,6 +53,10 @@ namespace Erp.Data.Entities.SalesModule
       TotalAmount = QuotationRequest.GrandTotal;
       Status = QuotationRequest.Status;
     }
+    public Quotation()
+    {
+
+    }
   }
 
   public enum QuotationStatus

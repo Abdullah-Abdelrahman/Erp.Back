@@ -1,4 +1,3 @@
-using Name.Data.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.InventoryModule

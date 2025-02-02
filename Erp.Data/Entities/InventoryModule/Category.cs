@@ -1,5 +1,3 @@
-using Name.Data.Entities;
-
 namespace Erp.Data.Entities.InventoryModule
 {
   public class Category
