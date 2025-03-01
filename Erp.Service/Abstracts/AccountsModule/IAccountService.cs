@@ -14,6 +14,11 @@ namespace Erp.Service.Abstracts.AccountsModule
 
     Task<List<PrimaryAccount>> GetMainAccountListAsync();
 
+    Task<List<PrimaryAccount>> GetPrimaryAccountListAsync();
+
+    Task<List<SecondaryAccount>> GetSecondaryAccountListAsync();
+
+
     Task<string> UpdateAccountAsync(Account account);
 
 

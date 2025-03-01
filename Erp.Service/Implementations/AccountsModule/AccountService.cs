@@ -129,7 +129,8 @@ namespace Erp.Service.Implementations.AccountsModule
     {
       try
       {
-        var result = await _primaryAccountRepository.GetTableNoTracking().Where(x => x.ParentAccountID == null).Include(x => x.ChildAccounts).ToListAsync();
+        var result = await _primaryAccountRepository.GetTableNoTracking().
+          Where(x => !x.ParentAccountID.HasValue).Include(x => x.ChildAccounts).ToListAsync();
 
 
         foreach (var primaryAccount in result)
@@ -148,6 +149,20 @@ namespace Erp.Service.Implementations.AccountsModule
     public async Task<Account?> GetAccountByIdAsync(int id)
     {
       return await _accountRepository.GetByIdAsync(id);
+    }
+
+    public async Task<List<PrimaryAccount>> GetPrimaryAccountListAsync()
+    {
+      var result = await _primaryAccountRepository.GetTableNoTracking().ToListAsync();
+
+      return result;
+    }
+
+    public async Task<List<SecondaryAccount>> GetSecondaryAccountListAsync()
+    {
+      var result = await _secondaryAccountRepository.GetTableNoTracking().ToListAsync();
+
+      return result;
     }
   }
 }

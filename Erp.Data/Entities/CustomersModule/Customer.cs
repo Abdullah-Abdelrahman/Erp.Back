@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.CustomersModule
 {
-  public class Customer
+  public class Customer : IMustHaveTenant
   {
 
     public int CustomerId { get; set; }
@@ -33,6 +33,7 @@ namespace Erp.Data.Entities.CustomersModule
     public string? Notes { get; set; }
 
     public ICollection<ContactList> ContactLists { get; set; } = new List<ContactList>();
+    public string TenantId { get; set; } = null!;
 
     public Customer()
     {

@@ -35,14 +35,17 @@ namespace Erp.Service.Implementations.SalesModule
       try
       {
         var newQuotation = await _QuotationRepository.AddAsync(Quotation);
-
+        decimal total = 0;
         foreach (var item in QuotationRequest.QuotationItemDT0s)
         {
           var QuotationItem = new QuotationItem(item, newQuotation.QuotationId);
 
-
+          total += QuotationItem.Total;
           await _QuotationItemRepository.AddAsync(QuotationItem);
         }
+        newQuotation.Total = total;
+
+        await _QuotationRepository.UpdateAsync(newQuotation);
 
 
 
@@ -90,7 +93,7 @@ namespace Erp.Service.Implementations.SalesModule
         ExpiryDate = Quotation.ExpiryDate,
         Tax = Quotation.TaxAmount,
         Discount = Quotation.Discount,
-        GrandTotal = Quotation.TotalAmount,
+        GrandTotal = Quotation.Total,
         Status = Quotation.Status,
         QuotationItemsDto = new List<QuotationItemDto>()
       };
@@ -125,7 +128,7 @@ namespace Erp.Service.Implementations.SalesModule
         ExpiryDate = x.ExpiryDate,
         Tax = x.TaxAmount,
         Discount = x.Discount,
-        GrandTotal = x.TotalAmount,
+        GrandTotal = x.Total,
         Status = x.Status,
 
       }));
@@ -149,7 +152,16 @@ namespace Erp.Service.Implementations.SalesModule
           var QuotationItem = new QuotationItem(item);
 
 
-          await _QuotationItemRepository.UpdateAsync(QuotationItem);
+          if (item.QuotationItemId != null)
+          {
+            await _QuotationItemRepository.UpdateAsync(QuotationItem);
+
+          }
+          else
+          {
+            await _QuotationItemRepository.AddAsync(QuotationItem);
+
+          }
         }
 
 

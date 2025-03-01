@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.InventoryModule
 {
-  public class TransformVoucher
+  public class TransformVoucher : IMustHaveTenant
   {
     public int TransformVoucherId { get; set; }
     public DateTime TransformDate { get; set; } = DateTime.UtcNow;
@@ -20,6 +20,8 @@ namespace Erp.Data.Entities.InventoryModule
 
     // Navigation Property
     public ICollection<TransformVoucherItem> TransformItems { get; set; } = new List<TransformVoucherItem>();
+    public string TenantId { get; set; } = null!;
+
   }
 }
 

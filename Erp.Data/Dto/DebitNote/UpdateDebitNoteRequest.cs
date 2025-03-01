@@ -14,7 +14,7 @@ namespace Erp.Data.Dto.DebitNote
 
   public class DebitNoteItemUpdateDT0
   {
-    public int DebitNoteItemId { get; set; }
+    public int? DebitNoteItemId { get; set; }
     public int ProductId { get; set; }
     public int Quantity { get; set; }
     public decimal discount { get; set; }

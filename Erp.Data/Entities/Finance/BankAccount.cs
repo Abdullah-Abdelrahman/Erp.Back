@@ -1,19 +1,13 @@
+using Erp.Data.Entities.HumanResources.Staff;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Erp.Data.Entities.MainModule;
 
 namespace Erp.Data.Entities.Finance
 {
-  public class BankAccount
+  public class BankAccount : IMustHaveTenant, IFinancePermissions
   {
     [Key]
     public int BankAccountID { get; set; }
 
-    [Required]
-    public int CompanyID { get; set; }
-
-    [ForeignKey(nameof(CompanyID))]
-    public Company Company { get; set; }
 
     [Required]
     [MaxLength(100)]
@@ -27,21 +21,26 @@ namespace Erp.Data.Entities.Finance
     [MaxLength(50)]
     public string AccountNumber { get; set; }
 
-    [MaxLength(34)]
-    public string IBAN { get; set; }
 
-    [MaxLength(11)]
-    public string SWIFTCode { get; set; }
-
+    [Required]
     [MaxLength(3)]
-    public string CurrencyCode { get; set; } = "USD";
+    public string Currency { get; set; }
 
-    public decimal Balance { get; set; } = 0.00m;
 
     public AccountStatus Status { get; set; } = AccountStatus.ACTIVE;
 
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+    public string Type { get; } = "Bank Account";
+
+    public string TenantId { get; set; } = null!;
+
+
+    public WhoHaveType DepositPermission { get; set; } = WhoHaveType.None;
+    public WhoHaveType WithdrawPermission { get; set; } = WhoHaveType.None;
+    public ICollection<Employee> employeesWhoHaveDepositPermessions { get; set; } = new List<Employee>();
+    public ICollection<ApplicationRole> RolesWhoHaveWithdrawPermessions { get; set; } = new List<ApplicationRole>();
+    public ICollection<Employee> employeesWhoHaveWithdrawPermessions { get; set; } = new List<Employee>();
+
+    public ICollection<ApplicationRole> RolesWhoHaveDepositPermessions { get; set; } = new List<ApplicationRole>();
   }
 
   public enum AccountStatus

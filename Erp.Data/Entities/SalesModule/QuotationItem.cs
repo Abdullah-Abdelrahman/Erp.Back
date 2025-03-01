@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.SalesModule
 {
-  public class QuotationItem
+  public class QuotationItem : IMustHaveTenant
   {
     [Key]
     public int Id { get; set; }
@@ -32,8 +32,9 @@ namespace Erp.Data.Entities.SalesModule
 
     public decimal Discount { get; set; }
     public decimal Tax { get; set; }
-    public decimal Total => (UnitPrice * Quantity) - Discount + Tax;
+    public decimal Total { get; set; } = 0;
 
+    public string TenantId { get; set; } = null!;
 
     public QuotationItem(QuotationItemDT0 itemDT0, int quotationID)
     {
@@ -45,12 +46,17 @@ namespace Erp.Data.Entities.SalesModule
       Discount = itemDT0.discount;
       Tax = itemDT0.Tax;
 
+      Total = (itemDT0.UnitPrice * itemDT0.Quantity) - itemDT0.discount + itemDT0.Tax;
 
     }
 
     public QuotationItem(QuotationItemUpdateDT0 itemDT0)
     {
-      Id = itemDT0.QuotationItemId;
+      if (itemDT0.QuotationItemId != null)
+      {
+        Id = (int)itemDT0.QuotationItemId;
+
+      }
       QuotationId = itemDT0.QuotationId;
       ProductId = itemDT0.ProductId;
       Description = itemDT0.Description;
@@ -58,6 +64,8 @@ namespace Erp.Data.Entities.SalesModule
       UnitPrice = itemDT0.UnitPrice;
       Discount = itemDT0.discount;
       Tax = itemDT0.Tax;
+      Total = (itemDT0.UnitPrice * itemDT0.Quantity) - itemDT0.discount + itemDT0.Tax;
+
     }
     public QuotationItem()
     {

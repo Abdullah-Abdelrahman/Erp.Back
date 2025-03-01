@@ -1,31 +1,52 @@
+using Erp.Data.Abstracts;
+using Erp.Data.Entities;
 using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.CustomersModule;
+using Erp.Data.Entities.Finance;
+using Erp.Data.Entities.HumanResources.OrganizationalStructure;
+using Erp.Data.Entities.HumanResources.Staff;
 using Erp.Data.Entities.InventoryModule;
 using Erp.Data.Entities.MainModule;
 using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.Entities.SalesModule;
+using Erp.Service.Abstracts.MainModule;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Name.Infrastructure.Data
 {
-  public class ApplicationDBContext : IdentityDbContext<UserBase>
+  public class ApplicationDBContext : IdentityDbContext<UserBase, ApplicationRole, string>
   {
 
     //private readonly IEncryptionProvider _encryptionProvider;
+    //Aaa123@
+    private readonly ITenantService _tenantService;
+
+    public string? CurrentTenantId { get; set; }
     public ApplicationDBContext() { }
 
-    public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
+    public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options, ITenantService tenantService) : base(options)
     {
+      _tenantService = tenantService;
+      CurrentTenantId = _tenantService.TenantId;
+
 
       //_encryptionProvider = new GenerateEncryptionProvider("dthfhgwt365d765dhgfyt46cghfo97hgk05dhft46dc");
+
     }
 
     #region Dbsets
 
+
     /// -------------------Main Module-----------------------///
 
     public DbSet<UserBase> userBases { get; set; }
+
+    public DbSet<ApplicationRole> applicationRoles { get; set; }
+    //Without tenant id cause it is fixed for all
+    public DbSet<ApplicationClaim> applicationClaims { get; set; }
+
+    public DbSet<Company> companies { get; set; }
 
 
 
@@ -131,10 +152,33 @@ namespace Name.Infrastructure.Data
     // -------------------Finance Module-----------------------//
     #region FinanceDbsets
 
+    public DbSet<BankAccount> BankAccounts { get; set; }
+    public DbSet<Expense> Expenses { get; set; }
+    public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
+    public DbSet<Receipt> Receipts { get; set; }
+    public DbSet<ReceiptCategory> ReceiptCategories { get; set; }
+    public DbSet<Treasury> Treasuries { get; set; }
+
+    public DbSet<MultiAccExpenseItem> multiAccExpenseItems { get; set; }
+
+    public DbSet<MultiAccReceiptItem> multiAccReceiptItems { get; set; }
+
+
+
     #endregion
     // -------------------HumanResources Module-----------------------//
 
     #region HumanResources
+
+    public DbSet<Department> departments { get; set; }
+
+    public DbSet<EmploymentLevel> employmentLevels { get; set; }
+
+    public DbSet<EmploymentType> employmentTypes { get; set; }
+
+    public DbSet<JobType> jobTypes { get; set; }
+
+
 
 
     #endregion
@@ -148,15 +192,34 @@ namespace Name.Infrastructure.Data
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
       //optionsBuilder.UseSqlServer("Data Source=DESKTOP-30J4B23\\SQLEXPRESS;Initial Catalog= OnlineGym ;Integrated Security=True;Connect Timeout=100;Trust Server Certificate=True");
+
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
 
+      #region MainModule
+      // modelBuilder.Entity<Company>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<ApplicationRole>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      #endregion
+
       // -------------------Inventory Module-----------------------//
       #region Inventory
       // modelBuilder.UseEncryption(_encryptionProvider);
+
+      modelBuilder.Entity<Product>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<Category>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<Warehouse>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<StockTransaction>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<ReceivingVoucher>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<ReceivingVoucherItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<DeliveryVoucher>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<DeliveryVoucherItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<TransformVoucher>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<TransformVoucherItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+
       modelBuilder.Entity<Product>()
           .HasMany(p => p.StockTransactions)
           .WithOne(st => st.Product)
@@ -215,8 +278,30 @@ namespace Name.Infrastructure.Data
       #endregion
 
 
+      // -------------------Purchases Module-----------------------//
+
+      #region Purchases
+      modelBuilder.Entity<PurchaseInvoice>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<PurchaseInvoiceItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<PurchaseReturn>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<PurchaseReturnItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<DebitNote>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<DebitNoteItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<Supplier>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<PurchaseInoviceSettings>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+
+      #endregion
+
       // -------------------Accounts Module-----------------------//
       #region Accounts
+
+      modelBuilder.Entity<Account>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+
+      modelBuilder.Entity<CostCenter>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+
+      modelBuilder.Entity<JournalEntry>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<JournalEntryDetail>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+
       modelBuilder.Entity<Account>()
           .HasDiscriminator<string>("AccountType")
           .HasValue<PrimaryAccount>("Primary")
@@ -252,6 +337,11 @@ namespace Name.Infrastructure.Data
       // -------------------Customers Module-----------------------//
 
       #region Customers
+
+      modelBuilder.Entity<Customer>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+
+      modelBuilder.Entity<ContactList>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<CustomerClassification>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<Customer>()
           .HasDiscriminator<string>("CustomerType")
           .HasValue<CommercialCustomer>("Commercial")
@@ -262,13 +352,22 @@ namespace Name.Infrastructure.Data
       modelBuilder.Entity<ContactList>()
         .HasOne(jd => jd.Customer).WithMany(i => i.ContactLists)
         .HasForeignKey(jd => jd.CustomerId)
-        .OnDelete(DeleteBehavior.Restrict); // Prevents cascading delete
+        .OnDelete(DeleteBehavior.Cascade);
 
 
       #endregion
       // -------------------Sales Module-----------------------//
 
-
+      #region Sales
+      modelBuilder.Entity<Invoice>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<InvoiceItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<Quotation>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<QuotationItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<RecurringInvoice>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<RecurringInvoiceItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<CreditNote>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<CreditNoteItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<CustomerPayment>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
 
       modelBuilder.Entity<Invoice>().
           HasMany(po => po.Items).
@@ -316,6 +415,154 @@ namespace Name.Infrastructure.Data
         .WithMany(i => i.payments)
         .HasForeignKey(cp => cp.InvoiceId)
         .OnDelete(DeleteBehavior.Restrict);
+
+
+      #endregion
+
+
+      // -------------------Finance Module-----------------------//
+      #region Finance
+      modelBuilder.Entity<BankAccount>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<Expense>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<ExpenseCategory>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<Receipt>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<ReceiptCategory>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<Treasury>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<MultiAccExpenseItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<MultiAccReceiptItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+
+
+      modelBuilder.Entity<BankAccount>()
+        .HasMany(b => b.employeesWhoHaveDepositPermessions)
+        .WithMany(r => r.BankAccountDepositPermessions)
+        .UsingEntity(j => j.ToTable("BankAccountEmployeeDeposit"));
+
+      // Many-to-Many: BankAccount <-> Employee (Withdraw)
+      modelBuilder.Entity<BankAccount>()
+          .HasMany(b => b.employeesWhoHaveWithdrawPermessions)
+          .WithMany(r => r.BankAccountWithdrawPermessions)
+          .UsingEntity(j => j.ToTable("BankAccountEmployeeWithdraw"));
+
+
+      modelBuilder.Entity<BankAccount>()
+        .HasMany(b => b.RolesWhoHaveDepositPermessions)
+        .WithMany(r => r.BankAccountDepositPermessions)
+        .UsingEntity(j => j.ToTable("BankAccountDepositRoles"));
+
+      modelBuilder.Entity<BankAccount>()
+          .HasMany(b => b.RolesWhoHaveWithdrawPermessions)
+          .WithMany(r => r.BankAccountWithdrawPermessions)
+          .UsingEntity(j => j.ToTable("BankAccountWithdrawRoles"));
+
+
+      modelBuilder.Entity<Treasury>()
+        .HasMany(t => t.employeesWhoHaveDepositPermessions)
+        .WithMany(r => r.TreasuryDepositPermessions)
+        .UsingEntity(j => j.ToTable("TreasuryEmployeeDeposit"));
+
+      // Many-to-Many: Treasury <-> Employee (Withdraw)
+      modelBuilder.Entity<Treasury>()
+          .HasMany(t => t.employeesWhoHaveWithdrawPermessions)
+          .WithMany(r => r.TreasuryWithdrawPermessions)
+          .UsingEntity(j => j.ToTable("TreasuryEmployeeWithdraw"));
+
+
+      modelBuilder.Entity<Treasury>()
+        .HasMany(t => t.RolesWhoHaveDepositPermessions)
+        .WithMany(r => r.TreasuryDepositPermessions)
+        .UsingEntity(j => j.ToTable("TreasuryRoleDeposit"));
+
+      // Many-to-Many: Treasury <-> ApplicationRole (Withdraw)
+      modelBuilder.Entity<Treasury>()
+          .HasMany(t => t.RolesWhoHaveWithdrawPermessions)
+          .WithMany(r => r.TreasuryWithdrawPermessions)
+          .UsingEntity(j => j.ToTable("TreasuryRoleWithdraw"));
+
+
+
+      modelBuilder.Entity<Expense>()
+       .HasMany(s => s.CostCenters)
+       .WithMany(b => b.Expenses)
+       .UsingEntity<ExpenseCostCenter>(
+        j => j
+            .HasOne(sb => sb.CostCenter)
+            .WithMany(b => b.ExpenseCostCenters)
+            .HasForeignKey(sb => sb.CostCenterId),
+        j => j
+            .HasOne(sb => sb.Expense)
+            .WithMany(s => s.ExpenseCostCenters)
+            .HasForeignKey(sb => sb.ExpenseId),
+        j =>
+        {
+          j.HasKey(t => new { t.ExpenseId, t.CostCenterId });
+        }
+       );
+
+      modelBuilder.Entity<Receipt>()
+       .HasMany(s => s.CostCenters)
+       .WithMany(b => b.Receipts)
+       .UsingEntity<ReceiptCostCenter>(
+        j => j
+            .HasOne(sb => sb.CostCenter)
+            .WithMany(b => b.ReceiptCostCenters)
+            .HasForeignKey(sb => sb.CostCenterId),
+        j => j
+            .HasOne(sb => sb.receipt)
+            .WithMany(s => s.ReceiptCostCenters)
+            .HasForeignKey(sb => sb.ReceiptId),
+        j =>
+        {
+          j.HasKey(t => new { t.ReceiptId, t.CostCenterId });
+        }
+       );
+
+      modelBuilder.Entity<Expense>()
+        .HasOne(cp => cp.SubAccount)
+        .WithMany(i => i.expenses)
+        .HasForeignKey(cp => cp.SubAccountId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+
+      modelBuilder.Entity<Receipt>()
+       .HasOne(cp => cp.SubAccount)
+       .WithMany(i => i.receipts)
+       .HasForeignKey(cp => cp.SubAccountId)
+       .OnDelete(DeleteBehavior.Restrict);
+
+      #endregion
+
+      // -------------------HumanResources Module-----------------------//
+
+      #region HumanResources
+
+
+      #endregion
+
+    }
+
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+
+      foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().Where(e => e.State == EntityState.Added))
+      {
+        if (CurrentTenantId != null)
+        {
+
+          entry.Entity.TenantId = CurrentTenantId;
+
+        }
+      }
+      foreach (var entry in ChangeTracker.Entries<IMustHaveTenant>().Where(e => e.State == EntityState.Modified))
+      {
+        if (CurrentTenantId != null)
+        {
+
+          entry.Entity.TenantId = CurrentTenantId;
+
+        }
+      }
+      return base.SaveChangesAsync(cancellationToken);
     }
 
   }

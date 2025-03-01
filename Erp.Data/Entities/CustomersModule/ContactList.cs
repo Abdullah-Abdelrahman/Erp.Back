@@ -1,10 +1,11 @@
 using Erp.Data.Dto.Customer;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Erp.Data.Entities.CustomersModule
 {
   //قاءمه اتصال
-  public class ContactList
+  public class ContactList : IMustHaveTenant
   {
 
     public int ContactListId { get; set; }
@@ -20,9 +21,10 @@ namespace Erp.Data.Entities.CustomersModule
     public string? Email { get; set; }
 
     public int CustomerId { get; set; }
+    [JsonIgnore]
     [ForeignKey("CustomerId")]
     public Customer Customer { get; set; }
-
+    public string TenantId { get; set; } = null!;
 
     public ContactList(AddContactListDT0 addContactListDT0, int customerId)
     {

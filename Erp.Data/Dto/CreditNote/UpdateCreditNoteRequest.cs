@@ -20,7 +20,7 @@ namespace Erp.Data.Dto.CreditNote
 
   public class CreditNoteItemUpdateDT0
   {
-    public int CreditNoteItemId { get; set; }
+    public int? CreditNoteItemId { get; set; }
     public int CreditNoteId { get; set; }
     public int ProductId { get; set; }
     public int Quantity { get; set; }

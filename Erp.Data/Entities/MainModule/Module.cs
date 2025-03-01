@@ -11,6 +11,9 @@ namespace Erp.Data.Entities.MainModule
     public bool IsActive { get; set; } = true;
 
     public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
+
+    public ICollection<ApplicationClaim> ClaimList { get; set; } = new List<ApplicationClaim>();
   }
 
 }

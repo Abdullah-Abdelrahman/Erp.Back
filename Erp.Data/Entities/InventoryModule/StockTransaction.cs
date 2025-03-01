@@ -1,6 +1,6 @@
 namespace Erp.Data.Entities.InventoryModule
 {
-  public class StockTransaction
+  public class StockTransaction : IMustHaveTenant
   {
     public int StockTransactionId { get; set; }
     public string TransactionType { get; set; } = null!;
@@ -14,6 +14,8 @@ namespace Erp.Data.Entities.InventoryModule
 
     public int WarehouseId { get; set; }
     public Warehouse Warehouse { get; set; } = null!;
+    public string TenantId { get; set; } = null!;
+
   }
 
 }

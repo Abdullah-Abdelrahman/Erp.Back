@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.PurchasesModule
 {
-  public class DebitNoteItem
+  public class DebitNoteItem : IMustHaveTenant
   {
 
     public int DebitNoteItemId { get; set; }
@@ -21,5 +21,8 @@ namespace Erp.Data.Entities.PurchasesModule
     public decimal Tax { get; set; }
     public decimal UnitPrice { get; set; }
     public decimal TotalPrice => Quantity * UnitPrice;
+
+    public string TenantId { get; set; } = null!;
+
   }
 }

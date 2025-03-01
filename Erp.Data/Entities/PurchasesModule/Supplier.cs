@@ -1,6 +1,6 @@
 namespace Erp.Data.Entities.PurchasesModule
 {
-  public class Supplier
+  public class Supplier : IMustHaveTenant
   {
     public int SupplierId { get; set; }
     public string SupplierName { get; set; } = null!;
@@ -9,7 +9,7 @@ namespace Erp.Data.Entities.PurchasesModule
 
     // Navigation Properties
     public ICollection<PurchaseInvoice> PurchaseInvoices { get; set; } = new List<PurchaseInvoice>();
-
+    public string TenantId { get; set; } = null!;
   }
 
 }

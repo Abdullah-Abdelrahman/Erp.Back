@@ -40,7 +40,7 @@ namespace Erp.Data.Dto.RecurringInvoice
 
   public class RecurringInvoiceItemUpdateDT0
   {
-    public int RecurringInvoiceItemId { get; set; }
+    public int? RecurringInvoiceItemId { get; set; }
     public int RecurringInvoiceId { get; set; }
     public int ProductId { get; set; }
     public int Quantity { get; set; }

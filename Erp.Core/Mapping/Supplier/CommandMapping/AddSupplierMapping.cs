@@ -8,6 +8,8 @@ namespace Erp.Core.Mapping.Supplier
     {
       CreateMap<AddSupplierCommand, Entitis.PurchasesModule.Supplier>()
         .ForMember(destnation => destnation.Address, opt => opt.MapFrom(src => src.Address));
+
+
     }
   }
 }

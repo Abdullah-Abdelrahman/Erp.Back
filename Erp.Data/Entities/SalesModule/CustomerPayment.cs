@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.SalesModule
 {
-  public class CustomerPayment
+  public class CustomerPayment : IMustHaveTenant
   {
     [Key]
     public int Id { get; set; }
@@ -32,5 +32,8 @@ namespace Erp.Data.Entities.SalesModule
     //رقم تعريفي يصاحب عمليات السداد بأوراق الدفع (مثل الشيكات).
 
     public string? IDNumber { get; set; }
+
+    public string TenantId { get; set; } = null!;
+
   }
 }

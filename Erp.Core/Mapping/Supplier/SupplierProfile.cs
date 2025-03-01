@@ -7,7 +7,7 @@ namespace Erp.Core.Mapping.Supplier
     public SupplierProfile()
     {
       AddSupplierMapping();
-
+      EditSupplierMapping();
 
 
       GetSupplierByIdMapping();

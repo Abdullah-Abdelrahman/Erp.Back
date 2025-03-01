@@ -35,14 +35,18 @@ namespace Erp.Service.Implementations.SalesModule
       try
       {
         var newRecurringInvoice = await _RecurringInvoiceRepository.AddAsync(RecurringInvoice);
-
+        decimal total = 0;
         foreach (var item in RecurringInvoiceRequest.RecurringInvoiceItemDT0s)
         {
           var RecurringInvoiceItem = new RecurringInvoiceItem(item, newRecurringInvoice.Id);
 
-
+          total += RecurringInvoiceItem.Total;
           await _RecurringInvoiceItemRepository.AddAsync(RecurringInvoiceItem);
         }
+        newRecurringInvoice.Total = total;
+
+        await _RecurringInvoiceRepository.UpdateAsync(newRecurringInvoice);
+
 
 
 
@@ -156,8 +160,16 @@ namespace Erp.Service.Implementations.SalesModule
         {
           var RecurringInvoiceItem = new RecurringInvoiceItem(item);
 
+          if (item.RecurringInvoiceItemId != null)
+          {
+            await _RecurringInvoiceItemRepository.UpdateAsync(RecurringInvoiceItem);
 
-          await _RecurringInvoiceItemRepository.UpdateAsync(RecurringInvoiceItem);
+          }
+          else
+          {
+            await _RecurringInvoiceItemRepository.AddAsync(RecurringInvoiceItem);
+
+          }
         }
 
 

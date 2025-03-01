@@ -49,7 +49,21 @@ namespace Erp.Api.Controllers
 
       return NewResult(response);
     }
+    [HttpGet(Router.CostCenterRouter.GetPrimaryCostCenterList)]
+    public async Task<IActionResult> GetCostCentersList()
+    {
+      var response = await Mediator.Send(new GetPrimaryCostCentersListQuery());
 
+      return Ok(response);
+    }
+
+    [HttpGet(Router.CostCenterRouter.GetSecondaryCostCenterList)]
+    public async Task<IActionResult> GetSecondaryCostCentersList()
+    {
+      var response = await Mediator.Send(new GetSecondaryCostCentersListQuery());
+
+      return Ok(response);
+    }
 
     //if you dont need parent id you must send null
     [HttpPost(Router.CostCenterRouter.Create)]

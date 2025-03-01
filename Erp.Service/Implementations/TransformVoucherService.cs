@@ -1,6 +1,5 @@
 using Erp.Data.Dto.TransformVoucher;
 using Erp.Data.Dto.TransformVoucher.cs;
-using Erp.Data.Entities;
 using Erp.Data.Entities.InventoryModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
@@ -156,12 +155,21 @@ namespace Erp.Service.Implementations
           var TransformVoucherItem = new TransformVoucherItem()
           {
             transformVoucherId = TransformVoucherRequest.TransformVoucherId,
-            TransformVoucherItemId = item.TransformVoucherItemId,
             Quantity = item.Quantity,
             ProductId = item.ProductId
           };
+          if (item.TransformVoucherItemId != null)
+          {
+            TransformVoucherItem.TransformVoucherItemId = (int)item.TransformVoucherItemId;
+            await _TransformVoucherItemRepository.UpdateAsync(TransformVoucherItem);
 
-          await _TransformVoucherItemRepository.UpdateAsync(TransformVoucherItem);
+          }
+          else
+          {
+            await _TransformVoucherItemRepository.AddAsync(TransformVoucherItem);
+
+          }
+
         }
 
 

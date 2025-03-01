@@ -24,6 +24,21 @@ namespace Erp.Api.Controllers
       return Ok(response);
     }
 
+    [HttpGet(Router.AccountRouter.GetPrimaryAccountsList)]
+    public async Task<IActionResult> GetPrimaryAccountsList()
+    {
+      var response = await Mediator.Send(new GetPrimaryAccountsListQuery());
+
+      return Ok(response);
+    }
+
+    [HttpGet(Router.AccountRouter.GetSecondaryAccountsList)]
+    public async Task<IActionResult> GetSecondaryAccountsList()
+    {
+      var response = await Mediator.Send(new GetSecondaryAccountsListQuery());
+
+      return Ok(response);
+    }
 
     [HttpGet(Router.AccountRouter.GetAccountTypeById)]
     public async Task<IActionResult> GetAccountTypeById(int Id)

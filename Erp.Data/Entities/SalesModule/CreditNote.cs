@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Erp.Data.Entities.SalesModule
 {
   //اشعار داءن
-  public class CreditNote
+  public class CreditNote : IMustHaveTenant
   {
     [Key]
     public int CreditNoteID { get; set; }
@@ -33,6 +33,7 @@ namespace Erp.Data.Entities.SalesModule
 
     public ICollection<CreditNoteItem> Items { get; set; } = new List<CreditNoteItem>();
 
+    public string TenantId { get; set; } = null!;
 
     public CreditNote(AddCreditNoteRequest Request)
     {

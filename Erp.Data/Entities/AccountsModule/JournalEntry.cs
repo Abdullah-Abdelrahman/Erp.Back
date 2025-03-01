@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.AccountsModule
 {
-  public class JournalEntry
+  public class JournalEntry : IMustHaveTenant
   {
     [Key]
     public int JournalEntryID { get; set; }
@@ -22,6 +22,7 @@ namespace Erp.Data.Entities.AccountsModule
 
     public ICollection<JournalEntryDetail> details { get; set; } = new List<JournalEntryDetail>();
 
+    public string TenantId { get; set; } = null!;
 
   }
 }

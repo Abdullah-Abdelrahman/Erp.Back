@@ -35,14 +35,19 @@ namespace Erp.Service.Implementations.SalesModule
       try
       {
         var newCreditNote = await _CreditNoteRepository.AddAsync(CreditNote);
-
+        decimal total = 0;
         foreach (var item in CreditNoteRequest.CreditNoteItemDT0s)
         {
           var CreditNoteItem = new CreditNoteItem(item, newCreditNote.CreditNoteID);
-
+          total += CreditNoteItem.Total;
 
           await _CreditNoteItemRepository.AddAsync(CreditNoteItem);
         }
+
+        newCreditNote.Total = total;
+
+        await _CreditNoteRepository.UpdateAsync(newCreditNote);
+
 
 
 
@@ -51,10 +56,10 @@ namespace Erp.Service.Implementations.SalesModule
         return MessageCenter.CrudMessage.Success;
 
       }
-      catch
+      catch (Exception ex)
       {
         await transact.RollbackAsync();
-        return MessageCenter.CrudMessage.Falied;
+        return MessageCenter.CrudMessage.Falied + ex.Message;
       }
 
     }
@@ -135,7 +140,7 @@ namespace Erp.Service.Implementations.SalesModule
     {
       var CreditNote = new CreditNote(CreditNoteRequest);
 
-
+      decimal total = 0;
 
       var transact = _CreditNoteRepository.BeginTransaction();
       try
@@ -146,12 +151,22 @@ namespace Erp.Service.Implementations.SalesModule
         {
           var CreditNoteItem = new CreditNoteItem(item);
 
+          total += CreditNoteItem.Total;
+          if (item.CreditNoteItemId != null)
+          {
+            await _CreditNoteItemRepository.UpdateAsync(CreditNoteItem);
 
-          await _CreditNoteItemRepository.UpdateAsync(CreditNoteItem);
+          }
+          else
+          {
+            await _CreditNoteItemRepository.AddAsync(CreditNoteItem);
+
+          }
         }
 
 
-
+        CreditNote.Total = total;
+        await _CreditNoteRepository.UpdateAsync(CreditNote);
 
         await transact.CommitAsync();
         return MessageCenter.CrudMessage.Success;

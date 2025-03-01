@@ -1,0 +1,13 @@
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\bin\Release\net8.0\Erp.Data.deps.json
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\bin\Release\net8.0\Erp.Data.dll
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\bin\Release\net8.0\Erp.Data.pdb
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\obj\Release\net8.0\Erp.Data.csproj.AssemblyReference.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\obj\Release\net8.0\Erp.Data.GeneratedMSBuildEditorConfig.editorconfig
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\obj\Release\net8.0\Erp.Data.AssemblyInfoInputs.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\obj\Release\net8.0\Erp.Data.AssemblyInfo.cs
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\obj\Release\net8.0\Erp.Data.csproj.CoreCompileInputs.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\obj\Release\net8.0\Erp.Data.sourcelink.json
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\obj\Release\net8.0\Erp.Data.dll
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\obj\Release\net8.0\refint\Erp.Data.dll
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\obj\Release\net8.0\Erp.Data.pdb
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Data\obj\Release\net8.0\ref\Erp.Data.dll

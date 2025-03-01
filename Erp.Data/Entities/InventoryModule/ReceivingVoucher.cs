@@ -1,9 +1,9 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Erp.Data.Entities.PurchasesModule;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.InventoryModule
 {
-  public class ReceivingVoucher
+  public class ReceivingVoucher : IMustHaveTenant
   {
     public int ReceivingVoucherId { get; set; }
     public DateTime ReceivingDate { get; set; } = DateTime.UtcNow;
@@ -21,6 +21,9 @@ namespace Erp.Data.Entities.InventoryModule
 
     // Navigation Property
     public ICollection<ReceivingVoucherItem> receivingVoucherItems { get; set; } = new List<ReceivingVoucherItem>();
+
+    public string TenantId { get; set; } = null!;
+
   }
 
 }

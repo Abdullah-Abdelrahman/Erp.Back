@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.SalesModule
 {
-  public class RecurringInvoice
+  public class RecurringInvoice : IMustHaveTenant
   {
     [Key]
     public int Id { get; set; }
@@ -45,9 +45,10 @@ namespace Erp.Data.Entities.SalesModule
     public decimal Tax { get; set; }
     public decimal Discount { get; set; }
 
-    public decimal Total { get; set; }
+    public decimal Total { get; set; } = 0;
     public ICollection<RecurringInvoiceItem> Items { get; set; } = new List<RecurringInvoiceItem>();
 
+    public string TenantId { get; set; } = null!;
 
     public RecurringInvoice(AddRecurringInvoiceRequest Request)
     {

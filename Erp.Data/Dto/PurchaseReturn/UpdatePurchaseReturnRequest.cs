@@ -14,7 +14,7 @@ namespace Erp.Data.Dto.PurchaseReturn
 
   public class PurchaseReturnItemUpdateDT0
   {
-    public int PurchaseReturnItemId { get; set; }
+    public int? PurchaseReturnItemId { get; set; }
     public int ProductId { get; set; }
     public int Quantity { get; set; }
     public decimal discount { get; set; }

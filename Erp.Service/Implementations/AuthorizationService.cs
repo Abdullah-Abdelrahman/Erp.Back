@@ -1,8 +1,8 @@
+using Erp.Data.Entities.HumanResources.Staff;
 using Erp.Data.Entities.MainModule;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Name.Data.Dto;
-using Name.Data.Helpers;
 using Name.Infrastructure.Data;
 using Name.Service.Abstracts;
 using System.Security.Claims;
@@ -11,17 +11,17 @@ namespace Name.Service.Implementations
 {
   internal class AuthorizationService : IAuthorizationService
   {
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly UserManager<UserBase> _userManager;
     private readonly ApplicationDBContext _dbContext;
-    public AuthorizationService(RoleManager<IdentityRole> roleManager, UserManager<UserBase> userManager, ApplicationDBContext dbContext)
+    public AuthorizationService(RoleManager<ApplicationRole> roleManager, UserManager<UserBase> userManager, ApplicationDBContext dbContext)
     {
       _userManager = userManager;
       _roleManager = roleManager;
       _dbContext = dbContext;
     }
 
-    public async Task<string> DeleteRoleAsync(IdentityRole role)
+    public async Task<string> DeleteRoleAsync(ApplicationRole role)
     {
 
       var result = await _roleManager.DeleteAsync(role);
@@ -40,12 +40,12 @@ namespace Name.Service.Implementations
       }
     }
 
-    public async Task<IdentityRole> GetRoleById(string id)
+    public async Task<ApplicationRole> GetRoleById(string id)
     {
       return await _roleManager.FindByIdAsync(id);
     }
 
-    public Task<List<IdentityRole>> GetRolesList()
+    public Task<List<ApplicationRole>> GetRolesList()
     {
       var roles = _roleManager.Roles;
 
@@ -156,20 +156,20 @@ namespace Name.Service.Implementations
       //Get USer Claims
       var userClaims = await _userManager.GetClaimsAsync(user); //edit
                                                                 //create edit get print
-      foreach (var claim in ClaimsStore.claims)
-      {
-        var userclaim = new UserClaim();
-        userclaim.Type = claim.Type;
-        if (userClaims.Any(x => x.Type == claim.Type))
-        {
-          userclaim.Value = true;
-        }
-        else
-        {
-          userclaim.Value = false;
-        }
-        usercliamsList.Add(userclaim);
-      }
+                                                                //foreach (var claim in ClaimsStore.claims)
+                                                                //{
+                                                                //  var userclaim = new UserClaim();
+                                                                //  userclaim.Type = claim.Type;
+                                                                //  if (userClaims.Any(x => x.Type == claim.Type))
+                                                                //  {
+                                                                //    userclaim.Value = true;
+                                                                //  }
+                                                                //  else
+                                                                //  {
+                                                                //    userclaim.Value = false;
+                                                                //  }
+                                                                //  usercliamsList.Add(userclaim);
+                                                                //}
       response.userClaims = usercliamsList;
       //return Result
       return response;

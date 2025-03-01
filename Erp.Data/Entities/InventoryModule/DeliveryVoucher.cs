@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.InventoryModule
 {
-  public class DeliveryVoucher
+  public class DeliveryVoucher : IMustHaveTenant
   {
     public int DeliveryVoucherId { get; set; }
     public DateTime DeliveryDate { get; set; } = DateTime.UtcNow;
@@ -16,6 +16,9 @@ namespace Erp.Data.Entities.InventoryModule
 
     // Navigation Property
     public ICollection<DeliveryVoucherItem> deliveryVoucherItems { get; set; } = new List<DeliveryVoucherItem>();
+    public string TenantId { get; set; } = null!;
+
+
   }
 
 }

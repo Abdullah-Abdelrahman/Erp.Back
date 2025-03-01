@@ -24,5 +24,7 @@ namespace Erp.Service.Abstracts.CustomersModule
     Task<string> GetCustomerTypeByIdAsync(int CustomerId);
 
     Task<Customer?> GetCustomerByIdAsync(int id);
+
+    Task<List<GetCustomerListResponse>> GetCustomerListAsync();
   }
 }

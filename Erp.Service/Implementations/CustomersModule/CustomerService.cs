@@ -56,7 +56,7 @@ IContactListRepository contactListRepository)
         {
           var contactList = new ContactList(item, CustomerId);
 
-          await _contactListRepository.AddContactListAsync(contactList);
+          await _contactListRepository.AddAsync(contactList);
         }
         return MessageCenter.CrudMessage.Success;
       }
@@ -132,15 +132,17 @@ IContactListRepository contactListRepository)
         var Customer = await _CustomerRepository.GetCustomerByIdAsync(id);
         if (Customer != null)
         {
+
+
           await _CustomerRepository.DeleteAsync(Customer);
           return MessageCenter.CrudMessage.Success;
 
         }
         return MessageCenter.CrudMessage.DoesNotExist;
       }
-      catch
+      catch (Exception ex)
       {
-        return MessageCenter.CrudMessage.Falied;
+        return MessageCenter.CrudMessage.Falied + ex.InnerException;
       }
     }
 
@@ -171,8 +173,9 @@ IContactListRepository contactListRepository)
     {
       try
       {
-        var result = await _IndividualCustomerRepository.GetTableNoTracking().Where(x => x.CustomerId == id).Include(c => c.ContactLists).SingleOrDefaultAsync();
+        var result = await _IndividualCustomerRepository.GetTableNoTracking().Where(x => x.CustomerId == id).SingleOrDefaultAsync();
 
+        result.ContactLists = await _contactListRepository.GetTableAsTracking().Where(x => x.CustomerId == result.CustomerId).ToListAsync();
 
 
         return result;
@@ -187,6 +190,24 @@ IContactListRepository contactListRepository)
     public async Task<Customer?> GetCustomerByIdAsync(int id)
     {
       return await _CustomerRepository.GetByIdAsync(id);
+    }
+
+    public async Task<List<GetCustomerListResponse>> GetCustomerListAsync()
+    {
+      var customers = _CustomerRepository.GetTableNoTracking().ToList();
+
+      var dtoList = new List<GetCustomerListResponse>();
+
+      dtoList.AddRange(customers.Select(x => new GetCustomerListResponse()
+      {
+        CustomerId = x.CustomerId,
+        Email = x.Email,
+        PhoneNumber = x.PhoneNumber,
+        ClassificationId = x.ClassificationId,
+
+      }));
+
+      return dtoList;
     }
   }
 }

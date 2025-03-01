@@ -27,7 +27,7 @@ namespace Erp.Data.Dto.Invoice
 
   public class InvoiceItemUpdateDT0
   {
-    public int InvoiceItemId { get; set; }
+    public int? InvoiceItemId { get; set; }
     public int InvoiceId { get; set; }
     public int ProductId { get; set; }
     public int Quantity { get; set; }

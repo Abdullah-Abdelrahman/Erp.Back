@@ -2,21 +2,28 @@ using Erp.Data.Entities.InventoryModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
 using Erp.Service.Abstracts;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Name.Service.Abstracts;
 
 namespace Erp.Service.Implementations
 {
   public class CategoryService : ICategoryService
   {
     private readonly ICategoryRepository _categoryRepository;
+    private readonly IFileService _FileService;
 
 
-    public CategoryService(ICategoryRepository categoryRepository)
+    public CategoryService(ICategoryRepository categoryRepository, IFileService fileService)
     {
       _categoryRepository = categoryRepository;
+      _FileService = fileService;
     }
-    public async Task<string> AddCategoryAsync(Category Category)
+    public async Task<string> AddCategoryAsync(Category Category, IFormFile? ImageFile,
+      string? webRootPath)
     {
 
+      Category.ImagePath = (await _FileService.UploadFile(ImageFile, webRootPath));
       var newCategory = await _categoryRepository.AddAsync(Category);
       if (newCategory != null)
       {
@@ -44,14 +51,18 @@ namespace Erp.Service.Implementations
 
     public async Task<Category> GetCategoryByIdAsync(int id)
     {
-      var Category = _categoryRepository.GetTableNoTracking().Where(x => x.CategoryId == id).SingleOrDefault();
+      var Category = await _categoryRepository.GetTableNoTracking().Where(x => x.CategoryId == id).SingleOrDefaultAsync();
+      if (Category != null)
+      {
+        Category.ImageFile = await _FileService.GetFileAsync(Category.ImagePath);
 
+      }
       return Category;
     }
 
     public async Task<List<Category>> GetCategorysListAsync()
     {
-      var Categorys = _categoryRepository.GetTableNoTracking().ToList();
+      var Categorys = await _categoryRepository.GetTableNoTracking().ToListAsync();
 
       return Categorys;
     }
@@ -67,10 +78,10 @@ namespace Erp.Service.Implementations
         return MessageCenter.CrudMessage.Success;
 
       }
-      catch
+      catch (Exception ex)
       {
         await transact.RollbackAsync();
-        return MessageCenter.CrudMessage.Falied;
+        return MessageCenter.CrudMessage.Falied + ex.Message;
       }
     }
   }

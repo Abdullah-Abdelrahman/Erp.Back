@@ -7,9 +7,14 @@ using Name.Core.Bases;
 
 namespace Erp.Core.Features.CostCenter.Queries.Handlers
 {
-  public class CostCenterQueryHandler : ResponseHandler, IRequestHandler<GetMainCostCentersListQuery, Response<List<GetPrimaryCostCenterByIdResult>>>, IRequestHandler<GetPrimaryCostCenterByIdQuery, Response<GetPrimaryCostCenterByIdResult>>,
+  public class CostCenterQueryHandler : ResponseHandler,
+    IRequestHandler<GetMainCostCentersListQuery, Response<List<GetPrimaryCostCenterByIdResult>>>, IRequestHandler<GetPrimaryCostCenterByIdQuery, Response<GetPrimaryCostCenterByIdResult>>,
     IRequestHandler<GetCostCenterTypeByIdQuery, Response<string>>,
-    IRequestHandler<GetSecondaryCostCenterByIdQuery, Response<GetSecondaryCostCenterByIdResult>>
+    IRequestHandler<GetSecondaryCostCenterByIdQuery, Response<GetSecondaryCostCenterByIdResult>>,
+    IRequestHandler<GetPrimaryCostCentersListQuery, Response<List<GetPrimaryCostCenterByIdResult>>>,
+    IRequestHandler<GetSecondaryCostCentersListQuery, Response<List<GetSecondaryCostCenterByIdResult>>>
+
+
   {
     #region Fields
     private readonly ICostCenterService _CostCenterService;
@@ -61,6 +66,20 @@ namespace Erp.Core.Features.CostCenter.Queries.Handlers
       }
 
       var result = _mapper.Map<GetSecondaryCostCenterByIdResult>(secondaryCostCenter);
+      return Success(result);
+    }
+
+    public async Task<Response<List<GetPrimaryCostCenterByIdResult>>> Handle(GetPrimaryCostCentersListQuery request, CancellationToken cancellationToken)
+    {
+      var primary = await _CostCenterService.GetPrimaryCostCenterListAsync();
+      var result = _mapper.Map<List<GetPrimaryCostCenterByIdResult>>(primary);
+      return Success(result);
+    }
+
+    public async Task<Response<List<GetSecondaryCostCenterByIdResult>>> Handle(GetSecondaryCostCentersListQuery request, CancellationToken cancellationToken)
+    {
+      var SecondaryCostCenters = await _CostCenterService.GetSecondaryCostCenterListAsync();
+      var result = _mapper.Map<List<GetSecondaryCostCenterByIdResult>>(SecondaryCostCenters);
       return Success(result);
     }
   }

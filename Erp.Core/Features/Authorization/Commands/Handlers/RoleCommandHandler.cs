@@ -1,4 +1,5 @@
 using AutoMapper;
+using Erp.Data.Entities.HumanResources.Staff;
 using Erp.Data.MetaData;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -15,12 +16,12 @@ namespace Name.Core.Features.Authorization.Commands.Handlers
 
   {
     private readonly IMapper _mapper;
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly RoleManager<ApplicationRole> _roleManager;
 
     private readonly IAuthorizationService _authorizationService;
     #region ctor
     public RoleCommandHandler(IMapper mapper,
-        RoleManager<IdentityRole> roleManager,
+        RoleManager<ApplicationRole> roleManager,
         IAuthorizationService authorizationService)
     {
       _roleManager = roleManager;
@@ -37,7 +38,7 @@ namespace Name.Core.Features.Authorization.Commands.Handlers
 
     public async Task<Response<string>> Handle(AddRoleCommand request, CancellationToken cancellationToken)
     {
-      var result = await _roleManager.CreateAsync(new IdentityRole() { Name = request.RoleName });
+      var result = await _roleManager.CreateAsync(new ApplicationRole() { Name = request.RoleName });
 
       if (result.Succeeded)
       {

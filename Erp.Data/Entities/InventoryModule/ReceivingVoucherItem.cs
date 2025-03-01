@@ -1,6 +1,6 @@
 namespace Erp.Data.Entities.InventoryModule
 {
-  public class ReceivingVoucherItem
+  public class ReceivingVoucherItem : IMustHaveTenant
   {
     public int ReceivingVoucherItemId { get; set; }
     public int Quantity { get; set; }
@@ -13,6 +13,8 @@ namespace Erp.Data.Entities.InventoryModule
 
     public int ProductId { get; set; }
     public Product Product { get; set; } = null!;
+    public string TenantId { get; set; } = null!;
+
   }
 
 }

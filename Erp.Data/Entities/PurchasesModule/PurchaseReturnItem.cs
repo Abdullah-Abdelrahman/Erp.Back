@@ -2,7 +2,7 @@ using Erp.Data.Entities.InventoryModule;
 
 namespace Erp.Data.Entities.PurchasesModule
 {
-  public class PurchaseReturnItem
+  public class PurchaseReturnItem : IMustHaveTenant
   {
     public int PurchaseReturnItemId { get; set; }
     public int PurchaseReturnId { get; set; }
@@ -16,6 +16,8 @@ namespace Erp.Data.Entities.PurchasesModule
     public int Quantity { get; set; }
     public decimal UnitPrice { get; set; }
     public decimal TotalPrice { get; set; }
+    public string TenantId { get; set; } = null!;
+
 
   }
 }

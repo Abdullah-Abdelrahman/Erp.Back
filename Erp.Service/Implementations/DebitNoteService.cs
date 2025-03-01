@@ -1,5 +1,4 @@
 using Erp.Data.Dto.DebitNote;
-using Erp.Data.Entities;
 using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
@@ -158,13 +157,22 @@ namespace Erp.Service.Implementations
           var DebitNoteItem = new DebitNoteItem()
           {
             DebitNoteId = DebitNoteRequest.DebitNoteId,
-            DebitNoteItemId = item.DebitNoteItemId,
             Quantity = item.Quantity,
             UnitPrice = item.UnitPrice,
             ProductId = item.ProductId
           };
+          if (item.DebitNoteItemId != null)
+          {
+            DebitNoteItem.DebitNoteItemId = (int)item.DebitNoteItemId;
+            await _DebitNoteItemRepository.UpdateAsync(DebitNoteItem);
 
-          await _DebitNoteItemRepository.UpdateAsync(DebitNoteItem);
+          }
+          else
+          {
+            await _DebitNoteItemRepository.AddAsync(DebitNoteItem);
+
+          }
+
         }
 
 

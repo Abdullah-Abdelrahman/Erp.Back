@@ -1,8 +1,9 @@
+using Erp.Data.Entities.Finance;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.AccountsModule
 {
-  public class Account
+  public class Account : IMustHaveTenant
   {
     public int AccountID { get; set; }
 
@@ -27,7 +28,11 @@ namespace Erp.Data.Entities.AccountsModule
     [ForeignKey("ParentAccountID")]
     public Account? ParentAccount { get; set; }
 
+    public ICollection<Expense> expenses { get; set; } = new List<Expense>();
 
+    public ICollection<Receipt> receipts { get; set; } = new List<Receipt>();
+
+    public string TenantId { get; set; } = null!;
   }
   public enum AccountType
   {

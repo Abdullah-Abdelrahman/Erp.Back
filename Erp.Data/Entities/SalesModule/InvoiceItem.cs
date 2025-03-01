@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.SalesModule
 {
-  public class InvoiceItem
+  public class InvoiceItem : IMustHaveTenant
   {
     [Key]
     public int InvoiceItemID { get; set; }
@@ -32,7 +32,8 @@ namespace Erp.Data.Entities.SalesModule
 
     public decimal Discount { get; set; } = 0;
     public decimal Tax { get; set; } = 0;
-    public decimal Total => (UnitPrice * Quantity) - Discount + Tax;
+    public decimal Total { get; set; }
+    public string TenantId { get; set; } = null!;
 
     public InvoiceItem(InvoiceItemDT0 itemDT0, int invoiceID)
     {
@@ -43,13 +44,17 @@ namespace Erp.Data.Entities.SalesModule
       UnitPrice = itemDT0.UnitPrice;
       Discount = itemDT0.discount;
       Tax = itemDT0.Tax;
-
+      Total = (itemDT0.UnitPrice * itemDT0.Quantity) - itemDT0.discount + itemDT0.Tax;
 
     }
 
     public InvoiceItem(InvoiceItemUpdateDT0 itemDT0)
     {
-      InvoiceItemID = itemDT0.InvoiceItemId;
+      if (itemDT0.InvoiceItemId != null)
+      {
+        InvoiceItemID = (int)itemDT0.InvoiceItemId;
+
+      }
       InvoiceID = itemDT0.InvoiceId;
       productID = itemDT0.ProductId;
       Description = itemDT0.Description;
@@ -57,6 +62,7 @@ namespace Erp.Data.Entities.SalesModule
       UnitPrice = itemDT0.UnitPrice;
       Discount = itemDT0.discount;
       Tax = itemDT0.Tax;
+      Total = (itemDT0.UnitPrice * itemDT0.Quantity) - itemDT0.discount + itemDT0.Tax;
     }
     public InvoiceItem()
     {

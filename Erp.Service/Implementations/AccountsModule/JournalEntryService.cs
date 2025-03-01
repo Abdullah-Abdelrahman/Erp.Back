@@ -154,14 +154,24 @@ namespace Erp.Service.Implementations.AccountsModule
           var JournalEntryDetail = new JournalEntryDetail()
           {
             JournalEntryID = JournalEntryRequest.JournalEntryID,
-            JournalEntryDetailID = Detail.JournalEntryDetailID,
             AccountID = Detail.AccountID,
             CostCenterId = Detail.CostCenterId,
             Credit = Detail.Credit,
             Debit = Detail.Debit
           };
 
-          await _JournalEntryDetailRepository.UpdateAsync(JournalEntryDetail);
+          if (Detail.JournalEntryDetailID != null)
+          {
+            JournalEntryDetail.JournalEntryDetailID = (int)Detail.JournalEntryDetailID;
+            await _JournalEntryDetailRepository.UpdateAsync(JournalEntryDetail);
+
+          }
+          else
+          {
+            await _JournalEntryDetailRepository.AddAsync(JournalEntryDetail);
+
+          }
+
         }
 
 

@@ -6,7 +6,7 @@ using Name.Data.MetaData;
 
 namespace Erp.Api.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("api/Inventory/[controller]")]
   [ApiController]
   public class CategoryController : AppControllerBase
 
@@ -23,7 +23,7 @@ namespace Erp.Api.Controllers
     //[Authorize(Policy = "CreateCategory")]
     public async Task<IActionResult> CreateCategory([FromForm] AddCategoryCommand command)
     {
-
+      command.WebRootPath = _webHost.ContentRootPath;
       var response = await Mediator.Send(command);
 
       return NewResult(response);

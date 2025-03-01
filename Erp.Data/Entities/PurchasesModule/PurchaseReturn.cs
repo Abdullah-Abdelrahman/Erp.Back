@@ -4,7 +4,7 @@ namespace Erp.Data.Entities.PurchasesModule
 {
 
 
-  public class PurchaseReturn
+  public class PurchaseReturn : IMustHaveTenant
   {
     public int PurchaseReturnId { get; set; }
     public DateTime ReturnDate { get; set; } = DateTime.UtcNow;
@@ -17,6 +17,9 @@ namespace Erp.Data.Entities.PurchasesModule
     public Supplier supplier { get; set; }
 
     public ICollection<PurchaseReturnItem> Items { get; set; } = new List<PurchaseReturnItem>();
+
+    public string TenantId { get; set; } = null!;
+
   }
 
 }

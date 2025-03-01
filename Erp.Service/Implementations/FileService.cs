@@ -30,11 +30,11 @@ namespace Name.Service.Implementations
     }
 
     //Create an file for the image and creat an uniqe name for it
-    public async Task<string> UploadFile(IFormFile? file, string WebRootPath)
+    public async Task<string?> UploadFile(IFormFile? file, string WebRootPath)
     {
-      string uniqueFileName = null;
+      string? uniqueFileName = null;
 
-      if (file != null)
+      if (file != null && WebRootPath != null)
       {
         string uploadsFolder = Path.Combine(WebRootPath, "Files");
         uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;

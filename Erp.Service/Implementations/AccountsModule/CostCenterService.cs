@@ -153,5 +153,19 @@ namespace Erp.Service.Implementations.CostCentersModule
     {
       return await _CostCenterRepository.GetByIdAsync(id);
     }
+
+    public async Task<List<PrimaryCostCenter>> GetPrimaryCostCenterListAsync()
+    {
+      var result = await _primaryCostCenterRepository.GetTableNoTracking().ToListAsync();
+
+      return result;
+    }
+
+    public async Task<List<SecondaryCostCenter>> GetSecondaryCostCenterListAsync()
+    {
+      var result = await _secondaryCostCenterRepository.GetTableNoTracking().ToListAsync();
+
+      return result;
+    }
   }
 }

@@ -14,7 +14,7 @@ namespace Erp.Data.Dto.PurchaseInvoice
 
   public class PurchaseInvoiceItemUpdateDT0
   {
-    public int PurchaseInvoiceItemId { get; set; }
+    public int? PurchaseInvoiceItemId { get; set; }
     public int ProductId { get; set; }
     public int Quantity { get; set; }
     public decimal discount { get; set; }

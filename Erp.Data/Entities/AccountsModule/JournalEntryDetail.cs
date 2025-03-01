@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.AccountsModule
 {
-  public class JournalEntryDetail
+  public class JournalEntryDetail : IMustHaveTenant
   {
     [Key]
     public int JournalEntryDetailID { get; set; }
@@ -16,7 +16,7 @@ namespace Erp.Data.Entities.AccountsModule
 
     [ForeignKey("Account")]
     public int AccountID { get; set; }
-    public Account Account { get; set; }
+    public Account Account { get; set; } = null!;
 
     [Column(TypeName = "decimal(15, 2)")]
     public decimal Debit { get; set; } = 0.00M;
@@ -28,5 +28,8 @@ namespace Erp.Data.Entities.AccountsModule
     public int? CostCenterId { get; set; }
     [ForeignKey("CostCenterId")]
     public SecondaryCostCenter? CostCenter { get; set; }
+
+    public string TenantId { get; set; } = null!;
+
   }
 }

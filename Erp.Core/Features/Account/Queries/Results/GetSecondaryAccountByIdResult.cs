@@ -15,8 +15,11 @@ namespace Erp.Core.Features.Account.Queries.Results
 
     public bool IsActive { get; set; } = true;
 
-    public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+    public DateTime AccCreatedDate { get; set; }
 
+
+
+    // --- JournalEntry  ---- 
 
     public ICollection<Entitis.AccountsModule.JournalEntryDetail>? journalEntryDetails { get; set; } = new List<Entitis.AccountsModule.JournalEntryDetail>();
   }

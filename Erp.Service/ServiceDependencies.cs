@@ -2,11 +2,17 @@ using Erp.Service.Abstracts;
 using Erp.Service.Abstracts.AccountsModule;
 using Erp.Service.Abstracts.CostCentersModule;
 using Erp.Service.Abstracts.CustomersModule;
+using Erp.Service.Abstracts.Finance;
+using Erp.Service.Abstracts.HumanResources.OrganizationalStructure;
+using Erp.Service.Abstracts.MainModule;
 using Erp.Service.Abstracts.SalesModule;
 using Erp.Service.Implementations;
 using Erp.Service.Implementations.AccountsModule;
 using Erp.Service.Implementations.CostCentersModule;
 using Erp.Service.Implementations.CustomersModule;
+using Erp.Service.Implementations.Finance;
+using Erp.Service.Implementations.HumanResources.OrganizationalStructure;
+using Erp.Service.Implementations.MainModule;
 using Erp.Service.Implementations.SalesModule;
 using Microsoft.Extensions.DependencyInjection;
 using Name.Service.Abstracts;
@@ -91,6 +97,39 @@ namespace Name.Service
       services.AddTransient<IRecurringInvoiceItemService, RecurringInvoiceItemService>();
 
       services.AddTransient<ICustomerPaymentService, CustomerPaymentService>();
+
+
+
+
+      services.AddTransient<IBankAccountService, BankAccountService>();
+
+      services.AddTransient<ITreasuryService, TreasuryService>();
+
+
+      services.AddTransient<IExpenseCategoryService, ExpenseCategoryService>();
+
+      services.AddTransient<IReceiptCategoryService, ReceiptCategoryService>();
+
+      services.AddTransient<IExpenseService, ExpenseService>();
+
+      services.AddTransient<IReceiptService, ReceiptService>();
+
+
+
+
+      services.AddTransient<IDepartmentService, DepartmentService>();
+      services.AddTransient<IJobTypeService, JobTypeService>();
+      services.AddTransient<IEmploymentLevelService, EmploymentLevelService>();
+      services.AddTransient<IEmploymentTypeService, EmploymentTypeService>();
+
+
+
+
+      services.AddTransient<ICompanyService, CompanyService>();
+
+
+      //to make it the same instance for the life time of a request
+
       return services;
     }
   }

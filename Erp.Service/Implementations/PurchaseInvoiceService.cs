@@ -1,5 +1,4 @@
 using Erp.Data.Dto.PurchaseInvoice;
-using Erp.Data.Entities;
 using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
@@ -63,10 +62,10 @@ namespace Erp.Service.Implementations
         return MessageCenter.CrudMessage.Success;
 
       }
-      catch
+      catch (Exception ex)
       {
         await transact.RollbackAsync();
-        return MessageCenter.CrudMessage.Falied;
+        return MessageCenter.CrudMessage.Falied + ex.Message;
       }
 
     }
@@ -158,13 +157,21 @@ namespace Erp.Service.Implementations
           var PurchaseInvoiceItem = new PurchaseInvoiceItem()
           {
             PurchaseInvoiceId = PurchaseInvoiceRequest.PurchaseInvoiceId,
-            PurchaseInvoiceItemId = item.PurchaseInvoiceItemId,
             Quantity = item.Quantity,
             UnitPrice = item.UnitPrice,
             ProductId = item.ProductId
           };
+          if (item.PurchaseInvoiceItemId != null)
+          {
+            PurchaseInvoiceItem.PurchaseInvoiceItemId = (int)item.PurchaseInvoiceItemId;
+            await _PurchaseInvoiceItemRepository.UpdateAsync(PurchaseInvoiceItem);
 
-          await _PurchaseInvoiceItemRepository.UpdateAsync(PurchaseInvoiceItem);
+          }
+          else
+          {
+            await _PurchaseInvoiceItemRepository.AddAsync(PurchaseInvoiceItem);
+
+          }
         }
 
 
@@ -174,10 +181,10 @@ namespace Erp.Service.Implementations
         return MessageCenter.CrudMessage.Success;
 
       }
-      catch
+      catch (Exception ex)
       {
         await transact.RollbackAsync();
-        return MessageCenter.CrudMessage.Falied;
+        return MessageCenter.CrudMessage.Falied + ex.Message;
       }
     }
 

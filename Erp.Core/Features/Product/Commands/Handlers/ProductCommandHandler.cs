@@ -1,10 +1,10 @@
 using AutoMapper;
 using Erp.Core.Features.Product.Commands.Models;
+using Erp.Data.Dto.Product;
 using Erp.Data.MetaData;
 using Erp.Service.Abstracts;
 using MediatR;
 using Name.Core.Bases;
-using Entitis = Erp.Data.Entities;
 namespace Erp.Core.Features.Product.Commands.Handlers
 {
 
@@ -24,7 +24,7 @@ namespace Erp.Core.Features.Product.Commands.Handlers
 
     public async Task<Response<string>> Handle(AddProductCommand request, CancellationToken cancellationToken)
     {
-      var productMapper = _mapper.Map<Entitis.InventoryModule.Product>(request);
+      var productMapper = _mapper.Map<AddProductRequest>(request);
       var result = await _productService.AddProductAsync(productMapper, request.ImageFile, request.WebRootPath);
 
       if (result == MessageCenter.CrudMessage.Exist)
@@ -43,7 +43,7 @@ namespace Erp.Core.Features.Product.Commands.Handlers
 
     public async Task<Response<string>> Handle(EditProductCommand request, CancellationToken cancellationToken)
     {
-      var productMapper = _mapper.Map<Entitis.InventoryModule.Product>(request);
+      var productMapper = _mapper.Map<UpdateProductRequest>(request);
       var result = await _productService.UpdateAsync(productMapper);
 
       if (result == MessageCenter.CrudMessage.Success)

@@ -2,7 +2,7 @@ using Erp.Data.Entities.InventoryModule;
 
 namespace Erp.Data.Entities.PurchasesModule
 {
-  public class PurchaseInvoiceItem
+  public class PurchaseInvoiceItem : IMustHaveTenant
   {
     public int PurchaseInvoiceItemId { get; set; }
     public int PurchaseInvoiceId { get; set; }
@@ -18,5 +18,7 @@ namespace Erp.Data.Entities.PurchasesModule
     public decimal Tax { get; set; }
     public decimal UnitPrice { get; set; }
     public decimal TotalPrice => Quantity * UnitPrice;
+    public string TenantId { get; set; } = null!;
+
   }
 }

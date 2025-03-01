@@ -9,7 +9,9 @@ namespace Erp.Core.Features.Customer.Queries.Handlers
 {
   public class CustomerQueryHandler : ResponseHandler, IRequestHandler<GetCommercialCustomerByIdQuery, Response<GetCommercialCustomerByIdDto>>,
     IRequestHandler<GetCustomerTypeByIdQuery, Response<string>>,
-    IRequestHandler<GetIndividualCustomerByIdQuery, Response<GetIndividualCustomerByIdDto>>
+    IRequestHandler<GetIndividualCustomerByIdQuery, Response<GetIndividualCustomerByIdDto>>,
+    IRequestHandler<GetCustomerListQuery, Response<List<GetCustomerListResponse>>>
+
   {
     #region Fields
     private readonly ICustomerService _CustomerService;
@@ -57,6 +59,14 @@ namespace Erp.Core.Features.Customer.Queries.Handlers
 
       var result = _mapper.Map<GetIndividualCustomerByIdDto>(IndividualCustomer);
       return Success(result);
+    }
+
+    public async Task<Response<List<GetCustomerListResponse>>> Handle(GetCustomerListQuery request, CancellationToken cancellationToken)
+    {
+      var customers = await _CustomerService.GetCustomerListAsync();
+
+
+      return Success(customers);
     }
   }
 }

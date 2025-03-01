@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.MainModule
 {
-  public class UserBase : IdentityUser
+  public class UserBase : IdentityUser, IMustHaveTenant
   {
 
     public string Name { get; set; }
-
-    public int CompanyId { get; set; }
 
     public DateTime CreatedDate { get; set; }
 
@@ -15,6 +14,12 @@ namespace Erp.Data.Entities.MainModule
 
     //[EncryptColumn]
     public string? Code { get; set; }
+
+
+    public int CompanyId { get; set; }
+    [ForeignKey("CompanyId")]
+    public Company Company { get; set; }
+    public string TenantId { get; set; } = null!;
 
   }
 

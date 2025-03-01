@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.SalesModule
 {
-  public class RecurringInvoiceItem
+  public class RecurringInvoiceItem : IMustHaveTenant
   {
     [Key]
     public int ID { get; set; }
@@ -32,7 +32,10 @@ namespace Erp.Data.Entities.SalesModule
 
     public decimal Discount { get; set; } = 0;
     public decimal Tax { get; set; } = 0;
-    public decimal Total => (UnitPrice * Quantity) - Discount + Tax;
+    public decimal Total { get; set; } = 0;
+
+    public string TenantId { get; set; } = null!;
+
     public RecurringInvoiceItem(RecurringInvoiceItemDT0 itemDT0, int RecurringInvoiceItemID)
     {
       RInvoiceID = RecurringInvoiceItemID;
@@ -43,12 +46,17 @@ namespace Erp.Data.Entities.SalesModule
       Discount = itemDT0.discount;
       Tax = itemDT0.Tax;
 
+      Total = (itemDT0.UnitPrice * itemDT0.Quantity) - itemDT0.discount + itemDT0.Tax;
 
     }
 
     public RecurringInvoiceItem(RecurringInvoiceItemUpdateDT0 itemDT0)
     {
-      ID = itemDT0.RecurringInvoiceItemId;
+      if (itemDT0.RecurringInvoiceItemId != null)
+      {
+        ID = (int)itemDT0.RecurringInvoiceItemId;
+
+      }
       RInvoiceID = itemDT0.RecurringInvoiceId;
       productID = itemDT0.ProductId;
       Description = itemDT0.Description;
@@ -56,6 +64,8 @@ namespace Erp.Data.Entities.SalesModule
       UnitPrice = itemDT0.UnitPrice;
       Discount = itemDT0.discount;
       Tax = itemDT0.Tax;
+      Total = (itemDT0.UnitPrice * itemDT0.Quantity) - itemDT0.discount + itemDT0.Tax;
+
     }
 
     public RecurringInvoiceItem()

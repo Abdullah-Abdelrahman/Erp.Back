@@ -1,6 +1,6 @@
 namespace Erp.Data.Entities.PurchasesModule
 {
-  public class PurchaseInvoice
+  public class PurchaseInvoice : IMustHaveTenant
   {
     public int PurchaseInvoiceId { get; set; }
     public DateTime InvoiceDate { get; set; } = DateTime.UtcNow;
@@ -16,5 +16,7 @@ namespace Erp.Data.Entities.PurchasesModule
     public Supplier Supplier { get; set; }
 
     public ICollection<PurchaseInvoiceItem> Items { get; set; } = new List<PurchaseInvoiceItem>();
+    public string TenantId { get; set; } = null!;
+
   }
 }

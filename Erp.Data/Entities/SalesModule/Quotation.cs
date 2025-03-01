@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.SalesModule
 {
-  public class Quotation
+  public class Quotation : IMustHaveTenant
   {
     [Key]
     public int QuotationId { get; set; }
@@ -23,12 +23,12 @@ namespace Erp.Data.Entities.SalesModule
 
     public QuotationStatus Status { get; set; } = 0; // Pending, Approved, Rejected
 
-    public decimal TotalAmount { get; set; }
     public decimal TaxAmount { get; set; }
     public decimal Discount { get; set; }
-    public decimal GrandTotal { get; set; }
+    public decimal Total { get; set; }
 
     public ICollection<QuotationItem> Items { get; set; } = new List<QuotationItem>();
+    public string TenantId { get; set; } = null!;
 
     public Quotation(AddQuotationRequest QuotationRequest)
     {
@@ -37,7 +37,7 @@ namespace Erp.Data.Entities.SalesModule
       ExpiryDate = QuotationRequest.ExpiryDate;
       TaxAmount = QuotationRequest.Tax;
       Discount = QuotationRequest.Discount;
-      TotalAmount = QuotationRequest.GrandTotal;
+      Total = QuotationRequest.GrandTotal;
       Status = QuotationStatus.Pending;
 
     }
@@ -50,7 +50,7 @@ namespace Erp.Data.Entities.SalesModule
       ExpiryDate = QuotationRequest.ExpiryDate;
       TaxAmount = QuotationRequest.Tax;
       Discount = QuotationRequest.Discount;
-      TotalAmount = QuotationRequest.GrandTotal;
+      Total = QuotationRequest.GrandTotal;
       Status = QuotationRequest.Status;
     }
     public Quotation()

@@ -1,5 +1,4 @@
 using Erp.Data.Dto.DeliveryVoucher;
-using Erp.Data.Entities;
 using Erp.Data.Entities.InventoryModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
@@ -156,13 +155,21 @@ namespace Erp.Service.Implementations
           var DeliveryVoucherItem = new DeliveryVoucherItem()
           {
             deliveryVoucherId = DeliveryVoucherRequest.DeliveryVoucherId,
-            DeliveryVoucherItemId = item.DeliveryVoucherItemId,
             Quantity = item.Quantity,
             UnitPrice = item.UnitPrice,
             ProductId = item.ProductId
           };
+          if (item.DeliveryVoucherItemId != null)
+          {
+            DeliveryVoucherItem.DeliveryVoucherItemId = (int)item.DeliveryVoucherItemId;
+            await _DeliveryVoucherItemRepository.UpdateAsync(DeliveryVoucherItem);
 
-          await _DeliveryVoucherItemRepository.UpdateAsync(DeliveryVoucherItem);
+          }
+          else
+          {
+            await _DeliveryVoucherItemRepository.AddAsync(DeliveryVoucherItem);
+
+          }
         }
 
 

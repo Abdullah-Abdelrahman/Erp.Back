@@ -35,26 +35,28 @@ namespace Erp.Service.Implementations.SalesModule
       try
       {
         var newInvoice = await _InvoiceRepository.AddAsync(invoice);
-
+        decimal total = 0;
         foreach (var item in InvoiceRequest.InvoiceItemDT0s)
         {
           var InvoiceItem = new InvoiceItem(item, newInvoice.InvoiceID);
-
+          total += InvoiceItem.Total;
 
           await _InvoiceItemRepository.AddAsync(InvoiceItem);
         }
 
+        newInvoice.Total = total;
 
+        await _InvoiceRepository.UpdateAsync(newInvoice);
 
 
         await transact.CommitAsync();
         return MessageCenter.CrudMessage.Success;
 
       }
-      catch
+      catch (Exception ex)
       {
         await transact.RollbackAsync();
-        return MessageCenter.CrudMessage.Falied;
+        return MessageCenter.CrudMessage.Falied + ex.InnerException;
       }
 
     }
@@ -105,7 +107,8 @@ namespace Erp.Service.Implementations.SalesModule
         Quantity = x.Quantity,
         UnitPrice = x.UnitPrice,
         discount = x.Discount,
-        Tax = x.Tax
+        Tax = x.Tax,
+        TotalPrice = x.Total
 
       }));
 
@@ -146,15 +149,26 @@ namespace Erp.Service.Implementations.SalesModule
       {
         await _InvoiceRepository.UpdateAsync(Invoice);
 
+        decimal total = 0;
+
         foreach (var item in InvoiceRequest.InvoiceItems)
         {
           var InvoiceItem = new InvoiceItem(item);
+          total += InvoiceItem.Total;
+          if (item.InvoiceItemId != null)
+          {
+            await _InvoiceItemRepository.UpdateAsync(InvoiceItem);
 
+          }
+          else
+          {
+            await _InvoiceItemRepository.AddAsync(InvoiceItem);
 
-          await _InvoiceItemRepository.UpdateAsync(InvoiceItem);
+          }
         }
 
-
+        Invoice.Total = total;
+        await _InvoiceRepository.UpdateAsync(Invoice);
 
 
         await transact.CommitAsync();

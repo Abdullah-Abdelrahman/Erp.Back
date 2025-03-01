@@ -1,6 +1,6 @@
 namespace Erp.Data.Entities.PurchasesModule
 {
-  public class DebitNote
+  public class DebitNote : IMustHaveTenant
   {
     public int DebitNoteId { get; set; }
     public DateTime NoteDate { get; set; } = DateTime.UtcNow;
@@ -12,5 +12,8 @@ namespace Erp.Data.Entities.PurchasesModule
     public Supplier Supplier { get; set; }
 
     public ICollection<DebitNoteItem> Items { get; set; } = new List<DebitNoteItem>();
+
+    public string TenantId { get; set; } = null!;
+
   }
 }

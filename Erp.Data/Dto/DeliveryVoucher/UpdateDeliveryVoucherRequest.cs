@@ -14,7 +14,7 @@ namespace Erp.Data.Dto.DeliveryVoucher
 
   public class DeliveryVoucherItemUpdateDT0
   {
-    public int DeliveryVoucherItemId { get; set; }
+    public int? DeliveryVoucherItemId { get; set; }
     public int Quantity { get; set; }
     public decimal UnitPrice { get; set; }
     public decimal TotalPrice => Quantity * UnitPrice;

@@ -14,6 +14,12 @@ namespace Erp.Service.Abstracts.CostCentersModule
 
     Task<List<PrimaryCostCenter>> GetMainCostCenterListAsync();
 
+
+    Task<List<PrimaryCostCenter>> GetPrimaryCostCenterListAsync();
+
+    Task<List<SecondaryCostCenter>> GetSecondaryCostCenterListAsync();
+
+
     Task<string> UpdateCostCenterAsync(CostCenter CostCenter);
 
 

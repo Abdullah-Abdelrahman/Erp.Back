@@ -7,7 +7,7 @@ namespace Erp.Data.Entities.SalesModule
 {
 
   //الفاوتير العاديه والمرتجعه
-  public class Invoice
+  public class Invoice : IMustHaveTenant
   {
     [Key]
     public int InvoiceID { get; set; }
@@ -36,6 +36,7 @@ namespace Erp.Data.Entities.SalesModule
 
     public ICollection<InvoiceItem> Items { get; set; } = new List<InvoiceItem>();
     public ICollection<CustomerPayment> payments { get; set; } = new List<CustomerPayment>();
+    public string TenantId { get; set; } = null!;
 
     public Invoice(AddInvoiceRequest InvoiceRequest)
     {

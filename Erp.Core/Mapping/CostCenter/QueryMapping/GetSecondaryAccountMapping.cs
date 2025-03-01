@@ -8,7 +8,8 @@ namespace Erp.Core.Mapping.CostCenter
     public void GetSecondaryCostCenterMapping()
     {
       CreateMap<SecondaryCostCenter, GetSecondaryCostCenterByIdResult>()
-                .ForMember(dest => dest.journalEntryDetails, opt => opt.MapFrom(src => src.journalEntryDetails));
+                .ForMember(dest => dest.journalEntryDetails, opt => opt.MapFrom(src => src.journalEntryDetails)).
+                ForMember(dest => dest.CostCenterName, opt => opt.MapFrom(src => src.Name));
     }
   }
 }

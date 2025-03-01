@@ -1,14 +1,15 @@
 using Erp.Data.Entities.AccountsModule;
 using MediatR;
 using Name.Core.Bases;
+using System.ComponentModel.DataAnnotations;
 
 namespace Erp.Core.Features.CostCenter.Commands.Models
 {
   public class AddCostCenterCommand : IRequest<Response<string>>
   {
 
-
-    public string CostCenterName { get; set; } = string.Empty;
+    [Required]
+    public string CostCenterName { get; set; }
 
     //Primary,Secondary
     public PrimaryOrSecondary PrimaryOrSecondary { get; set; }

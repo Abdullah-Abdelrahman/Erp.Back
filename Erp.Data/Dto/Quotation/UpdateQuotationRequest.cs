@@ -26,7 +26,7 @@ namespace Erp.Data.Dto.Quotation
 
   public class QuotationItemUpdateDT0
   {
-    public int QuotationItemId { get; set; }
+    public int? QuotationItemId { get; set; }
     public int QuotationId { get; set; }
     public int ProductId { get; set; }
     public int Quantity { get; set; }

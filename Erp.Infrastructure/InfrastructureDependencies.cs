@@ -4,12 +4,22 @@ using Erp.Infrastructure.Abstracts;
 using Erp.Infrastructure.Abstracts.AccountsModule;
 using Erp.Infrastructure.Abstracts.CostCentersModule;
 using Erp.Infrastructure.Abstracts.CustomersModule;
+using Erp.Infrastructure.Abstracts.Finance;
+using Erp.Infrastructure.Abstracts.HumanResources.OrganizationalStructure;
+using Erp.Infrastructure.Abstracts.HumanResources.Staff;
+using Erp.Infrastructure.Abstracts.MainModule;
 using Erp.Infrastructure.Abstracts.SalesModule;
 using Erp.Infrastructure.Repositories;
 using Erp.Infrastructure.Repositories.AccountsModule;
 using Erp.Infrastructure.Repositories.CostCentersModule;
 using Erp.Infrastructure.Repositories.CustomersModule;
+using Erp.Infrastructure.Repositories.Finance;
+using Erp.Infrastructure.Repositories.HumanResources.OrganizationalStructure;
+using Erp.Infrastructure.Repositories.HumanResources.Staff;
+using Erp.Infrastructure.Repositories.MainModule;
 using Erp.Infrastructure.Repositories.SalesModule;
+using Erp.Service.Abstracts.MainModule;
+using Erp.Service.Implementations.MainModule;
 using Microsoft.Extensions.DependencyInjection;
 using Name.Infrastructure.Bases;
 
@@ -96,6 +106,50 @@ namespace Name.Infrastructure
 
       services.AddTransient<ICustomerPaymentRepository, CustomerPaymentRepository>();
 
+
+
+
+
+
+      services.AddTransient<IBankAccountRepository, BankAccountRepository>();
+
+      services.AddTransient<ITreasuryRepository, TreasuryRepository>();
+
+      services.AddTransient<IExpenseCategoryRepository, ExpenseCategoryRepository>();
+
+      services.AddTransient<IReceiptCategoryRepository, ReceiptCategoryRepository>();
+
+      services.AddTransient<IExpenseRepository, ExpenseRepository>();
+
+      services.AddTransient<IReceiptRepository, ReceiptRepository>();
+
+
+      services.AddTransient<IMultiAccExpenseItemRepository, MultiAccExpenseItemRepository>();
+      services.AddTransient<IMultiAccReceiptItemRepository, MultiAccReceiptItemRepository>();
+
+
+
+
+      services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+
+      services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+      services.AddTransient<IJobTypeRepository, JobTypeRepository>();
+      services.AddTransient<IEmploymentLevelRepository, EmploymentLevelRepository>();
+      services.AddTransient<IEmploymentTypeRepository, EmploymentTypeRepository>();
+
+
+
+
+
+
+      services.AddTransient<ICompanyRepository, CompanyRepository>();
+
+      services.AddTransient<IApplicationRoleRepository, ApplicationRoleRepository>();
+
+
+
+      services.AddScoped<ITenantRepository, TenantRepository>();
+      services.AddScoped<ITenantService, TenantService>();
       services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
       return services;
     }

@@ -17,6 +17,14 @@ namespace Erp.Api.Controllers
     }
 
 
+    [HttpGet(Router.CustomerRouter.GetCustomerList)]
+    public async Task<IActionResult> GetCustomerList()
+    {
+      var response = await Mediator.Send(new GetCustomerListQuery());
+
+      return Ok(response);
+    }
+
 
     [HttpGet(Router.CustomerRouter.GetCustomerTypeById)]
     public async Task<IActionResult> GetCustomerTypeById(int Id)

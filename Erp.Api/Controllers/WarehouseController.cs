@@ -6,7 +6,7 @@ using Name.Data.MetaData;
 
 namespace Erp.Api.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("api/Inventory/[controller]")]
   [ApiController]
   public class WarehouseController : AppControllerBase
   {

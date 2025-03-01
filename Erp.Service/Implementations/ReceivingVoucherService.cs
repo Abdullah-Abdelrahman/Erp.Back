@@ -1,5 +1,4 @@
 using Erp.Data.Dto.ReceivingVoucher;
-using Erp.Data.Entities;
 using Erp.Data.Entities.InventoryModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
@@ -156,13 +155,21 @@ namespace Erp.Service.Implementations
           var receivingVoucherItem = new ReceivingVoucherItem()
           {
             receivingVoucherId = ReceivingVoucherRequest.ReceivingVoucherId,
-            ReceivingVoucherItemId = item.ReceivingVoucherItemId,
             Quantity = item.Quantity,
             UnitPrice = item.UnitPrice,
             ProductId = item.ProductId
           };
+          if (item.ReceivingVoucherItemId != null)
+          {
+            receivingVoucherItem.ReceivingVoucherItemId = (int)item.ReceivingVoucherItemId;
+            await _receivingVoucherItemRepository.UpdateAsync(receivingVoucherItem);
 
-          await _receivingVoucherItemRepository.UpdateAsync(receivingVoucherItem);
+          }
+          else
+          {
+            await _receivingVoucherItemRepository.AddAsync(receivingVoucherItem);
+
+          }
         }
 
 

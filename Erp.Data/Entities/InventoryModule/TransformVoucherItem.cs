@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.InventoryModule
 {
-  public class TransformVoucherItem
+  public class TransformVoucherItem : IMustHaveTenant
   {
     public int TransformVoucherItemId { get; set; }
     public int Quantity { get; set; }
@@ -14,5 +14,7 @@ namespace Erp.Data.Entities.InventoryModule
 
     public int ProductId { get; set; }
     public Product Product { get; set; } = null!;
+    public string TenantId { get; set; } = null!;
+
   }
 }

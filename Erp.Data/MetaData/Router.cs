@@ -3,13 +3,16 @@ namespace Name.Data.MetaData
   public static class Router
   {
 
+
     public const string Root = "/Api";
+    // public const string Root = "";
+
     public const string Rule = Root + "/";
 
 
     public static class ProductRouter
     {
-      public const string prefix = Rule + "Product/";
+      public const string prefix = Rule + "Inventory/Product/";
 
       public const string GetList = prefix + "List";
 
@@ -24,7 +27,7 @@ namespace Name.Data.MetaData
     }
     public static class WarehouseRouter
     {
-      public const string prefix = Rule + "Warehouse/";
+      public const string prefix = Rule + "Inventory/Warehouse/";
 
       public const string GetList = prefix + "List";
 
@@ -40,7 +43,7 @@ namespace Name.Data.MetaData
 
     public static class SupplierRouter
     {
-      public const string prefix = Rule + "Supplier/";
+      public const string prefix = Rule + "Purchase/Supplier/";
 
       public const string GetList = prefix + "List";
 
@@ -55,7 +58,7 @@ namespace Name.Data.MetaData
     }
     public static class UserRouter
     {
-      public const string prefix = Rule + "UserApp/";
+      public const string prefix = Rule + "User/";
 
       public const string GetList = prefix + "List";
 
@@ -116,7 +119,7 @@ namespace Name.Data.MetaData
 
     public static class CategoryRouter
     {
-      public const string prefix = Rule + "Category/";
+      public const string prefix = Rule + "Inventory/Category/";
 
       public const string GetList = prefix + "List";
 
@@ -136,7 +139,7 @@ namespace Name.Data.MetaData
 
     public static class ReceivingVoucherRouter
     {
-      public const string prefix = Rule + "ReceivingVoucher/";
+      public const string prefix = Rule + "Inventory/ReceivingVoucher/";
 
       public const string GetList = prefix + "List";
 
@@ -154,7 +157,7 @@ namespace Name.Data.MetaData
 
     public static class DeliveryVoucherRouter
     {
-      public const string prefix = Rule + "DeliveryVoucher/";
+      public const string prefix = Rule + "Inventory/DeliveryVoucher/";
 
       public const string GetList = prefix + "List";
 
@@ -173,7 +176,7 @@ namespace Name.Data.MetaData
 
     public static class TransformVoucherRouter
     {
-      public const string prefix = Rule + "TransformVoucher/";
+      public const string prefix = Rule + "Inventory/TransformVoucher/";
 
       public const string GetList = prefix + "List";
 
@@ -191,7 +194,7 @@ namespace Name.Data.MetaData
 
     public static class PurchaseInvoiceRouter
     {
-      public const string prefix = Rule + "PurchaseInvoice/";
+      public const string prefix = Rule + "Purchase/PurchaseInvoice/";
 
       public const string GetList = prefix + "List";
 
@@ -209,7 +212,7 @@ namespace Name.Data.MetaData
 
     public static class PurchaseReturnRouter
     {
-      public const string prefix = Rule + "PurchaseReturn/";
+      public const string prefix = Rule + "Purchase/PurchaseReturn/";
 
       public const string GetList = prefix + "List";
 
@@ -227,7 +230,7 @@ namespace Name.Data.MetaData
 
     public static class DebitNoteRouter
     {
-      public const string prefix = Rule + "DebitNote/";
+      public const string prefix = Rule + "Purchase/DebitNote/";
 
       public const string GetList = prefix + "List";
 
@@ -244,28 +247,34 @@ namespace Name.Data.MetaData
     }
     public static class AccountRouter
     {
-      public const string prefix = Rule + "Account/";
+      public const string prefix = Rule + "accounts/account/";
 
-      public const string GetAccountTypeById = prefix + "GetAccountTypeById/{Id}";
+      public const string GetAccountTypeById = prefix + "getAccountTypeById/{Id}";
 
       public const string GetById = prefix + "{Id}";
 
-      public const string Create = prefix + "Create";
+      public const string Create = prefix + "create";
 
-      public const string GetMainAccountsList = prefix + "MainAccountsList";
+      public const string GetMainAccountsList = prefix + "mainAccountsList";
 
-      public const string Edit = prefix + "Edit";
+      public const string GetPrimaryAccountsList = prefix + "primaryAccountsList";
 
-      public const string GetSecondaryAccountById = prefix + "GetSecondaryAccountById/{Id}";
-      public const string GetPrimaryAccountById = prefix + "GetPrimaryAccountById/{Id}";
+      public const string GetSecondaryAccountsList = prefix + "secondaryAccountsList";
 
-      public const string Delete = prefix + "Delete/{Id}";
+
+
+      public const string Edit = prefix + "edit";
+
+      public const string GetSecondaryAccountById = prefix + "getSecondaryAccountById/{Id}";
+      public const string GetPrimaryAccountById = prefix + "getPrimaryAccountById/{Id}";
+
+      public const string Delete = prefix + "delete/{Id}";
 
     }
 
     public static class JournalEntryRouter
     {
-      public const string prefix = Rule + "JournalEntry/";
+      public const string prefix = Rule + "Accounts/JournalEntry/";
 
       public const string GetList = prefix + "List";
 
@@ -283,7 +292,7 @@ namespace Name.Data.MetaData
 
     public static class CostCenterRouter
     {
-      public const string prefix = Rule + "CostCenter/";
+      public const string prefix = Rule + "Accounts/CostCenter/";
 
       public const string GetCostCenterTypeById = prefix + "GetCostCenterTypeById/{Id}";
 
@@ -292,6 +301,11 @@ namespace Name.Data.MetaData
       public const string Create = prefix + "Create";
 
       public const string GetMainCostCentersList = prefix + "MainCostCentersList";
+
+      public const string GetPrimaryCostCenterList = prefix + "primaryCostCenterList";
+
+      public const string GetSecondaryCostCenterList = prefix + "secondaryCostCenterList";
+
 
       public const string Edit = prefix + "Edit";
 
@@ -306,9 +320,12 @@ namespace Name.Data.MetaData
 
     public static class CustomerRouter
     {
-      public const string prefix = Rule + "Customer/";
+      public const string prefix = Rule + "Customers/Customer/";
 
       public const string GetCustomerTypeById = prefix + "GetCustomerTypeById/{Id}";
+
+      public const string GetCustomerList = prefix + "list";
+
 
       public const string GetById = prefix + "{Id}";
 
@@ -325,7 +342,7 @@ namespace Name.Data.MetaData
 
     public static class CustomerClassificationRouter
     {
-      public const string prefix = Rule + "CustomerClassification/";
+      public const string prefix = Rule + "Customers/CustomerClassification/";
 
       public const string GetList = prefix + "List";
 
@@ -341,7 +358,7 @@ namespace Name.Data.MetaData
     }
     public static class ContactListRouter
     {
-      public const string prefix = Rule + "ContactList/";
+      public const string prefix = Rule + "Customers/ContactList/";
 
       public const string GetList = prefix + "List";
 
@@ -368,7 +385,7 @@ namespace Name.Data.MetaData
 
     public static class InvoiceRouter
     {
-      public const string prefix = Rule + "Invoice/";
+      public const string prefix = Rule + "Sales/Invoice/";
 
       public const string GetList = prefix + "List";
 
@@ -386,7 +403,7 @@ namespace Name.Data.MetaData
 
     public static class QuotationRouter
     {
-      public const string prefix = Rule + "Quotation/";
+      public const string prefix = Rule + "Sales/Quotation/";
 
       public const string GetList = prefix + "List";
 
@@ -404,7 +421,7 @@ namespace Name.Data.MetaData
 
     public static class CreditNoteRouter
     {
-      public const string prefix = Rule + "CreditNote/";
+      public const string prefix = Rule + "Sales/CreditNote/";
 
       public const string GetList = prefix + "List";
 
@@ -422,7 +439,7 @@ namespace Name.Data.MetaData
 
     public static class RecurringInvoiceRouter
     {
-      public const string prefix = Rule + "RecurringInvoice/";
+      public const string prefix = Rule + "Sales/RecurringInvoice/";
 
       public const string GetList = prefix + "List";
 
@@ -441,7 +458,7 @@ namespace Name.Data.MetaData
 
     public static class CustomerPaymentRouter
     {
-      public const string prefix = Rule + "CustomerPayment/";
+      public const string prefix = Rule + "Sales/CustomerPayment/";
 
       public const string GetList = prefix + "List";
 
@@ -455,6 +472,197 @@ namespace Name.Data.MetaData
 
     }
 
+
+
+
+
+    public static class BankAccountRouter
+    {
+      public const string prefix = Rule + "finance/bankAccount/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+
+    }
+
+    public static class TreasuryRouter
+    {
+      public const string prefix = Rule + "finance/treasury/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+
+    }
+
+    public static class ExpenseCategoryRouter
+    {
+      public const string prefix = Rule + "finance/expenseCategory/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+    }
+    public static class ReceiptCategoryRouter
+    {
+      public const string prefix = Rule + "finance/receipt-category/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+    }
+
+    public static class ExpenseRouter
+    {
+      public const string prefix = Rule + "finance/expense/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+
+    }
+    public static class ReceiptRouter
+    {
+      public const string prefix = Rule + "finance/receipt/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+
+    }
+
+
+
+
+    public static class DepartmentRouter
+    {
+      public const string prefix = Rule + "HumanResources/OrganizationalStructure/department/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+    }
+    public static class EmploymentLevelRouter
+    {
+      public const string prefix = Rule + "HumanResources/OrganizationalStructure/employment-level/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+    }
+    public static class EmploymentTypeRouter
+    {
+      public const string prefix = Rule + "HumanResources/OrganizationalStructure/employment-type/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+    }
+    public static class JobTypeRouter
+    {
+      public const string prefix = Rule + "HumanResources/OrganizationalStructure/job-type/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+    }
+
+    public static class CompanyRouter
+    {
+      public const string prefix = Rule + "main/company/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+    }
 
     public static class EmailRouter
     {

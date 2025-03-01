@@ -77,7 +77,7 @@ namespace Erp.Core.Features.Customer.Commands.Handlers
         }
         else
         {
-          return BadRequest<string>(MessageCenter.CrudMessage.Falied);
+          return BadRequest<string>(result);
         }
 
 

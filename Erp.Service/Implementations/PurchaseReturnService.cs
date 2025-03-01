@@ -1,5 +1,4 @@
 using Erp.Data.Dto.PurchaseReturn;
-using Erp.Data.Entities;
 using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
@@ -32,7 +31,7 @@ namespace Erp.Service.Implementations
         ReturnDate = (DateTime)PurchaseReturnRequest.InvoiceDate,
         Notes = PurchaseReturnRequest.Notes,
         TotalAmount = PurchaseReturnRequest.TotalAmount,
-
+        supplierId = PurchaseReturnRequest.SupplierId
       };
 
 
@@ -63,10 +62,10 @@ namespace Erp.Service.Implementations
         return MessageCenter.CrudMessage.Success;
 
       }
-      catch
+      catch (Exception ex)
       {
         await transact.RollbackAsync();
-        return MessageCenter.CrudMessage.Falied;
+        return MessageCenter.CrudMessage.Falied + ex.Message;
       }
 
     }
@@ -100,6 +99,7 @@ namespace Erp.Service.Implementations
         InvoiceDate = PurchaseReturn.ReturnDate,
         Notes = PurchaseReturn.Notes,
         TotalAmount = PurchaseReturn.TotalAmount,
+        SupplierId = PurchaseReturn.supplierId,
         PurchaseReturnItemsDto = new List<PurchaseReturnItemDto>()
       };
 
@@ -127,7 +127,9 @@ namespace Erp.Service.Implementations
         PurchaseReturnId = x.PurchaseReturnId,
         InvoiceDate = x.ReturnDate,
         Notes = x.Notes,
-        TotalAmount = x.TotalAmount
+        TotalAmount = x.TotalAmount,
+        SupplierId = x.supplierId
+
 
       }));
 
@@ -140,7 +142,8 @@ namespace Erp.Service.Implementations
       {
         PurchaseReturnId = PurchaseReturnRequest.PurchaseReturnId,
         ReturnDate = PurchaseReturnRequest.InvoiceDate,
-        Notes = PurchaseReturnRequest.Notes
+        Notes = PurchaseReturnRequest.Notes,
+        supplierId = PurchaseReturnRequest.SupplierId
 
       };
 
@@ -155,13 +158,21 @@ namespace Erp.Service.Implementations
           var PurchaseReturnItem = new PurchaseReturnItem()
           {
             PurchaseReturnId = PurchaseReturnRequest.PurchaseReturnId,
-            PurchaseReturnItemId = item.PurchaseReturnItemId,
             Quantity = item.Quantity,
             UnitPrice = item.UnitPrice,
             ProductId = item.ProductId
           };
+          if (item.PurchaseReturnItemId != null)
+          {
+            PurchaseReturnItem.PurchaseReturnItemId = (int)item.PurchaseReturnItemId;
+            await _PurchaseReturnItemRepository.UpdateAsync(PurchaseReturnItem);
 
-          await _PurchaseReturnItemRepository.UpdateAsync(PurchaseReturnItem);
+          }
+          else
+          {
+            await _PurchaseReturnItemRepository.AddAsync(PurchaseReturnItem);
+
+          }
         }
 
 
@@ -171,10 +182,10 @@ namespace Erp.Service.Implementations
         return MessageCenter.CrudMessage.Success;
 
       }
-      catch
+      catch (Exception ex)
       {
         await transact.RollbackAsync();
-        return MessageCenter.CrudMessage.Falied;
+        return MessageCenter.CrudMessage.Falied + ex.Message;
       }
     }
 

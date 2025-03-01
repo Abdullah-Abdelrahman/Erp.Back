@@ -7,9 +7,10 @@ using Name.Core.Bases;
 
 namespace Erp.Core.Features.Account.Queries.Handlers
 {
-  public class AccountQueryHandler : ResponseHandler, IRequestHandler<GetMainAccountsListQuery, Response<List<GetPrimaryAccountByIdResult>>>, IRequestHandler<GetPrimaryAccountByIdQuery, Response<GetPrimaryAccountByIdResult>>,
+  public class AccountQueryHandler : ResponseHandler,
+    IRequestHandler<GetMainAccountsListQuery, Response<List<GetPrimaryAccountByIdResult>>>, IRequestHandler<GetPrimaryAccountByIdQuery, Response<GetPrimaryAccountByIdResult>>,
     IRequestHandler<GetAccountTypeByIdQuery, Response<string>>,
-    IRequestHandler<GetSecondaryAccountByIdQuery, Response<GetSecondaryAccountByIdResult>>
+    IRequestHandler<GetSecondaryAccountByIdQuery, Response<GetSecondaryAccountByIdResult>>, IRequestHandler<GetPrimaryAccountsListQuery, Response<List<GetPrimaryAccountByIdResult>>>, IRequestHandler<GetSecondaryAccountsListQuery, Response<List<GetSecondaryAccountByIdResult>>>
   {
     #region Fields
     private readonly IAccountService _AccountService;
@@ -61,6 +62,20 @@ namespace Erp.Core.Features.Account.Queries.Handlers
       }
 
       var result = _mapper.Map<GetSecondaryAccountByIdResult>(secondaryAccount);
+      return Success(result);
+    }
+
+    public async Task<Response<List<GetPrimaryAccountByIdResult>>> Handle(GetPrimaryAccountsListQuery request, CancellationToken cancellationToken)
+    {
+      var primaryAccounts = await _AccountService.GetPrimaryAccountListAsync();
+      var result = _mapper.Map<List<GetPrimaryAccountByIdResult>>(primaryAccounts);
+      return Success(result);
+    }
+
+    public async Task<Response<List<GetSecondaryAccountByIdResult>>> Handle(GetSecondaryAccountsListQuery request, CancellationToken cancellationToken)
+    {
+      var SecondaryAccounts = await _AccountService.GetSecondaryAccountListAsync();
+      var result = _mapper.Map<List<GetSecondaryAccountByIdResult>>(SecondaryAccounts);
       return Success(result);
     }
   }

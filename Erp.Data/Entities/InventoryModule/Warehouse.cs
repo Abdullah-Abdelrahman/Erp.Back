@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Erp.Data.Entities.InventoryModule
 {
-  public class Warehouse
+  public class Warehouse : IMustHaveTenant
   {
     public int WarehouseId { get; set; }
     public string WarehouseName { get; set; } = null!;
@@ -16,7 +16,7 @@ namespace Erp.Data.Entities.InventoryModule
 
     [JsonIgnore]
     public ICollection<DeliveryVoucher> deliveryVouchers { get; set; } = new List<DeliveryVoucher>();
-
+    public string TenantId { get; set; } = null!;
   }
 
 }

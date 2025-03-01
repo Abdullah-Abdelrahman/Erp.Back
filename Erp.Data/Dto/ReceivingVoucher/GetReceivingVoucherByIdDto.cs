@@ -1,6 +1,6 @@
 using Erp.Data.Entities.InventoryModule;
 using Erp.Data.Entities.PurchasesModule;
-
+using E = Erp.Data.Entities.InventoryModule;
 namespace Erp.Data.Dto.ReceivingVoucher
 {
   public class GetReceivingVoucherByIdDto
@@ -25,7 +25,7 @@ namespace Erp.Data.Dto.ReceivingVoucher
     public int Quantity { get; set; }
     public decimal UnitPrice { get; set; }
     public decimal TotalPrice { get; set; }
-    public Product Product { get; set; } = null!;
+    public E.Product Product { get; set; } = null!;
   }
 
 }

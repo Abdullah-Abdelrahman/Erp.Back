@@ -1,27 +1,27 @@
-﻿using Name.Data.Dto;
-using Microsoft.AspNetCore.Identity;
+using Erp.Data.Entities.HumanResources.Staff;
 using Erp.Data.Entities.MainModule;
+using Name.Data.Dto;
 
 namespace Name.Service.Abstracts
 {
   public interface IAuthorizationService
-    {
-        public Task<bool> IsRoleExistByName(string roleName);
+  {
+    public Task<bool> IsRoleExistByName(string roleName);
 
-        public Task<bool> IsRoleExistById(string roleId);
+    public Task<bool> IsRoleExistById(string roleId);
 
-        public Task<List<IdentityRole>> GetRolesList();
+    public Task<List<ApplicationRole>> GetRolesList();
 
-        public Task<IdentityRole> GetRoleById(string id);
+    public Task<ApplicationRole> GetRoleById(string id);
 
-        public Task<string> DeleteRoleAsync(IdentityRole role);
+    public Task<string> DeleteRoleAsync(ApplicationRole role);
 
-        public Task<ManageUserRolesResult> ManageUserRolesData(UserBase user);
+    public Task<ManageUserRolesResult> ManageUserRolesData(UserBase user);
 
-        public Task<string> UpdateUserRoles(UpdateUserRolesRequest request);
+    public Task<string> UpdateUserRoles(UpdateUserRolesRequest request);
 
-        public Task<ManageUserClaimsResult> ManageUserClaimData(UserBase user);
+    public Task<ManageUserClaimsResult> ManageUserClaimData(UserBase user);
 
-        public Task<string> UpdateUserClaims(UpdateUserClaimsRequest request);
-    }
+    public Task<string> UpdateUserClaims(UpdateUserClaimsRequest request);
+  }
 }
