@@ -4,6 +4,7 @@ using Erp.Service.Abstracts.CostCentersModule;
 using Erp.Service.Abstracts.CustomersModule;
 using Erp.Service.Abstracts.Finance;
 using Erp.Service.Abstracts.HumanResources.OrganizationalStructure;
+using Erp.Service.Abstracts.InventoryModule;
 using Erp.Service.Abstracts.MainModule;
 using Erp.Service.Abstracts.SalesModule;
 using Erp.Service.Implementations;
@@ -12,6 +13,7 @@ using Erp.Service.Implementations.CostCentersModule;
 using Erp.Service.Implementations.CustomersModule;
 using Erp.Service.Implementations.Finance;
 using Erp.Service.Implementations.HumanResources.OrganizationalStructure;
+using Erp.Service.Implementations.InventoryModule;
 using Erp.Service.Implementations.MainModule;
 using Erp.Service.Implementations.SalesModule;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +36,7 @@ namespace Name.Service
       services.AddTransient<IEmailService, EmailService>();
       services.AddTransient<IUserBaseService, UserBaseService>();
 
+      services.AddTransient<IProductAndServiceBaseService, ProductAndServiceBaseService>();
       services.AddTransient<IProductService, ProductService>();
       services.AddTransient<ICategoryService, CategoryService>();
       services.AddTransient<IStockTransactionService, StockTransactionService>();

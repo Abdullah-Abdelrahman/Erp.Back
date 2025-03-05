@@ -112,21 +112,6 @@ namespace Erp.Infrastructure.Migrations
                     b.ToTable("BankAccountEmployeeWithdraw", (string)null);
                 });
 
-            modelBuilder.Entity("CategoryProduct", b =>
-                {
-                    b.Property<int>("ProductsProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("categoriesCategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductsProductId", "categoriesCategoryId");
-
-                    b.HasIndex("categoriesCategoryId");
-
-                    b.ToTable("CategoryProduct");
-                });
-
             modelBuilder.Entity("EmployeeTreasury", b =>
                 {
                     b.Property<int>("TreasuryDepositPermessionsId")
@@ -823,7 +808,57 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("DepartmentHeadID");
 
-                    b.ToTable("Department");
+                    b.ToTable("departments");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.HumanResources.OrganizationalStructure.EmploymentLevel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("employmentLevels");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.HumanResources.OrganizationalStructure.EmploymentType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("employmentTypes");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.HumanResources.OrganizationalStructure.JobType", b =>
@@ -853,7 +888,38 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("JobType");
+                    b.ToTable("jobTypes");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.HumanResources.Staff.Employee", b =>
@@ -865,11 +931,9 @@ namespace Erp.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmployeeID"));
 
                     b.Property<string>("Address1")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Address2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
@@ -879,12 +943,26 @@ namespace Erp.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Country")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DateOfBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DepartmentID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DirectManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EmploymentLevelId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EmploymentTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
@@ -900,11 +978,6 @@ namespace Erp.Infrastructure.Migrations
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JobTitle")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("JobTypeID")
                         .HasColumnType("int");
@@ -922,13 +995,14 @@ namespace Erp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("PrivateEmail")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -936,6 +1010,9 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<string>("TenantId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("UseDefaultFinancialHistory")
+                        .HasColumnType("bit");
 
                     b.Property<string>("postcode")
                         .HasColumnType("nvarchar(max)");
@@ -949,7 +1026,15 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("DepartmentID");
 
+                    b.HasIndex("DirectManagerId");
+
+                    b.HasIndex("EmploymentLevelId");
+
+                    b.HasIndex("EmploymentTypeId");
+
                     b.HasIndex("JobTypeID");
+
+                    b.HasIndex("RoleID");
 
                     b.ToTable("Employee");
                 });
@@ -972,6 +1057,9 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<int?>("MainCategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductAndServiceBaseProductId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TenantId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -979,6 +1067,8 @@ namespace Erp.Infrastructure.Migrations
                     b.HasKey("CategoryId");
 
                     b.HasIndex("MainCategoryId");
+
+                    b.HasIndex("ProductAndServiceBaseProductId");
 
                     b.ToTable("Categories");
                 });
@@ -1044,7 +1134,50 @@ namespace Erp.Infrastructure.Migrations
                     b.ToTable("deliveryVoucherItems");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Product", b =>
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.PriceList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("priceLists");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.PriceListItem", b =>
+                {
+                    b.Property<int>("PriceListId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SellPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PriceListId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("priceListItems");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.ProductAndServiceBase", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -1066,15 +1199,14 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<decimal>("LowestSellingPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("MinAmountBeforNotefy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductOrService")
-                        .HasColumnType("int");
+                    b.Property<string>("ProductOrService")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
 
                     b.Property<decimal>("PurchasePrice")
                         .HasColumnType("decimal(18,2)");
@@ -1082,24 +1214,20 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<decimal>("SellPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("StockQuantity")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SupplierId")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("isActive")
-                        .HasColumnType("bit");
-
                     b.HasKey("ProductId");
 
-                    b.HasIndex("SupplierId");
+                    b.ToTable("productAndServiceBases");
 
-                    b.ToTable("Products");
+                    b.HasDiscriminator<string>("ProductOrService").HasValue("ProductAndServiceBase");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.ReceivingVoucher", b =>
@@ -1312,37 +1440,6 @@ namespace Erp.Infrastructure.Migrations
                     b.HasIndex("ModuleID");
 
                     b.ToTable("applicationClaims");
-                });
-
-            modelBuilder.Entity("Erp.Data.Entities.MainModule.ApplicationRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.Company", b =>
@@ -2410,6 +2507,39 @@ namespace Erp.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("Individual");
                 });
 
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Product", b =>
+                {
+                    b.HasBaseType("Erp.Data.Entities.InventoryModule.ProductAndServiceBase");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinAmountBeforNotefy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SupplierId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("TrackInventory")
+                        .HasColumnType("bit");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasDiscriminator().HasValue("Product");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Service", b =>
+                {
+                    b.HasBaseType("Erp.Data.Entities.InventoryModule.ProductAndServiceBase");
+
+                    b.HasDiscriminator().HasValue("Service");
+                });
+
             modelBuilder.Entity("ApplicationRoleBankAccount", b =>
                 {
                     b.HasOne("Erp.Data.Entities.Finance.BankAccount", null)
@@ -2418,7 +2548,7 @@ namespace Erp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Erp.Data.Entities.MainModule.ApplicationRole", null)
+                    b.HasOne("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RolesWhoHaveDepositPermessionsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2433,7 +2563,7 @@ namespace Erp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Erp.Data.Entities.MainModule.ApplicationRole", null)
+                    b.HasOne("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RolesWhoHaveWithdrawPermessionsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2442,7 +2572,7 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("ApplicationRoleTreasury", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.MainModule.ApplicationRole", null)
+                    b.HasOne("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RolesWhoHaveDepositPermessionsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2457,7 +2587,7 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("ApplicationRoleTreasury1", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.MainModule.ApplicationRole", null)
+                    b.HasOne("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RolesWhoHaveWithdrawPermessionsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2496,21 +2626,6 @@ namespace Erp.Infrastructure.Migrations
                     b.HasOne("Erp.Data.Entities.HumanResources.Staff.Employee", null)
                         .WithMany()
                         .HasForeignKey("employeesWhoHaveWithdrawPermessionsEmployeeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CategoryProduct", b =>
-                {
-                    b.HasOne("Erp.Data.Entities.InventoryModule.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Erp.Data.Entities.InventoryModule.Category", null)
-                        .WithMany()
-                        .HasForeignKey("categoriesCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -2776,15 +2891,39 @@ namespace Erp.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("DepartmentID");
 
+                    b.HasOne("Erp.Data.Entities.HumanResources.Staff.Employee", "DirectManager")
+                        .WithMany()
+                        .HasForeignKey("DirectManagerId");
+
+                    b.HasOne("Erp.Data.Entities.HumanResources.OrganizationalStructure.EmploymentLevel", "EmploymentLevel")
+                        .WithMany()
+                        .HasForeignKey("EmploymentLevelId");
+
+                    b.HasOne("Erp.Data.Entities.HumanResources.OrganizationalStructure.EmploymentType", "EmploymentType")
+                        .WithMany()
+                        .HasForeignKey("EmploymentTypeId");
+
                     b.HasOne("Erp.Data.Entities.HumanResources.OrganizationalStructure.JobType", "JobType")
                         .WithMany()
                         .HasForeignKey("JobTypeID");
+
+                    b.HasOne("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", "Role")
+                        .WithMany()
+                        .HasForeignKey("RoleID");
 
                     b.Navigation("Company");
 
                     b.Navigation("Department");
 
+                    b.Navigation("DirectManager");
+
+                    b.Navigation("EmploymentLevel");
+
+                    b.Navigation("EmploymentType");
+
                     b.Navigation("JobType");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Category", b =>
@@ -2792,6 +2931,10 @@ namespace Erp.Infrastructure.Migrations
                     b.HasOne("Erp.Data.Entities.InventoryModule.Category", "MainCategory")
                         .WithMany()
                         .HasForeignKey("MainCategoryId");
+
+                    b.HasOne("Erp.Data.Entities.InventoryModule.ProductAndServiceBase", null)
+                        .WithMany("categories")
+                        .HasForeignKey("ProductAndServiceBaseProductId");
 
                     b.Navigation("MainCategory");
                 });
@@ -2826,13 +2969,23 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("deliveryVoucher");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Product", b =>
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.PriceListItem", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.PurchasesModule.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId");
+                    b.HasOne("Erp.Data.Entities.InventoryModule.PriceList", "PriceList")
+                        .WithMany("priceListItems")
+                        .HasForeignKey("PriceListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Supplier");
+                    b.HasOne("Erp.Data.Entities.InventoryModule.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PriceList");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.ReceivingVoucher", b =>
@@ -2875,7 +3028,7 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.StockTransaction", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.InventoryModule.Product", "Product")
+                    b.HasOne("Erp.Data.Entities.InventoryModule.ProductAndServiceBase", "Product")
                         .WithMany("StockTransactions")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3216,7 +3369,7 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.MainModule.ApplicationRole", null)
+                    b.HasOne("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3243,7 +3396,7 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.MainModule.ApplicationRole", null)
+                    b.HasOne("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -3263,6 +3416,19 @@ namespace Erp.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Product", b =>
+                {
+                    b.HasOne("Erp.Data.Entities.InventoryModule.Category", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("Erp.Data.Entities.PurchasesModule.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId");
+
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.AccountsModule.Account", b =>
@@ -3307,14 +3473,26 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("receiptCategories");
                 });
 
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.DeliveryVoucher", b =>
                 {
                     b.Navigation("deliveryVoucherItems");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Product", b =>
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.PriceList", b =>
+                {
+                    b.Navigation("priceListItems");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.ProductAndServiceBase", b =>
                 {
                     b.Navigation("StockTransactions");
+
+                    b.Navigation("categories");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.ReceivingVoucher", b =>

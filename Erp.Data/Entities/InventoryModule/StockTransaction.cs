@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Erp.Data.Entities.InventoryModule
 {
   public class StockTransaction : IMustHaveTenant
@@ -10,7 +12,8 @@ namespace Erp.Data.Entities.InventoryModule
 
     // Foreign Keys
     public int ProductId { get; set; }
-    public Product Product { get; set; } = null!;
+    [ForeignKey("ProductId")]
+    public ProductAndServiceBase Product { get; set; } = null!;
 
     public int WarehouseId { get; set; }
     public Warehouse Warehouse { get; set; } = null!;

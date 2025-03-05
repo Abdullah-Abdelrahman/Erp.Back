@@ -13,5 +13,8 @@ namespace Erp.Service.Abstracts.CustomersModule
     public Task<string> UpdateAsync(CustomerClassification CustomerClassification);
 
     public Task<string> DeleteAsync(CustomerClassification CustomerClassification);
+
+    public Task<string> DeleteByIdAsync(int id);
+
   }
 }

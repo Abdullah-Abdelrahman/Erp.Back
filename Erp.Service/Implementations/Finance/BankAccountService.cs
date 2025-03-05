@@ -22,6 +22,7 @@ namespace Erp.Service.Implementations.Finance
 
     private readonly IAccountRepository<SecondaryAccount> _SecondaryaccountRepository;
 
+    private readonly IAccountRepository<PrimaryAccount> _PrimaryaccountRepository;
 
 
 
@@ -29,14 +30,15 @@ namespace Erp.Service.Implementations.Finance
       IEmployeeRepository employeeRepository,
       IApplicationRoleRepository applicationRoleRepository,
       IAccountService accountService,
-      IAccountRepository<SecondaryAccount> SecondaryaccountRepository)
+      IAccountRepository<SecondaryAccount> SecondaryaccountRepository,
+      IAccountRepository<PrimaryAccount> primaryaccountRepository)
     {
       _BankAccountRepository = BankAccountRepository;
       _applicationRoleRepository = applicationRoleRepository;
       _employeeRepository = employeeRepository;
       _accountService = accountService;
       _SecondaryaccountRepository = SecondaryaccountRepository;
-
+      _PrimaryaccountRepository = primaryaccountRepository;
     }
     public async Task<string> AddBankAccount(AddBankAccountRequest BankAccountRequest)
     {
@@ -126,7 +128,7 @@ namespace Erp.Service.Implementations.Finance
           AccountName = newBankAccount.BankName,
           Type = AccountType.debtor,
           Balance = 0,
-          ParentAccountID = (await _SecondaryaccountRepository.GetTableNoTracking().Where(a => a.AccountName == "Bank").SingleOrDefaultAsync())?.AccountID,
+          ParentAccountID = (await _PrimaryaccountRepository.GetTableNoTracking().Where(a => a.AccountName == "Bank").SingleOrDefaultAsync())?.AccountID,
           IsActive = newBankAccount.Status == AccountStatus.ACTIVE ? true : false,
           CreatedDate = DateTime.UtcNow,
         };

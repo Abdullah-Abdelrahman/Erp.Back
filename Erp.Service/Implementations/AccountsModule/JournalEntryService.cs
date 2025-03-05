@@ -117,18 +117,37 @@ namespace Erp.Service.Implementations.AccountsModule
 
     public async Task<List<GetJournalEntryByIdDto>> GetJournalEntrysListAsync()
     {
-      var JournalEntrys = _JournalEntryRepository.GetTableNoTracking().ToList();
-
+      var JournalEntrys = await _JournalEntryRepository.GetTableNoTracking()
+        .Include(x => x.details)
+        .ThenInclude(d => d.Account)
+        .Include(x => x.details)
+        .ThenInclude(d => d.CostCenter)
+        .ToListAsync();
       var dtoList = new List<GetJournalEntryByIdDto>();
 
       dtoList.AddRange(JournalEntrys.Select(x => new GetJournalEntryByIdDto()
       {
         JournalEntryID = x.JournalEntryID,
         EntryDate = x.EntryDate,
-        Description = x.Description
+        Description = x.Description,
+        JournalEntryItemsDto = (x.details.Select(y => new JournalEntryItemDto
+        {
+          JournalEntryDetailID = y.JournalEntryDetailID,
+          JournalEntryID = y.JournalEntryID,
+          Description = y.Description,
+          AccountID = y.AccountID,
+          AccountName = y.Account.AccountName,
+          CostCenterId = y.CostCenterId,
+          CostCenterName = y.CostCenter?.Name,
+          Debit = y.Debit,
+          Credit = y.Credit
+
+        })).ToList()
 
 
       }));
+
+
 
       return dtoList;
     }

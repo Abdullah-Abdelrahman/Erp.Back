@@ -9,20 +9,43 @@ namespace Name.Data.MetaData
 
     public const string Rule = Root + "/";
 
+    public static class ProductAndServiceRouter
+    {
+      public const string prefix = Rule + "inventory/product-and-service/";
 
+      public const string GetProductsServicesPaginated = prefix + "Paginated";
+
+
+    }
     public static class ProductRouter
     {
-      public const string prefix = Rule + "Inventory/Product/";
+      public const string prefix = Rule + "inventory/product/";
 
-      public const string GetList = prefix + "List";
+      public const string GetList = prefix + "list";
 
       public const string GetById = prefix + "{Id}";
 
-      public const string Create = prefix + "Create";
+      public const string Create = prefix + "create";
 
-      public const string Edit = prefix + "Edit";
+      public const string Edit = prefix + "edit";
 
-      public const string Delete = prefix + "Delete/{Id}";
+      public const string Delete = prefix + "delete/{Id}";
+
+    }
+
+    public static class ServiceRouter
+    {
+      public const string prefix = Rule + "inventory/service/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
 
     }
     public static class WarehouseRouter

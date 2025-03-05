@@ -18,9 +18,13 @@ namespace Erp.Data.Dto.JournalEntry
     public int JournalEntryDetailID { get; set; }
     public int JournalEntryID { get; set; }
     public string? Description { get; set; }
+    public string AccountName { get; set; } = null!;
+
     public int AccountID { get; set; }
     public decimal Debit { get; set; } = 0.00M;
     public decimal Credit { get; set; } = 0.00M;
+    public string? CostCenterName { get; set; }
+
     public int? CostCenterId { get; set; }
 
 

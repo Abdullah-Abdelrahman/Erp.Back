@@ -17,7 +17,7 @@ namespace Erp.Core.Features.Product.Queries.Results
     public string? ImagePath { get; set; }
 
 
-    public List<E.Category> categories = new List<E.Category>();
+    public List<E.Category> categories { get; set; } = new List<E.Category>();
 
     //Image
     public byte[]? ImageFile { get; set; }

@@ -1,5 +1,6 @@
 using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.CustomersModule;
+using Erp.Data.Entities.InventoryModule;
 using Erp.Infrastructure.Abstracts;
 using Erp.Infrastructure.Abstracts.AccountsModule;
 using Erp.Infrastructure.Abstracts.CostCentersModule;
@@ -7,6 +8,7 @@ using Erp.Infrastructure.Abstracts.CustomersModule;
 using Erp.Infrastructure.Abstracts.Finance;
 using Erp.Infrastructure.Abstracts.HumanResources.OrganizationalStructure;
 using Erp.Infrastructure.Abstracts.HumanResources.Staff;
+using Erp.Infrastructure.Abstracts.InventoryModule;
 using Erp.Infrastructure.Abstracts.MainModule;
 using Erp.Infrastructure.Abstracts.SalesModule;
 using Erp.Infrastructure.Repositories;
@@ -16,6 +18,7 @@ using Erp.Infrastructure.Repositories.CustomersModule;
 using Erp.Infrastructure.Repositories.Finance;
 using Erp.Infrastructure.Repositories.HumanResources.OrganizationalStructure;
 using Erp.Infrastructure.Repositories.HumanResources.Staff;
+using Erp.Infrastructure.Repositories.InventoryModule;
 using Erp.Infrastructure.Repositories.MainModule;
 using Erp.Infrastructure.Repositories.SalesModule;
 using Erp.Service.Abstracts.MainModule;
@@ -32,6 +35,10 @@ namespace Name.Infrastructure
     {
 
 
+      services.AddTransient<IProductAndServiceRepository<ProductAndServiceBase>, ProductAndServiceRepository<ProductAndServiceBase>>();
+
+
+      services.AddTransient<IProductAndServiceRepository<Service>, ProductAndServiceRepository<Service>>();
 
       services.AddTransient<IProductRepository, ProductRepository>();
       services.AddTransient<ICategoryRepository, CategoryRepository>();

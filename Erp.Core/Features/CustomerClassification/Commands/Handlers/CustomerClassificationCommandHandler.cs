@@ -59,8 +59,8 @@ namespace Erp.Core.Features.CustomerClassification.Commands.Handlers
 
     public async Task<Response<string>> Handle(DeleteCustomerClassificationCommand request, CancellationToken cancellationToken)
     {
-      var CustomerClassificationMapper = _mapper.Map<Entitis.CustomersModule.CustomerClassification>(request);
-      var result = await _CustomerClassificationService.DeleteAsync(CustomerClassificationMapper);
+
+      var result = await _CustomerClassificationService.DeleteByIdAsync(request.Id);
 
       if (result == MessageCenter.CrudMessage.Success)
       {

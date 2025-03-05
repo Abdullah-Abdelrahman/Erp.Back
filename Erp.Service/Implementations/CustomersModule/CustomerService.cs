@@ -1,7 +1,10 @@
 using Erp.Data.Dto.Customer;
+using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.CustomersModule;
 using Erp.Data.MetaData;
+using Erp.Infrastructure.Abstracts.AccountsModule;
 using Erp.Infrastructure.Abstracts.CustomersModule;
+using Erp.Service.Abstracts.AccountsModule;
 using Erp.Service.Abstracts.CustomersModule;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,17 +16,26 @@ namespace Erp.Service.Implementations.CustomersModule
     private readonly ICustomerRepository<CommercialCustomer> _CommercialCustomerRepository;
     private readonly ICustomerRepository<IndividualCustomer> _IndividualCustomerRepository;
     private readonly IContactListRepository _contactListRepository;
+    private readonly IAccountRepository<SecondaryAccount> _SecondaryAccountRepository;
+    private readonly IAccountRepository<PrimaryAccount> _PrimaryAccountRepository;
+    private readonly IAccountService _accountService;
 
     // Constructor that injects the repository
     public CustomerService(ICustomerRepository<Customer> CustomerRepository, ICustomerRepository<CommercialCustomer> CommercialCustomerRepository,
-            ICustomerRepository<IndividualCustomer> IndividualCustomerRepository,
-IContactListRepository contactListRepository)
+        ICustomerRepository<IndividualCustomer> IndividualCustomerRepository,
+        IContactListRepository contactListRepository,
+        IAccountRepository<SecondaryAccount> SecondaryAccountRepository,
+        IAccountRepository<PrimaryAccount> PrimaryAccountRepository,
+        IAccountService accountService)
     {
       _CustomerRepository = CustomerRepository;
 
       _CommercialCustomerRepository = CommercialCustomerRepository;
       _IndividualCustomerRepository = IndividualCustomerRepository;
       _contactListRepository = contactListRepository;
+      _SecondaryAccountRepository = SecondaryAccountRepository;
+      _PrimaryAccountRepository = PrimaryAccountRepository;
+      _accountService = accountService;
     }
 
     public async Task<string> AddCustomerAsync(AddCustomerRequest request)
@@ -31,20 +43,20 @@ IContactListRepository contactListRepository)
       try
       {
         int CustomerId;
-
+        string CustomerName;
         if (request.commercialOrIndividual == CommercialOrIndividual.Commercial)
         {
           var customer = new IndividualCustomer(request);
           var result = await _CustomerRepository.AddAsync(customer);
           CustomerId = result.CustomerId;
-
+          CustomerName = customer.FullName;
         }
         else if (request.commercialOrIndividual == CommercialOrIndividual.Individual)
         {
           var customer = new CommercialCustomer(request);
           var result = await _CustomerRepository.AddAsync(customer);
           CustomerId = result.CustomerId;
-
+          CustomerName = customer.CommercialName;
         }
         else
         {
@@ -58,6 +70,18 @@ IContactListRepository contactListRepository)
 
           await _contactListRepository.AddAsync(contactList);
         }
+
+        var acc = new SecondaryAccount()
+        {
+          AccountName = CustomerName,
+          Type = AccountType.debtor,
+          Balance = 0,
+          ParentAccountID = (await _PrimaryAccountRepository.GetTableNoTracking().Where(a => a.AccountName == "Customers").SingleOrDefaultAsync())?.AccountID,
+          IsActive = true,
+          CreatedDate = DateTime.UtcNow,
+        };
+        await _accountService.AddAccountAsync(acc);
+
         return MessageCenter.CrudMessage.Success;
       }
       catch (Exception ex)

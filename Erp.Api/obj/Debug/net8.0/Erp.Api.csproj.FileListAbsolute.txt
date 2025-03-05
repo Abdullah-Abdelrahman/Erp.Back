@@ -543,6 +543,13 @@ E:\grad copy\Backend\Erp\Erp.Api\obj\Debug\net8.0\scopedcss\bundle\Erp.Api.style
 E:\grad copy\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.csproj.Up2Date
 E:\grad copy\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.genruntimeconfig.cache
 E:\grad copy\Backend\Erp\Erp.Api\obj\Debug\net8.0\ref\Erp.Api.dll
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.csproj.AssemblyReference.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.GeneratedMSBuildEditorConfig.editorconfig
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.AssemblyInfoInputs.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.AssemblyInfo.cs
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.csproj.CoreCompileInputs.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.MvcApplicationPartsAssemblyInfo.cache
+E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.sourcelink.json
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\bin\Debug\net8.0\appsettings.Development.json
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\bin\Debug\net8.0\appsettings.json
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\bin\Debug\net8.0\Erp.Api.exe
@@ -704,14 +711,6 @@ E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\b
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\bin\Debug\net8.0\Erp.Infrastructure.pdb
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\bin\Debug\net8.0\Erp.Data.pdb
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\bin\Debug\net8.0\Erp.Service.pdb
-E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.csproj.AssemblyReference.cache
-E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.GeneratedMSBuildEditorConfig.editorconfig
-E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.AssemblyInfoInputs.cache
-E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.AssemblyInfo.cs
-E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.csproj.CoreCompileInputs.cache
-E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.MvcApplicationPartsAssemblyInfo.cs
-E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.MvcApplicationPartsAssemblyInfo.cache
-E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\Erp.Api.sourcelink.json
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\staticwebassets.build.json
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\staticwebassets.development.json
 E:\All_of_my_projrcts\GraduationProject\Graduation-Project\Backend\Erp\Erp.Api\obj\Debug\net8.0\staticwebassets\msbuild.Erp.Api.Microsoft.AspNetCore.StaticWebAssets.props

@@ -43,6 +43,31 @@ namespace Erp.Service.Implementations.CustomersModule
 
     }
 
+    public async Task<string> DeleteByIdAsync(int id)
+    {
+      var CustomerClassification = await _CustomerClassificationRepository.GetByIdAsync(id);
+
+      if (CustomerClassification == null)
+      {
+        return MessageCenter.CrudMessage.DoesNotExist;
+      }
+      var transact = _CustomerClassificationRepository.BeginTransaction();
+
+      try
+      {
+        await _CustomerClassificationRepository.DeleteAsync(CustomerClassification);
+
+        await transact.CommitAsync();
+        return MessageCenter.CrudMessage.Success;
+
+      }
+      catch
+      {
+        await transact.RollbackAsync();
+        return MessageCenter.CrudMessage.Falied;
+      }
+    }
+
     public async Task<CustomerClassification> GetCustomerClassificationByIdAsync(int id)
     {
       var CustomerClassification = await _CustomerClassificationRepository.GetTableNoTracking().Where(x => x.Id == id).SingleOrDefaultAsync();

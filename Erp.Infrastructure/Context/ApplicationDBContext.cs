@@ -53,7 +53,13 @@ namespace Name.Infrastructure.Data
     // -------------------Inventory Module-----------------------//
 
     #region InventoryDbsets
+    public DbSet<ProductAndServiceBase> productAndServiceBases { get; set; }
     public DbSet<Product> Products { get; set; }// المنتجات
+    public DbSet<Service> services { get; set; }// الخدمات
+
+    public DbSet<PriceList> priceLists { get; set; }// 
+    public DbSet<PriceListItem> priceListItems { get; set; }// 
+
     public DbSet<Category> Categories { get; set; }// نوع النتج
     public DbSet<Warehouse> Warehouses { get; set; } // المخزن
 
@@ -170,6 +176,8 @@ namespace Name.Infrastructure.Data
 
     #region HumanResources
 
+    #region OrganizationalStructure
+
     public DbSet<Department> departments { get; set; }
 
     public DbSet<EmploymentLevel> employmentLevels { get; set; }
@@ -177,11 +185,23 @@ namespace Name.Infrastructure.Data
     public DbSet<EmploymentType> employmentTypes { get; set; }
 
     public DbSet<JobType> jobTypes { get; set; }
+    #endregion
+
+    #region Staff
+
+    #endregion
+
+    #region Salaries
+
+    #endregion
 
 
 
 
     #endregion
+
+
+
 
 
     #endregion
@@ -209,7 +229,10 @@ namespace Name.Infrastructure.Data
       #region Inventory
       // modelBuilder.UseEncryption(_encryptionProvider);
 
-      modelBuilder.Entity<Product>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<ProductAndServiceBase>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+
+      modelBuilder.Entity<PriceList>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<PriceListItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<Category>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<Warehouse>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<StockTransaction>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
@@ -220,7 +243,12 @@ namespace Name.Infrastructure.Data
       modelBuilder.Entity<TransformVoucher>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<TransformVoucherItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
 
-      modelBuilder.Entity<Product>()
+      modelBuilder.Entity<ProductAndServiceBase>()
+          .HasDiscriminator<string>("ProductOrService")
+          .HasValue<Product>("Product")
+          .HasValue<Service>("Service");
+
+      modelBuilder.Entity<ProductAndServiceBase>()
           .HasMany(p => p.StockTransactions)
           .WithOne(st => st.Product)
           .HasForeignKey(st => st.ProductId);
@@ -275,6 +303,14 @@ namespace Name.Infrastructure.Data
           .OnDelete(DeleteBehavior.Restrict);
 
 
+
+      modelBuilder.Entity<PriceList>().
+        HasMany(po => po.priceListItems).
+        WithOne(poi => poi.PriceList).
+        HasForeignKey(poi => poi.PriceListId);
+
+      modelBuilder.Entity<PriceListItem>()
+        .HasKey(p => new { p.PriceListId, p.ProductId });
       #endregion
 
 

@@ -21,7 +21,7 @@ namespace Erp.Core.Features.CustomerClassification.Commands.Validations
 
     public void ValidationRules()
     {
-      RuleFor(x => x.CustomerClassificationId).NotNull().WithMessage("CustomerClassificationId must not be null").NotEmpty().WithMessage("CustomerClassificationId must has value");
+      RuleFor(x => x.Id).NotNull().WithMessage("CustomerClassificationId must not be null").NotEmpty().WithMessage("CustomerClassificationId must has value");
 
 
     }

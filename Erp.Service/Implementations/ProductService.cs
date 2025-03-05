@@ -29,9 +29,9 @@ namespace Erp.Service.Implementations
     {
       var product = new Product()
       {
-        ProductName = ProductReq.ProductName,
+        Name = ProductReq.ProductName,
         Description = ProductReq.Description is null ? "" : ProductReq.Description,
-        InternalNotes = ProductReq.InternalNotes,
+        InternalNotes = ProductReq.InternalNotes is null ? "" : ProductReq.InternalNotes,
         PurchasePrice = ProductReq.PurchasePrice,
         SellPrice = ProductReq.SellPrice,
         LowestSellingPrice = ProductReq.LowestSellingPrice == null ? ProductReq.SellPrice : (decimal)ProductReq.LowestSellingPrice,
@@ -98,20 +98,33 @@ namespace Erp.Service.Implementations
     public async Task<string> UpdateAsync(UpdateProductRequest ProductReq)
     {
 
-      var product = new Product()
+
+
+      var product = await _productRepository.GetProductByIdAsync(ProductReq.ProductId);
+
+      if (product == null)
       {
-        ProductName = ProductReq.ProductName,
-        Description = ProductReq.Description is null ? "" : ProductReq.Description,
-        InternalNotes = ProductReq.InternalNotes,
-        PurchasePrice = ProductReq.PurchasePrice,
-        SellPrice = ProductReq.SellPrice,
-        LowestSellingPrice = ProductReq.LowestSellingPrice,
-        StockQuantity = ProductReq.StockQuantity,
-        MinAmountBeforNotefy = ProductReq.MinAmountBeforNotefy,
-        SupplierId = ProductReq.SupplierId
+        return MessageCenter.CrudMessage.DoesNotExist;
+      }
+      product.Name = ProductReq.ProductName;
+      product.Description = ProductReq.Description is null ? "" : ProductReq.Description;
+      product.InternalNotes = ProductReq.InternalNotes;
+      product.PurchasePrice = ProductReq.PurchasePrice;
+      product.SellPrice = ProductReq.SellPrice;
+      product.LowestSellingPrice = ProductReq.LowestSellingPrice;
+      product.StockQuantity = ProductReq.StockQuantity;
+      product.MinAmountBeforNotefy = ProductReq.MinAmountBeforNotefy;
+      product.SupplierId = ProductReq.SupplierId;
+      // product.Status= ProductReq.Status;
 
-      };
+      product.StockQuantity = ProductReq.StockQuantity;
+      // product.TrackInventory = ProductReq.;
 
+
+      foreach (var cat in product.categories.ToList())
+      {
+        product.categories.Remove(cat);
+      }
 
       foreach (var id in ProductReq.categoriesIds)
       {
