@@ -359,6 +359,9 @@ namespace Erp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
@@ -405,6 +408,8 @@ namespace Erp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
+
+                    b.HasIndex("AccountId");
 
                     b.HasIndex("ClassificationId");
 
@@ -577,9 +582,6 @@ namespace Erp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ExpenseId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -590,8 +592,6 @@ namespace Erp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ExpenseId");
 
                     b.ToTable("ExpenseCategories");
                 });
@@ -804,6 +804,10 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("DepartmentID");
 
                     b.HasIndex("DepartmentHeadID");
@@ -831,6 +835,10 @@ namespace Erp.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
                     b.ToTable("employmentLevels");
@@ -855,6 +863,10 @@ namespace Erp.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -883,6 +895,10 @@ namespace Erp.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -938,9 +954,6 @@ namespace Erp.Infrastructure.Migrations
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CompanyID")
-                        .HasColumnType("int");
 
                     b.Property<string>("Country")
                         .IsRequired()
@@ -1002,6 +1015,7 @@ namespace Erp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleID")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Status")
@@ -1022,8 +1036,6 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("EmployeeID");
 
-                    b.HasIndex("CompanyID");
-
                     b.HasIndex("DepartmentID");
 
                     b.HasIndex("DirectManagerId");
@@ -1036,7 +1048,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("RoleID");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Category", b =>
@@ -1081,6 +1093,9 @@ namespace Erp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeliveryVoucherId"));
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DeliveryDate")
                         .HasColumnType("datetime2");
 
@@ -1091,10 +1106,17 @@ namespace Erp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("VoucherStatusId")
+                        .HasColumnType("int");
+
                     b.Property<int>("WarehouseId")
                         .HasColumnType("int");
 
                     b.HasKey("DeliveryVoucherId");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("VoucherStatusId");
 
                     b.HasIndex("WarehouseId");
 
@@ -1141,6 +1163,9 @@ namespace Erp.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1238,25 +1263,30 @@ namespace Erp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReceivingVoucherId"));
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ReceivingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SupplierId")
-                        .HasColumnType("int");
-
                     b.Property<string>("TenantId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VoucherStatusId")
+                        .HasColumnType("int");
 
                     b.Property<int>("WarehouseId")
                         .HasColumnType("int");
 
                     b.HasKey("ReceivingVoucherId");
 
-                    b.HasIndex("SupplierId");
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("VoucherStatusId");
 
                     b.HasIndex("WarehouseId");
 
@@ -1294,6 +1324,58 @@ namespace Erp.Infrastructure.Migrations
                     b.HasIndex("receivingVoucherId");
 
                     b.ToTable("receivingVoucherItems");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.StockTaking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("stockTakings");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.StockTakingItem", b =>
+                {
+                    b.Property<int>("StockTakingId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DecreaseAndExcess")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberIStock")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberInProgram")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StockTakingId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("stockTakingItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.StockTransaction", b =>
@@ -1341,7 +1423,7 @@ namespace Erp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransformVoucherId"));
 
-                    b.Property<int?>("FromWarehouseId")
+                    b.Property<int>("FromWarehouseId")
                         .HasColumnType("int");
 
                     b.Property<string>("Notes")
@@ -1351,7 +1433,7 @@ namespace Erp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ToWarehouseId")
+                    b.Property<int>("ToWarehouseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("TransformDate")
@@ -1396,6 +1478,27 @@ namespace Erp.Infrastructure.Migrations
                     b.ToTable("transformVoucherItems");
                 });
 
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.VoucherStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("voucherStatuses");
+                });
+
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Warehouse", b =>
                 {
                     b.Property<int>("WarehouseId")
@@ -1406,6 +1509,9 @@ namespace Erp.Infrastructure.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("bit");
 
                     b.Property<string>("TenantId")
                         .IsRequired()
@@ -1418,28 +1524,6 @@ namespace Erp.Infrastructure.Migrations
                     b.HasKey("WarehouseId");
 
                     b.ToTable("Warehouses");
-                });
-
-            modelBuilder.Entity("Erp.Data.Entities.MainModule.ApplicationClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ModuleID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ModuleID");
-
-                    b.ToTable("applicationClaims");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.Company", b =>
@@ -1477,6 +1561,50 @@ namespace Erp.Infrastructure.Migrations
                     b.ToTable("companies");
                 });
 
+            modelBuilder.Entity("Erp.Data.Entities.MainModule.CompanyModule", b =>
+                {
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("CompanyId", "ModuleId");
+
+                    b.HasIndex("ModuleId");
+
+                    b.ToTable("companyModules");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.MainModule.CompanySubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubscriptionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("SubscriptionId");
+
+                    b.ToTable("companySubscriptions");
+                });
+
             modelBuilder.Entity("Erp.Data.Entities.MainModule.Module", b =>
                 {
                     b.Property<int>("ModuleID")
@@ -1485,10 +1613,15 @@ namespace Erp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ModuleID"));
 
+                    b.Property<string>("ClaimList")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -1498,14 +1631,9 @@ namespace Erp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SubscriptionId")
-                        .HasColumnType("int");
-
                     b.HasKey("ModuleID");
 
-                    b.HasIndex("SubscriptionId");
-
-                    b.ToTable("Module");
+                    b.ToTable("modules");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.Subscription", b =>
@@ -1516,15 +1644,15 @@ namespace Erp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CompanyID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1535,9 +1663,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyID");
-
-                    b.ToTable("Subscription");
+                    b.ToTable("subscriptions");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.UserBase", b =>
@@ -1676,6 +1802,9 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("JournalEntryID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("NoteDate")
                         .HasColumnType("datetime2");
 
@@ -1690,6 +1819,8 @@ namespace Erp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DebitNoteId");
+
+                    b.HasIndex("JournalEntryID");
 
                     b.HasIndex("SupplierId");
 
@@ -1766,6 +1897,9 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
 
+                    b.Property<int>("JournalEntryID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
@@ -1783,6 +1917,8 @@ namespace Erp.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PurchaseInvoiceId");
+
+                    b.HasIndex("JournalEntryID");
 
                     b.HasIndex("SupplierId");
 
@@ -1836,6 +1972,9 @@ namespace Erp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PurchaseReturnId"));
 
+                    b.Property<int>("JournalEntryID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
@@ -1853,6 +1992,8 @@ namespace Erp.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PurchaseReturnId");
+
+                    b.HasIndex("JournalEntryID");
 
                     b.HasIndex("supplierId");
 
@@ -1909,6 +2050,9 @@ namespace Erp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupplierId"));
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
@@ -1924,6 +2068,8 @@ namespace Erp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SupplierId");
+
+                    b.HasIndex("AccountId");
 
                     b.ToTable("Suppliers");
                 });
@@ -2339,6 +2485,21 @@ namespace Erp.Infrastructure.Migrations
                     b.ToTable("recurringInvoiceItems");
                 });
 
+            modelBuilder.Entity("ExpenseExpenseCategory", b =>
+                {
+                    b.Property<int>("ExpensesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("expenseCategoriesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExpensesId", "expenseCategoriesId");
+
+                    b.HasIndex("expenseCategoriesId");
+
+                    b.ToTable("ExpenseExpenseCategory");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -2733,9 +2894,17 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Erp.Data.Entities.CustomersModule.Customer", b =>
                 {
+                    b.HasOne("Erp.Data.Entities.AccountsModule.SecondaryAccount", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Erp.Data.Entities.CustomersModule.CustomerClassification", "Classification")
                         .WithMany()
                         .HasForeignKey("ClassificationId");
+
+                    b.Navigation("Account");
 
                     b.Navigation("Classification");
                 });
@@ -2782,13 +2951,6 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("Supplier");
 
                     b.Navigation("Treasury");
-                });
-
-            modelBuilder.Entity("Erp.Data.Entities.Finance.ExpenseCategory", b =>
-                {
-                    b.HasOne("Erp.Data.Entities.Finance.Expense", null)
-                        .WithMany("expenseCategories")
-                        .HasForeignKey("ExpenseId");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.Finance.MultiAccReceiptItem", b =>
@@ -2881,12 +3043,6 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Erp.Data.Entities.HumanResources.Staff.Employee", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.MainModule.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Erp.Data.Entities.HumanResources.OrganizationalStructure.Department", "Department")
                         .WithMany()
                         .HasForeignKey("DepartmentID");
@@ -2909,9 +3065,9 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasOne("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleID");
-
-                    b.Navigation("Company");
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
 
@@ -2941,11 +3097,27 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.DeliveryVoucher", b =>
                 {
+                    b.HasOne("Erp.Data.Entities.AccountsModule.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Erp.Data.Entities.InventoryModule.VoucherStatus", "VoucherStatus")
+                        .WithMany()
+                        .HasForeignKey("VoucherStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Erp.Data.Entities.InventoryModule.Warehouse", "Warehouse")
                         .WithMany("deliveryVouchers")
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("VoucherStatus");
 
                     b.Navigation("Warehouse");
                 });
@@ -2977,7 +3149,7 @@ namespace Erp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Erp.Data.Entities.InventoryModule.Product", "Product")
+                    b.HasOne("Erp.Data.Entities.InventoryModule.ProductAndServiceBase", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -2990,9 +3162,15 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.ReceivingVoucher", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.PurchasesModule.Supplier", "Supplier")
+                    b.HasOne("Erp.Data.Entities.AccountsModule.Account", "Account")
                         .WithMany()
-                        .HasForeignKey("SupplierId")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Erp.Data.Entities.InventoryModule.VoucherStatus", "VoucherStatus")
+                        .WithMany()
+                        .HasForeignKey("VoucherStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -3002,7 +3180,9 @@ namespace Erp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Supplier");
+                    b.Navigation("Account");
+
+                    b.Navigation("VoucherStatus");
 
                     b.Navigation("Warehouse");
                 });
@@ -3024,6 +3204,25 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("receivingVoucher");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.StockTakingItem", b =>
+                {
+                    b.HasOne("Erp.Data.Entities.InventoryModule.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Erp.Data.Entities.InventoryModule.StockTaking", "StockTaking")
+                        .WithMany("stockTakingItems")
+                        .HasForeignKey("StockTakingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("StockTaking");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.StockTransaction", b =>
@@ -3050,12 +3249,14 @@ namespace Erp.Infrastructure.Migrations
                     b.HasOne("Erp.Data.Entities.InventoryModule.Warehouse", "FromWarehouse")
                         .WithMany()
                         .HasForeignKey("FromWarehouseId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Erp.Data.Entities.InventoryModule.Warehouse", "ToWarehouse")
                         .WithMany()
                         .HasForeignKey("ToWarehouseId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("FromWarehouse");
 
@@ -3081,25 +3282,42 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("transformVoucher");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.MainModule.ApplicationClaim", b =>
+            modelBuilder.Entity("Erp.Data.Entities.MainModule.CompanyModule", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.MainModule.Module", null)
-                        .WithMany("ClaimList")
-                        .HasForeignKey("ModuleID");
+                    b.HasOne("Erp.Data.Entities.MainModule.Company", "Company")
+                        .WithMany("companyModules")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Erp.Data.Entities.MainModule.Module", "Module")
+                        .WithMany()
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Module");
                 });
 
-            modelBuilder.Entity("Erp.Data.Entities.MainModule.Module", b =>
+            modelBuilder.Entity("Erp.Data.Entities.MainModule.CompanySubscription", b =>
                 {
-                    b.HasOne("Erp.Data.Entities.MainModule.Subscription", null)
-                        .WithMany("Modules")
-                        .HasForeignKey("SubscriptionId");
-                });
+                    b.HasOne("Erp.Data.Entities.MainModule.Company", "Company")
+                        .WithMany("companySubscriptions")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("Erp.Data.Entities.MainModule.Subscription", b =>
-                {
-                    b.HasOne("Erp.Data.Entities.MainModule.Company", null)
-                        .WithMany("Subscriptions")
-                        .HasForeignKey("CompanyID");
+                    b.HasOne("Erp.Data.Entities.MainModule.Subscription", "Subscription")
+                        .WithMany("companySubscriptions")
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Subscription");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.UserBase", b =>
@@ -3140,11 +3358,19 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.DebitNote", b =>
                 {
+                    b.HasOne("Erp.Data.Entities.AccountsModule.JournalEntry", "JournalEntry")
+                        .WithMany()
+                        .HasForeignKey("JournalEntryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Erp.Data.Entities.PurchasesModule.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("JournalEntry");
 
                     b.Navigation("Supplier");
                 });
@@ -3170,11 +3396,19 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.PurchaseInvoice", b =>
                 {
+                    b.HasOne("Erp.Data.Entities.AccountsModule.JournalEntry", "JournalEntry")
+                        .WithMany()
+                        .HasForeignKey("JournalEntryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Erp.Data.Entities.PurchasesModule.Supplier", "Supplier")
                         .WithMany("PurchaseInvoices")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("JournalEntry");
 
                     b.Navigation("Supplier");
                 });
@@ -3200,11 +3434,19 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.PurchaseReturn", b =>
                 {
+                    b.HasOne("Erp.Data.Entities.AccountsModule.JournalEntry", "JournalEntry")
+                        .WithMany()
+                        .HasForeignKey("JournalEntryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Erp.Data.Entities.PurchasesModule.Supplier", "supplier")
                         .WithMany()
                         .HasForeignKey("supplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("JournalEntry");
 
                     b.Navigation("supplier");
                 });
@@ -3226,6 +3468,17 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("PurchaseReturn");
+                });
+
+            modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.Supplier", b =>
+                {
+                    b.HasOne("Erp.Data.Entities.AccountsModule.SecondaryAccount", "Account")
+                        .WithMany()
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.SalesModule.CreditNote", b =>
@@ -3367,6 +3620,21 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("product");
                 });
 
+            modelBuilder.Entity("ExpenseExpenseCategory", b =>
+                {
+                    b.HasOne("Erp.Data.Entities.Finance.Expense", null)
+                        .WithMany()
+                        .HasForeignKey("ExpensesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Erp.Data.Entities.Finance.ExpenseCategory", null)
+                        .WithMany()
+                        .HasForeignKey("expenseCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", null)
@@ -3459,8 +3727,6 @@ namespace Erp.Infrastructure.Migrations
                 {
                     b.Navigation("ExpenseCostCenters");
 
-                    b.Navigation("expenseCategories");
-
                     b.Navigation("multiAccExpenseItems");
                 });
 
@@ -3500,6 +3766,11 @@ namespace Erp.Infrastructure.Migrations
                     b.Navigation("receivingVoucherItems");
                 });
 
+            modelBuilder.Entity("Erp.Data.Entities.InventoryModule.StockTaking", b =>
+                {
+                    b.Navigation("stockTakingItems");
+                });
+
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.TransformVoucher", b =>
                 {
                     b.Navigation("TransformItems");
@@ -3516,17 +3787,14 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.Company", b =>
                 {
-                    b.Navigation("Subscriptions");
-                });
+                    b.Navigation("companyModules");
 
-            modelBuilder.Entity("Erp.Data.Entities.MainModule.Module", b =>
-                {
-                    b.Navigation("ClaimList");
+                    b.Navigation("companySubscriptions");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.Subscription", b =>
                 {
-                    b.Navigation("Modules");
+                    b.Navigation("companySubscriptions");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.DebitNote", b =>

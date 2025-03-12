@@ -8,10 +8,6 @@ namespace Erp.Data.Entities.AccountsModule
     [Key]
     public int JournalEntryID { get; set; }
 
-    //public int CompanyID { get; set; }
-    //[ForeignKey("CompanyID")]
-    //public Company Company { get; set; }
-
 
     [Column(TypeName = "datetime")]
     public DateTime EntryDate { get; set; } = DateTime.UtcNow;

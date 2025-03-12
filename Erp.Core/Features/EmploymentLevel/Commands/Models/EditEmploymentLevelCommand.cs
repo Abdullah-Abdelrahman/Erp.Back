@@ -6,6 +6,7 @@ namespace Erp.Core.Features.EmploymentLevel.Commands.Models
 {
   public class EditEmploymentLevelCommand : IRequest<Response<string>>
   {
+    [Required]
     public int Id { get; set; }
 
     [Required]
@@ -13,6 +14,10 @@ namespace Erp.Core.Features.EmploymentLevel.Commands.Models
     public string Name { get; set; } = string.Empty;
 
     public string Description { get; set; } = string.Empty;
+
+
+    [Required]
+    public bool IsActive { get; set; } = true;
 
   }
 }

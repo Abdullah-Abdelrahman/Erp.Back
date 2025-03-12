@@ -5,7 +5,7 @@ namespace Erp.Data.Entities.HumanResources.OrganizationalStructure
 {
   //مثل محاسب، مسئول شبكات، فني. وحدد له وصفًا تعريفيًا بالأدوار والمسئوليات
   //المسمي الوظيفي
-  public class JobType
+  public class JobType : IMustHaveTenant
   {
     [Key]
     public int ID { get; set; }
@@ -22,5 +22,7 @@ namespace Erp.Data.Entities.HumanResources.OrganizationalStructure
     public int? DepartmentId { get; set; }
     [ForeignKey("DepartmentId")]
     public Department? Department { get; set; }
+
+    public string TenantId { get; set; } = null!;
   }
 }

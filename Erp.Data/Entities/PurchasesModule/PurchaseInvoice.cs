@@ -1,3 +1,6 @@
+using Erp.Data.Entities.AccountsModule;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Erp.Data.Entities.PurchasesModule
 {
   public class PurchaseInvoice : IMustHaveTenant
@@ -15,6 +18,9 @@ namespace Erp.Data.Entities.PurchasesModule
     public int SupplierId { get; set; }
     public Supplier Supplier { get; set; }
 
+    public int JournalEntryID { get; set; }
+    [ForeignKey("JournalEntryID")]
+    public JournalEntry JournalEntry { get; set; }
     public ICollection<PurchaseInvoiceItem> Items { get; set; } = new List<PurchaseInvoiceItem>();
     public string TenantId { get; set; } = null!;
 

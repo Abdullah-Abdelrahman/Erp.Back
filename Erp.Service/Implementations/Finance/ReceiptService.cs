@@ -122,7 +122,8 @@ IMultiAccReceiptItemRepository multiAccReceiptItemRepository)
             var ReceiptCostCenterItem = new MultiAccReceiptItem()
             {
               receiptId = newReceipt.Id,
-              SecondaryAccountId = newReceipt.SubAccountId == null ? SubAccId : newReceipt.SubAccountId,
+              SecondaryAccountId = item.SecondaryAccountId == null ? SubAccId :
+              (int)item.SecondaryAccountId,
               CostCenterId = item.CostCenterId,
               Amount = item.Amount,
               Tax = item.Tax

@@ -8,7 +8,7 @@ namespace Erp.Data.Entities.InventoryModule
     public int ProductId { get; set; }
 
     [ForeignKey("ProductId")]
-    public Product Product { get; set; } = null!;
+    public ProductAndServiceBase Product { get; set; } = null!;
 
     public int PriceListId { get; set; }
 

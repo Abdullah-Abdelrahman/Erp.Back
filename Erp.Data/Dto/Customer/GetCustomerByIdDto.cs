@@ -30,6 +30,7 @@ namespace Erp.Data.Dto.Customer
     public int? ClassificationId { get; set; }
 
     public string? Notes { get; set; }
+    public int AccountId { get; set; } // الحساب الفرعي (اختياري)
 
     public List<GetContactListDT0> contactListDT0s { get; set; } = new List<GetContactListDT0>();
   }

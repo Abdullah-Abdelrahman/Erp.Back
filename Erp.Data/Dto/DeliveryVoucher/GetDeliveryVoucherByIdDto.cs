@@ -1,3 +1,4 @@
+using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.InventoryModule;
 using E = Erp.Data.Entities.InventoryModule;
 namespace Erp.Data.Dto.DeliveryVoucher
@@ -10,6 +11,9 @@ namespace Erp.Data.Dto.DeliveryVoucher
 
     public Warehouse Warehouse { get; set; }
 
+    public Account Account { get; set; } = null!;
+
+    public VoucherStatus VoucherStatus { get; set; }
     public List<DeliveryVoucherItemDto> deliveryVoucherItemDto { get; set; } = new List<DeliveryVoucherItemDto>();
   }
 

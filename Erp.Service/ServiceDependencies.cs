@@ -4,6 +4,7 @@ using Erp.Service.Abstracts.CostCentersModule;
 using Erp.Service.Abstracts.CustomersModule;
 using Erp.Service.Abstracts.Finance;
 using Erp.Service.Abstracts.HumanResources.OrganizationalStructure;
+using Erp.Service.Abstracts.HumanResources.Staff;
 using Erp.Service.Abstracts.InventoryModule;
 using Erp.Service.Abstracts.MainModule;
 using Erp.Service.Abstracts.SalesModule;
@@ -13,6 +14,7 @@ using Erp.Service.Implementations.CostCentersModule;
 using Erp.Service.Implementations.CustomersModule;
 using Erp.Service.Implementations.Finance;
 using Erp.Service.Implementations.HumanResources.OrganizationalStructure;
+using Erp.Service.Implementations.HumanResources.Staff;
 using Erp.Service.Implementations.InventoryModule;
 using Erp.Service.Implementations.MainModule;
 using Erp.Service.Implementations.SalesModule;
@@ -39,6 +41,8 @@ namespace Name.Service
       services.AddTransient<IProductAndServiceBaseService, ProductAndServiceBaseService>();
       services.AddTransient<IProductService, ProductService>();
       services.AddTransient<ICategoryService, CategoryService>();
+      services.AddTransient<IPriceListService, PriceListService>();
+      services.AddTransient<IStockTakingService, StockTakingService>();
       services.AddTransient<IStockTransactionService, StockTransactionService>();
       services.AddTransient<IDeliveryVoucherService, DeliveryVoucherService>();
       services.AddTransient<IReceivingVoucherService, ReceivingVoucherService>();
@@ -127,8 +131,18 @@ namespace Name.Service
 
 
 
+      services.AddTransient<IEmployeeService, EmployeeService>();
+
+
+      services.AddTransient<IModuleService, ModuleService>();
 
       services.AddTransient<ICompanyService, CompanyService>();
+
+      services.AddTransient<ICompanyModuleService, CompanyModuleService>();
+
+      services.AddTransient<ISubscriptionService, SubscriptionService>();
+
+
 
 
       //to make it the same instance for the life time of a request

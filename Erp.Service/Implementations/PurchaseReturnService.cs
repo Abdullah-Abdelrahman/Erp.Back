@@ -1,7 +1,9 @@
 using Erp.Data.Dto.PurchaseReturn;
+using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
+using Erp.Infrastructure.Abstracts.AccountsModule;
 using Erp.Service.Abstracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,16 +15,28 @@ namespace Erp.Service.Implementations
     private readonly IPurchaseReturnItemRepository _PurchaseReturnItemRepository;
     private readonly IProductService _productService;
     private readonly IWarehouseService _warehouseService;
+    private readonly IJournalEntryRepository _journalEntryRepository;
+    private readonly IJournalEntryDetailRepository _journalEntryDetailRepository;
 
+    private readonly IAccountRepository<SecondaryAccount> _SecondaryAccountRepository;
+    private readonly ISupplierService _supplierService;
 
 
     // Isupplair
-    public PurchaseReturnService(IPurchaseReturnRepository PurchaseReturnRepository, IProductService productService, IWarehouseService warehouseService, IPurchaseReturnItemRepository PurchaseReturnItemRepository)
+    public PurchaseReturnService(IPurchaseReturnRepository PurchaseReturnRepository, IProductService productService, IWarehouseService warehouseService, IPurchaseReturnItemRepository PurchaseReturnItemRepository,
+      IJournalEntryRepository journalEntryRepository,
+      IJournalEntryDetailRepository journalEntryDetailRepository,
+      IAccountRepository<SecondaryAccount> SecondaryAccountRepository,
+      ISupplierService supplierService)
     {
       _PurchaseReturnRepository = PurchaseReturnRepository;
       _PurchaseReturnItemRepository = PurchaseReturnItemRepository;
       _productService = productService;
       _warehouseService = warehouseService;
+      _journalEntryRepository = journalEntryRepository;
+      _journalEntryDetailRepository = journalEntryDetailRepository;
+      _supplierService = supplierService;
+      _SecondaryAccountRepository = SecondaryAccountRepository;
     }
     public async Task<string> AddPurchaseReturn(AddPurchaseReturnRequest PurchaseReturnRequest)
     {
@@ -38,7 +52,22 @@ namespace Erp.Service.Implementations
       var transact = _PurchaseReturnRepository.BeginTransaction();
       try
       {
+        JournalEntry JournalEntry = new JournalEntry()
+        {
+          EntryDate = DateTime.Now,
+          Description = "Purchase Refund #"
+        };
+        var NewJournalEntry = await _journalEntryRepository.AddAsync(JournalEntry);
+
+        PurchaseReturn.JournalEntryID = NewJournalEntry.JournalEntryID;
         var newPurchaseReturn = await _PurchaseReturnRepository.AddAsync(PurchaseReturn);
+
+        NewJournalEntry.Description += newPurchaseReturn.PurchaseReturnId.ToString();
+        await _journalEntryRepository.UpdateAsync(NewJournalEntry);
+
+
+
+        decimal total = 0;
 
         foreach (var item in PurchaseReturnRequest.PurchaseReturnItemDT0s)
         {
@@ -51,11 +80,41 @@ namespace Erp.Service.Implementations
             Tax = item.Tax,
             discount = item.discount,
           };
+          total += item.Quantity * item.UnitPrice;
 
           await _PurchaseReturnItemRepository.AddAsync(PurchaseReturnItem);
         }
 
+        var PurAccId = (await _SecondaryAccountRepository.GetTableNoTracking()
+     .Where(x => x.AccountName == "Purchases").SingleAsync()).AccountID;
 
+        await _journalEntryDetailRepository.AddAsync(new JournalEntryDetail()
+        {
+          JournalEntryID = NewJournalEntry.JournalEntryID,
+          Description = "Purchase Refund #" + newPurchaseReturn.PurchaseReturnId.ToString(),
+
+          AccountID = PurAccId,
+          Debit = 0.00M,
+          Credit = total
+        });
+
+        var supplierAccId = (await _supplierService.GetSupplierByIdAsync(newPurchaseReturn.supplierId)).AccountId;
+        await _journalEntryDetailRepository.AddAsync(new JournalEntryDetail()
+        {
+          JournalEntryID = NewJournalEntry.JournalEntryID,
+
+          Description = "Purchase Refund #" + newPurchaseReturn.PurchaseReturnId.ToString(),
+
+          AccountID = supplierAccId,
+          Debit = total,
+          Credit = 0.00M
+        });
+
+
+
+        newPurchaseReturn.TotalAmount = total;
+
+        await _PurchaseReturnRepository.UpdateAsync(newPurchaseReturn);
 
 
         await transact.CommitAsync();
@@ -100,6 +159,7 @@ namespace Erp.Service.Implementations
         Notes = PurchaseReturn.Notes,
         TotalAmount = PurchaseReturn.TotalAmount,
         SupplierId = PurchaseReturn.supplierId,
+        JournalEntryID = PurchaseReturn.JournalEntryID,
         PurchaseReturnItemsDto = new List<PurchaseReturnItemDto>()
       };
 
@@ -128,7 +188,8 @@ namespace Erp.Service.Implementations
         InvoiceDate = x.ReturnDate,
         Notes = x.Notes,
         TotalAmount = x.TotalAmount,
-        SupplierId = x.supplierId
+        SupplierId = x.supplierId,
+        JournalEntryID = x.JournalEntryID,
 
 
       }));

@@ -13,5 +13,10 @@ namespace Erp.Core.Features.Department.Commands.Models
 
     public string Description { get; set; } = string.Empty;
 
+    [Required]
+    public bool IsActive { get; set; } = true;
+
+
+    public int? DepartmentHeadID { get; set; }
   }
 }

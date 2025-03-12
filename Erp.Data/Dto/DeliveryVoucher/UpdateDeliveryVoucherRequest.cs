@@ -8,6 +8,8 @@ namespace Erp.Data.Dto.DeliveryVoucher
 
     // Foreign Keys
     public int WarehouseId { get; set; }
+    // Foreign Key - acc
+    public int AccountId { get; set; }
 
     public List<DeliveryVoucherItemUpdateDT0> DeliveryVoucherItems { get; set; }
   }

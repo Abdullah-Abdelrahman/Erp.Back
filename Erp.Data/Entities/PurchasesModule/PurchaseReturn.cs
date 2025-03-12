@@ -1,3 +1,4 @@
+using Erp.Data.Entities.AccountsModule;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.PurchasesModule
@@ -15,7 +16,9 @@ namespace Erp.Data.Entities.PurchasesModule
     public int supplierId { get; set; }
     [ForeignKey("supplierId")]
     public Supplier supplier { get; set; }
-
+    public int JournalEntryID { get; set; }
+    [ForeignKey("JournalEntryID")]
+    public JournalEntry JournalEntry { get; set; }
     public ICollection<PurchaseReturnItem> Items { get; set; } = new List<PurchaseReturnItem>();
 
     public string TenantId { get; set; } = null!;

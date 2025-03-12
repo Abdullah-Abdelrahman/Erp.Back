@@ -1,7 +1,10 @@
 using Erp.Data.Dto.DeliveryVoucher;
+using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.InventoryModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
+using Erp.Infrastructure.Abstracts.AccountsModule;
+using Erp.Infrastructure.Abstracts.InventoryModule;
 using Erp.Service.Abstracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,28 +15,62 @@ namespace Erp.Service.Implementations
     private readonly IDeliveryVoucherRepository _DeliveryVoucherRepository;
     private readonly IDeliveryVoucherItemRepository _DeliveryVoucherItemRepository;
     private readonly IProductService _productService;
-    private readonly IWarehouseService _warehouseService;
+    private readonly IWarehouseRepository _warehouseRepository;
+    private readonly IAccountRepository<SecondaryAccount> _accountRepository;
+    private readonly IVoucherStatusRepository _voucherStatusRepository;
 
 
 
     // Isupplair
-    public DeliveryVoucherService(IDeliveryVoucherRepository DeliveryVoucherRepository, IProductService productService, IWarehouseService warehouseService, IDeliveryVoucherItemRepository DeliveryVoucherItemRepository)
+    public DeliveryVoucherService(
+      IDeliveryVoucherRepository DeliveryVoucherRepository,
+      IProductService productService,
+      IWarehouseRepository warehouseRepository,
+      IDeliveryVoucherItemRepository DeliveryVoucherItemRepository,
+       IAccountRepository<SecondaryAccount> accountRepository,
+      IVoucherStatusRepository voucherStatusRepository)
     {
       _DeliveryVoucherRepository = DeliveryVoucherRepository;
       _DeliveryVoucherItemRepository = DeliveryVoucherItemRepository;
       _productService = productService;
-      _warehouseService = warehouseService;
+      _warehouseRepository = warehouseRepository;
+      _accountRepository = accountRepository;
+      _voucherStatusRepository = voucherStatusRepository;
     }
-
+    private async Task<int> GetDefaultSubAccountId()
+    {
+      var Acc = (await _accountRepository.GetTableNoTracking().
+        Where(a => a.AccountName == "Other Debtors").SingleOrDefaultAsync());
+      if (Acc == null)
+      {
+        return 0;
+      }
+      return Acc.AccountID;
+    }
+    private async Task<int> GetDefaultWarehouseId()
+    {
+      var warehouse = (await _warehouseRepository.GetTableNoTracking().
+        Where(a => a.IsPrimary == true).SingleOrDefaultAsync());
+      if (warehouse == null)
+      {
+        return 0;
+      }
+      return warehouse.WarehouseId;
+    }
 
     public async Task<string> AddDeliveryVoucher(AddDeliveryVoucherRequest DeliveryVoucherRequest)
     {
+      var accId = await GetDefaultSubAccountId();
+      var PrimaryWarhouseId = await GetDefaultSubAccountId();
       var DeliveryVoucher = new DeliveryVoucher()
       {
         DeliveryDate = (DateTime)DeliveryVoucherRequest.DeliveryDate,
         Notes = DeliveryVoucherRequest.Notes,
-        WarehouseId = DeliveryVoucherRequest.WarehouseId
-
+        WarehouseId = DeliveryVoucherRequest.WarehouseId is null ? PrimaryWarhouseId :
+        (int)DeliveryVoucherRequest.WarehouseId,
+        AccountId = DeliveryVoucherRequest.AccountId is null ? accId :
+        (int)DeliveryVoucherRequest.AccountId,
+        VoucherStatusId = 1
       };
 
 
@@ -91,7 +128,12 @@ namespace Erp.Service.Implementations
 
     public async Task<GetDeliveryVoucherByIdDto> GetDeliveryVoucherByIdAsync(int id)
     {
-      var DeliveryVoucher = _DeliveryVoucherRepository.GetTableNoTracking().Where(x => x.DeliveryVoucherId == id).Include(x => x.Warehouse).Include(x => x.deliveryVoucherItems).ThenInclude(r => r.Product).SingleOrDefault();
+      var DeliveryVoucher = _DeliveryVoucherRepository.GetTableNoTracking()
+        .Where(x => x.DeliveryVoucherId == id)
+        .Include(x => x.Warehouse)
+        .Include(x => x.Account)
+        .Include(x => x.VoucherStatus)
+        .Include(x => x.deliveryVoucherItems).ThenInclude(r => r.Product).SingleOrDefault();
 
       var dto = new GetDeliveryVoucherByIdDto()
       {
@@ -99,6 +141,8 @@ namespace Erp.Service.Implementations
         DeliveryDate = DeliveryVoucher.DeliveryDate,
         Notes = DeliveryVoucher.Notes,
         Warehouse = DeliveryVoucher.Warehouse,
+        Account = DeliveryVoucher.Account,
+        VoucherStatus = DeliveryVoucher.VoucherStatus,
         deliveryVoucherItemDto = new List<DeliveryVoucherItemDto>()
       };
 
@@ -117,7 +161,11 @@ namespace Erp.Service.Implementations
 
     public async Task<List<GetDeliveryVoucherByIdDto>> GetDeliveryVouchersListAsync()
     {
-      var DeliveryVouchers = _DeliveryVoucherRepository.GetTableNoTracking().Include(x => x.Warehouse).ToList();
+      var DeliveryVouchers = _DeliveryVoucherRepository
+        .GetTableNoTracking()
+        .Include(x => x.Warehouse)
+        .Include(x => x.Account)
+        .Include(x => x.VoucherStatus).ToList();
 
       var dtoList = new List<GetDeliveryVoucherByIdDto>();
 
@@ -126,7 +174,9 @@ namespace Erp.Service.Implementations
         DeliveryVoucherId = x.DeliveryVoucherId,
         DeliveryDate = x.DeliveryDate,
         Notes = x.Notes,
-        Warehouse = x.Warehouse
+        Warehouse = x.Warehouse,
+        Account = x.Account,
+        VoucherStatus = x.VoucherStatus,
 
 
       }));
@@ -136,13 +186,20 @@ namespace Erp.Service.Implementations
 
     public async Task<string> UpdateAsync(UpdateDeliveryVoucherRequest DeliveryVoucherRequest)
     {
-      var DeliveryVoucher = new DeliveryVoucher()
+      var DeliveryVoucher = await _DeliveryVoucherRepository.GetTableAsTracking()
+       .Where(x => x.DeliveryVoucherId == DeliveryVoucherRequest.DeliveryVoucherId)
+       .FirstOrDefaultAsync();
+
+      if (DeliveryVoucher == null)
       {
-        DeliveryVoucherId = DeliveryVoucherRequest.DeliveryVoucherId,
-        DeliveryDate = DeliveryVoucherRequest.DeliveryDate,
-        Notes = DeliveryVoucherRequest.Notes,
-        WarehouseId = DeliveryVoucherRequest.WarehouseId
-      };
+        return MessageCenter.CrudMessage.DoesNotExist;
+      }
+
+
+      DeliveryVoucher.DeliveryDate = DeliveryVoucherRequest.DeliveryDate;
+      DeliveryVoucher.Notes = DeliveryVoucherRequest.Notes;
+      DeliveryVoucher.WarehouseId = DeliveryVoucherRequest.WarehouseId;
+      DeliveryVoucher.AccountId = DeliveryVoucherRequest.AccountId;
 
 
       var transact = _DeliveryVoucherRepository.BeginTransaction();

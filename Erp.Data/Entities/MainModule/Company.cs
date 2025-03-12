@@ -21,6 +21,12 @@ namespace Erp.Data.Entities.MainModule
     public string TenantId { get; set; } = null!;
 
     public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
+
+    public ICollection<CompanySubscription> companySubscriptions { get; set; } = new List<CompanySubscription>();
+
+
+
+    public ICollection<CompanyModule> companyModules { get; set; } = new List<CompanyModule>();
   }
 
 }

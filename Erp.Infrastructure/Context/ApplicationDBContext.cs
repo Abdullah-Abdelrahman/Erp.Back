@@ -12,6 +12,7 @@ using Erp.Data.Entities.SalesModule;
 using Erp.Service.Abstracts.MainModule;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace Name.Infrastructure.Data
 {
@@ -43,10 +44,14 @@ namespace Name.Infrastructure.Data
     public DbSet<UserBase> userBases { get; set; }
 
     public DbSet<ApplicationRole> applicationRoles { get; set; }
-    //Without tenant id cause it is fixed for all
-    public DbSet<ApplicationClaim> applicationClaims { get; set; }
+    public DbSet<Module> modules { get; set; }
 
     public DbSet<Company> companies { get; set; }
+
+    public DbSet<Subscription> subscriptions { get; set; }
+    public DbSet<CompanyModule> companyModules { get; set; }
+
+    public DbSet<CompanySubscription> companySubscriptions { get; set; }
 
 
 
@@ -59,6 +64,9 @@ namespace Name.Infrastructure.Data
 
     public DbSet<PriceList> priceLists { get; set; }// 
     public DbSet<PriceListItem> priceListItems { get; set; }// 
+
+    public DbSet<StockTaking> stockTakings { get; set; }// 
+    public DbSet<StockTakingItem> stockTakingItems { get; set; }// 
 
     public DbSet<Category> Categories { get; set; }// نوع النتج
     public DbSet<Warehouse> Warehouses { get; set; } // المخزن
@@ -82,6 +90,9 @@ namespace Name.Infrastructure.Data
     public DbSet<TransformVoucher> transformVouchers { get; set; }// اذن تحويل من مخزن لمخزن
     public DbSet<TransformVoucherItem> transformVoucherItems { get; set; }
 
+
+
+    public DbSet<VoucherStatus> voucherStatuses { get; set; }
 
 
     #endregion
@@ -188,6 +199,7 @@ namespace Name.Infrastructure.Data
     #endregion
 
     #region Staff
+    public DbSet<Employee> Employees { get; set; }
 
     #endregion
 
@@ -223,6 +235,35 @@ namespace Name.Infrastructure.Data
       #region MainModule
       // modelBuilder.Entity<Company>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<ApplicationRole>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+
+
+      modelBuilder.Entity<CompanyModule>()
+        .HasKey(p => new { p.CompanyId, p.ModuleId });
+
+      modelBuilder.Entity<Company>()
+        .HasMany(s => s.Subscriptions)
+        .WithMany(b => b.Companies)
+        .UsingEntity<CompanySubscription>(
+            j => j
+              .HasOne(sb => sb.Subscription)
+              .WithMany(b => b.companySubscriptions)
+              .HasForeignKey(sb => sb.SubscriptionId),
+            j => j
+              .HasOne(sb => sb.Company)
+              .WithMany(s => s.companySubscriptions)
+              .HasForeignKey(sb => sb.CompanyId),
+            j =>
+            {
+              j.HasKey(t => t.Id);
+            }
+        );
+
+      modelBuilder.Entity<Module>()
+    .Property(m => m.ClaimList)
+    .HasConversion(
+        v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+        v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null)
+    );
       #endregion
 
       // -------------------Inventory Module-----------------------//
@@ -233,6 +274,8 @@ namespace Name.Infrastructure.Data
 
       modelBuilder.Entity<PriceList>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<PriceListItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<StockTaking>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+      modelBuilder.Entity<StockTakingItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<Category>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<Warehouse>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<StockTransaction>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
@@ -311,6 +354,15 @@ namespace Name.Infrastructure.Data
 
       modelBuilder.Entity<PriceListItem>()
         .HasKey(p => new { p.PriceListId, p.ProductId });
+
+
+      modelBuilder.Entity<StockTaking>().
+       HasMany(po => po.stockTakingItems).
+       WithOne(poi => poi.StockTaking).
+       HasForeignKey(poi => poi.StockTakingId);
+
+      modelBuilder.Entity<StockTakingItem>()
+        .HasKey(p => new { p.StockTakingId, p.ProductId });
       #endregion
 
 
@@ -564,6 +616,7 @@ namespace Name.Infrastructure.Data
        .WithMany(i => i.receipts)
        .HasForeignKey(cp => cp.SubAccountId)
        .OnDelete(DeleteBehavior.Restrict);
+
 
       #endregion
 

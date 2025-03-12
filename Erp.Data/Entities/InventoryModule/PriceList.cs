@@ -8,7 +8,7 @@ namespace Erp.Data.Entities.InventoryModule
     [Required]
     public string Name { get; set; } = null!;
     [Required]
-    bool IsActive { get; set; } = true;
+    public bool IsActive { get; set; } = true;
 
     public ICollection<PriceListItem> priceListItems { get; set; } = new List<PriceListItem>();
 

@@ -1,7 +1,9 @@
 using Erp.Data.Dto.PurchaseInvoice;
+using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
+using Erp.Infrastructure.Abstracts.AccountsModule;
 using Erp.Service.Abstracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,16 +15,33 @@ namespace Erp.Service.Implementations
     private readonly IPurchaseInvoiceItemRepository _PurchaseInvoiceItemRepository;
     private readonly IProductService _productService;
     private readonly IWarehouseService _warehouseService;
+    private readonly IJournalEntryRepository _journalEntryRepository;
+    private readonly IJournalEntryDetailRepository _journalEntryDetailRepository;
 
+    private readonly IAccountRepository<SecondaryAccount> _SecondaryAccountRepository;
+    private readonly ISupplierService _supplierService;
 
 
     // Isupplair
-    public PurchaseInvoiceService(IPurchaseInvoiceRepository PurchaseInvoiceRepository, IProductService productService, IWarehouseService warehouseService, IPurchaseInvoiceItemRepository PurchaseInvoiceItemRepository)
+    public PurchaseInvoiceService(
+      IPurchaseInvoiceRepository PurchaseInvoiceRepository,
+      IProductService productService,
+      IWarehouseService warehouseService,
+      IPurchaseInvoiceItemRepository PurchaseInvoiceItemRepository,
+      IJournalEntryRepository journalEntryRepository,
+      IJournalEntryDetailRepository journalEntryDetailRepository,
+      IAccountRepository<SecondaryAccount> SecondaryAccountRepository,
+      ISupplierService supplierService)
     {
       _PurchaseInvoiceRepository = PurchaseInvoiceRepository;
       _PurchaseInvoiceItemRepository = PurchaseInvoiceItemRepository;
       _productService = productService;
       _warehouseService = warehouseService;
+
+      _SecondaryAccountRepository = SecondaryAccountRepository;
+      _supplierService = supplierService;
+      _journalEntryRepository = journalEntryRepository;
+      _journalEntryDetailRepository = journalEntryDetailRepository;
     }
     public async Task<string> AddPurchaseInvoice(AddPurchaseInvoiceRequest PurchaseInvoiceRequest)
     {
@@ -38,8 +57,23 @@ namespace Erp.Service.Implementations
       var transact = _PurchaseInvoiceRepository.BeginTransaction();
       try
       {
+        JournalEntry JournalEntry = new JournalEntry()
+        {
+          EntryDate = DateTime.Now,
+          Description = "Purchase Invoice #"
+        };
+        var NewJournalEntry = await _journalEntryRepository.AddAsync(JournalEntry);
+
+        PurchaseInvoice.JournalEntryID = NewJournalEntry.JournalEntryID;
         var newPurchaseInvoice = await _PurchaseInvoiceRepository.AddAsync(PurchaseInvoice);
 
+
+
+        NewJournalEntry.Description += newPurchaseInvoice.PurchaseInvoiceId.ToString();
+        await _journalEntryRepository.UpdateAsync(NewJournalEntry);
+
+
+        decimal total = 0;
         foreach (var item in PurchaseInvoiceRequest.PurchaseInvoiceItemDT0s)
         {
           var PurchaseInvoiceItem = new PurchaseInvoiceItem()
@@ -51,12 +85,40 @@ namespace Erp.Service.Implementations
             Tax = item.Tax,
             discount = item.discount,
           };
+          total += item.Quantity * item.UnitPrice;
 
           await _PurchaseInvoiceItemRepository.AddAsync(PurchaseInvoiceItem);
         }
 
+        var PurAccId = (await _SecondaryAccountRepository.GetTableNoTracking()
+          .Where(x => x.AccountName == "Purchases").SingleAsync()).AccountID;
+        await _journalEntryDetailRepository.AddAsync(new JournalEntryDetail()
+        {
+          JournalEntryID = NewJournalEntry.JournalEntryID,
+          Description = "Purchase Invoice #" + newPurchaseInvoice.PurchaseInvoiceId.ToString(),
+
+          AccountID = PurAccId,
+          Debit = total,
+          Credit = 0.00M
+        });
+
+        var supplierAccId = (await _supplierService.GetSupplierByIdAsync(newPurchaseInvoice.SupplierId)).AccountId;
+        await _journalEntryDetailRepository.AddAsync(new JournalEntryDetail()
+        {
+          JournalEntryID = NewJournalEntry.JournalEntryID,
+
+          Description = "Purchase Invoice #" + newPurchaseInvoice.PurchaseInvoiceId.ToString(),
+
+          AccountID = supplierAccId,
+          Debit = 0.00M,
+          Credit = total
+        });
 
 
+
+        newPurchaseInvoice.TotalAmount = total;
+
+        await _PurchaseInvoiceRepository.UpdateAsync(newPurchaseInvoice);
 
         await transact.CommitAsync();
         return MessageCenter.CrudMessage.Success;
@@ -100,6 +162,7 @@ namespace Erp.Service.Implementations
         Notes = PurchaseInvoice.Notes,
         TotalAmount = PurchaseInvoice.TotalAmount,
         SupplierId = PurchaseInvoice.SupplierId,
+        JournalEntryID = PurchaseInvoice.JournalEntryID,
         PurchaseInvoiceItemsDto = new List<PurchaseInvoiceItemDto>()
       };
 
@@ -128,7 +191,8 @@ namespace Erp.Service.Implementations
         InvoiceDate = x.InvoiceDate,
         Notes = x.Notes,
         TotalAmount = x.TotalAmount,
-        SupplierId = x.SupplierId
+        SupplierId = x.SupplierId,
+        JournalEntryID = x.JournalEntryID
 
       }));
 

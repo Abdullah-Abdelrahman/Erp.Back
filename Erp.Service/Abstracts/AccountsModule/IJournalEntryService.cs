@@ -11,6 +11,8 @@ namespace Erp.Service.Abstracts.AccountsModule
 
     public Task<string> AddJournalEntry(AddJournalEntryRequest JournalEntry);
 
+    public Task<int> AddJournalEntryRetrunId(AddJournalEntryRequest JournalEntry);
+
     public Task<string> UpdateAsync(UpdateJournalEntryRequest JournalEntry);
 
     public Task<string> DeleteAsync(JournalEntry JournalEntry);

@@ -29,7 +29,7 @@ namespace Erp.Data.Entities.Finance
     [StringLength(255)]
     public string Description { get; set; } = string.Empty; // الوصف
 
-    public ICollection<ExpenseCategory> expenseCategories { get; set; } = new HashSet<ExpenseCategory>();
+    public ICollection<ExpenseCategory> expenseCategories { get; set; } = new List<ExpenseCategory>();
 
     public int? SupplierId { get; set; } // المورد (اختياري)
 
@@ -56,15 +56,15 @@ namespace Erp.Data.Entities.Finance
     public bool IsMultiAccount { get; set; } = false; // متعدد الحسابات؟
 
 
-    public ICollection<MultiAccExpenseItem> multiAccExpenseItems { get; set; } = new HashSet<MultiAccExpenseItem>();
+    public ICollection<MultiAccExpenseItem> multiAccExpenseItems { get; set; } = new List<MultiAccExpenseItem>();
 
     public bool Isfrequent { get; set; } = false;  //متكرر
 
 
     public bool WithCostCenter { get; set; } = false;
-    public ICollection<CostCenter> CostCenters { get; set; } = new HashSet<CostCenter>();
+    public ICollection<CostCenter> CostCenters { get; set; } = new List<CostCenter>();
 
-    public ICollection<ExpenseCostCenter> ExpenseCostCenters { get; set; } = new HashSet<ExpenseCostCenter>();
+    public ICollection<ExpenseCostCenter> ExpenseCostCenters { get; set; } = new List<ExpenseCostCenter>();
 
 
 

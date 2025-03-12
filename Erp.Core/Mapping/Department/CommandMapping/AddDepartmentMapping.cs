@@ -8,7 +8,8 @@ namespace Erp.Core.Mapping.Department
     public void AddDepartmentMapping()
     {
       CreateMap<AddDepartmentCommand, Entitis.Department>()
-       .ForMember(destnation => destnation.DepartmentName, opt => opt.MapFrom(src => src.Name));
+       .ForMember(destnation => destnation.DepartmentName, opt => opt.MapFrom(src => src.Name))
+       .ForMember(destnation => destnation.Description, opt => opt.MapFrom(src => src.Description));
     }
   }
 }

@@ -38,11 +38,12 @@ namespace Name.Core.Features.Authorization.Commands.Handlers
 
     public async Task<Response<string>> Handle(AddRoleCommand request, CancellationToken cancellationToken)
     {
-      var result = await _roleManager.CreateAsync(new ApplicationRole() { Name = request.RoleName });
+      var result = await _authorizationService.CreateRoleAsync(request);
 
-      if (result.Succeeded)
+
+      if (result == MessageCenter.CrudMessage.Success)
       {
-        return Created<string>($"{request.RoleName} : Role Created Successfuly");
+        return Created<string>($"{request.Name} : Role Created Successfuly");
       }
       else
       {
@@ -52,24 +53,24 @@ namespace Name.Core.Features.Authorization.Commands.Handlers
 
     public async Task<Response<string>> Handle(EditRoleCommand request, CancellationToken cancellationToken)
     {
-      var role = await _roleManager.FindByIdAsync(request.RoleId);
+      var result = await _authorizationService.UpdateRoleAsync(request);
 
-      if (role == null)
+      if (result == MessageCenter.CrudMessage.DoesNotExist)
       {
         return NotFound<string>($"there is no role with id ={request.RoleId}");
       }
+      else if (result == MessageCenter.CrudMessage.Success)
+      {
+
+
+
+        return Success<string>("Updated Successfuly");
+
+
+      }
       else
       {
-        var result = await _roleManager.UpdateAsync(role);
-
-        if (result == IdentityResult.Success)
-        {
-          return Success<string>("Updated Successfuly");
-        }
-        else
-        {
-          return BadRequest<string>("Somthing Bad happened");
-        }
+        return BadRequest<string>("Somthing Bad happened" + result);
       }
     }
 

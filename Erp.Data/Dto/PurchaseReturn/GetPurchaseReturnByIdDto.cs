@@ -9,6 +9,7 @@ namespace Erp.Data.Dto.PurchaseReturn
 
     public int SupplierId { get; set; }
 
+    public int JournalEntryID { get; set; }
 
     public List<PurchaseReturnItemDto> PurchaseReturnItemsDto { get; set; } = new List<PurchaseReturnItemDto>();
   }

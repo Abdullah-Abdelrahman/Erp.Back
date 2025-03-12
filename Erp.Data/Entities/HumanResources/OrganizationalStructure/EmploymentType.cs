@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Erp.Data.Entities.HumanResources.OrganizationalStructure
 {
   // نوع الوظيفة من حيث طبيعة الدوام، مثل دوام كامل أو جزئي أو عمل حر 
-  public class EmploymentType
+  public class EmploymentType : IMustHaveTenant
   {
     [Key]
     public int ID { get; set; }
@@ -16,6 +16,8 @@ namespace Erp.Data.Entities.HumanResources.OrganizationalStructure
 
     [Required]
     public bool IsActive { get; set; } = true;
+
+    public string TenantId { get; set; } = null!;
 
   }
 }

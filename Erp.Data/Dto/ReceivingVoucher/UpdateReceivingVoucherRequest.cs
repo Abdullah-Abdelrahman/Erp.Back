@@ -10,8 +10,8 @@ namespace Erp.Data.Dto.ReceivingVoucher
     public int WarehouseId { get; set; }
 
 
-    // Foreign Key - Supplier
-    public int SupplierId { get; set; }
+    // Foreign Key - acc
+    public int AccountId { get; set; }
 
     public List<ReceivingVoucherItemUpdateDT0> receivingVoucherItems { get; set; }
   }

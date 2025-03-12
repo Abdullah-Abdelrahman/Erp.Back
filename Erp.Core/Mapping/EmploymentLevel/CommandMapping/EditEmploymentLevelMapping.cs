@@ -7,7 +7,7 @@ namespace Erp.Core.Mapping.EmploymentLevel
     public void EditEmploymentLevelMapping()
     {
       CreateMap<EditEmploymentLevelCommand, Entitis.EmploymentLevel>()
-   .ForMember(destnation => destnation.Name, opt => opt.MapFrom(src => src.Name));
+   .ForMember(destnation => destnation.ID, opt => opt.MapFrom(src => src.Id));
     }
   }
 }

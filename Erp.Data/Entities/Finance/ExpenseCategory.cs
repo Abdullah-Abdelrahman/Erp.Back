@@ -13,7 +13,7 @@ namespace Erp.Data.Entities.Finance
 
     public string Description { get; set; } = string.Empty;
 
-    ICollection<Expense> Expenses { get; set; } = new HashSet<Expense>();
+    public ICollection<Expense> Expenses { get; set; } = new List<Expense>();
 
     public string TenantId { get; set; } = null!;
 

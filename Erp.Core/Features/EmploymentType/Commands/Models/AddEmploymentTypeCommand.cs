@@ -13,5 +13,8 @@ namespace Erp.Core.Features.EmploymentType.Commands.Models
 
     public string Description { get; set; } = string.Empty;
 
+    [Required]
+    public bool IsActive { get; set; } = true;
+
   }
 }

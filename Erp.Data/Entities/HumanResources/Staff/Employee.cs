@@ -1,6 +1,5 @@
 using Erp.Data.Entities.Finance;
 using Erp.Data.Entities.HumanResources.OrganizationalStructure;
-using Erp.Data.Entities.MainModule;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -12,8 +11,7 @@ namespace Erp.Data.Entities.HumanResources.Staff
     [Key]
     public int EmployeeID { get; set; }
 
-    [ForeignKey("Company")]
-    public int CompanyID { get; set; }
+
 
     [Required]
     [MaxLength(100)]
@@ -37,7 +35,7 @@ namespace Erp.Data.Entities.HumanResources.Staff
     public EmploymentStatus Status { get; set; } = EmploymentStatus.Active;
 
 
-    public string? RoleID { get; set; }
+    public string RoleID { get; set; }
 
     //-- Personal information --
     [Required]
@@ -86,10 +84,10 @@ namespace Erp.Data.Entities.HumanResources.Staff
     public bool UseDefaultFinancialHistory { get; set; } = true;
 
     // Navigation properties
-    public Company Company { get; set; }
+
 
     [ForeignKey("RoleID")]
-    public ApplicationRole? Role { get; set; }
+    public ApplicationRole Role { get; set; }
 
     public Department? Department { get; set; }
     public JobType? JobType { get; set; }

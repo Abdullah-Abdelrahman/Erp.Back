@@ -1,3 +1,4 @@
+using Erp.Core.Features.Authorization.Quaries.Models;
 using Microsoft.AspNetCore.Mvc;
 using Name.Api.Base;
 using Name.Core.Features.Authorization.Commands.Models;
@@ -15,7 +16,7 @@ namespace Name.Api.Controllers
     #region crud on role
 
     [HttpPost(Router.AuthorizationRouter.Create)]
-    public async Task<IActionResult> CreateRole([FromForm] AddRoleCommand command)
+    public async Task<IActionResult> CreateRole([FromBody] AddRoleCommand command)
     {
       var response = await Mediator.Send(command);
 
@@ -40,7 +41,7 @@ namespace Name.Api.Controllers
     }
 
     [HttpPut(Router.AuthorizationRouter.Edit)]
-    public async Task<IActionResult> EditAnswer([FromForm] EditRoleCommand command)
+    public async Task<IActionResult> EditAnswer([FromBody] EditRoleCommand command)
     {
       var response = await Mediator.Send(command);
 
@@ -97,6 +98,14 @@ namespace Name.Api.Controllers
 
 
 
+
+    [HttpGet(Router.AuthorizationRouter.GetActiveModelsClamis)]
+    public async Task<IActionResult> GetActiveModelsClamis()
+    {
+      var response = await Mediator.
+          Send(new GetActiveModelsClamisQuery());
+      return NewResult(response);
+    }
 
 
 

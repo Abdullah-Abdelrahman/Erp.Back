@@ -9,6 +9,7 @@ namespace Erp.Data.Dto.PurchaseInvoice
 
     public int SupplierId { get; set; }
 
+    public int JournalEntryID { get; set; }
 
     public List<PurchaseInvoiceItemDto> PurchaseInvoiceItemsDto { get; set; } = new List<PurchaseInvoiceItemDto>();
   }

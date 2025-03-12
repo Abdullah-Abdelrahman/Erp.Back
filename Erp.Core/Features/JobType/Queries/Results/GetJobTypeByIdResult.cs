@@ -8,5 +8,10 @@ namespace Erp.Core.Features.JobType.Queries.Results
 
     public string Description { get; set; } = string.Empty;
 
+    public int? DepartmentId { get; set; }
+
+    public bool IsActive { get; set; } = true;
+
+
   }
 }

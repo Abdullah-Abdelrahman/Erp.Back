@@ -1,5 +1,8 @@
+using Erp.Data.Dto.ApplicationRole;
 using Erp.Data.Entities.HumanResources.Staff;
 using Erp.Data.Entities.MainModule;
+using Erp.Data.MetaData;
+using Erp.Service.Abstracts.MainModule;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Name.Data.Dto;
@@ -14,11 +17,21 @@ namespace Name.Service.Implementations
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly UserManager<UserBase> _userManager;
     private readonly ApplicationDBContext _dbContext;
-    public AuthorizationService(RoleManager<ApplicationRole> roleManager, UserManager<UserBase> userManager, ApplicationDBContext dbContext)
+    private readonly ICompanyModuleService _companyModuleService;
+    private readonly IModuleService _moduleService;
+
+    public AuthorizationService(
+      RoleManager<ApplicationRole> roleManager,
+      UserManager<UserBase> userManager,
+      ApplicationDBContext dbContext,
+      ICompanyModuleService companyModuleService,
+      IModuleService moduleService)
     {
       _userManager = userManager;
       _roleManager = roleManager;
       _dbContext = dbContext;
+      _companyModuleService = companyModuleService;
+      _moduleService = moduleService;
     }
 
     public async Task<string> DeleteRoleAsync(ApplicationRole role)
@@ -40,9 +53,48 @@ namespace Name.Service.Implementations
       }
     }
 
-    public async Task<ApplicationRole> GetRoleById(string id)
+    public async Task<GetApplicationRoleRequest> GetRoleById(string id)
     {
-      return await _roleManager.FindByIdAsync(id);
+      var role = (await _roleManager.FindByIdAsync(id));
+      var clamis = await _roleManager.GetClaimsAsync(role);
+      if (role == null)
+      {
+        return new GetApplicationRoleRequest();
+      }
+      var roleRes = new GetApplicationRoleRequest()
+      {
+        Id = id,
+        Name = role.Name
+      };
+      var modulsIds = (await _companyModuleService.GetActiveModulesListAsync()).Select(x => x.ModuleID);
+
+      foreach (var Mid in modulsIds)
+      {
+        var model = await _moduleService.GetModuleByIdAsync(Mid);
+
+        var claimsDto = new List<ClaimDto>();
+        foreach (var c in model.ClaimList)
+        {
+          if (clamis.Any(x => x.Type == c))
+          {
+            claimsDto.Add(new ClaimDto() { name = c, value = true });
+          }
+          else
+          {
+            claimsDto.Add(new ClaimDto() { name = c, value = false });
+
+          }
+        }
+
+        roleRes.modelClaimsDtos.Add(new ModelClaimsDto()
+        {
+          ModelName = model.ModuleName,
+          ModelId = Mid,
+          claims = claimsDto
+        });
+      }
+
+      return roleRes;
     }
 
     public Task<List<ApplicationRole>> GetRolesList()
@@ -208,5 +260,99 @@ namespace Name.Service.Implementations
       }
     }
 
+    public async Task<string> CreateRoleAsync(AddApplicationRoleRequest request)
+    {
+      var transact = await _dbContext.Database.BeginTransactionAsync();
+      try
+      {
+
+        var role = new ApplicationRole()
+        {
+          Name = request.Name
+
+        };
+        await _roleManager.CreateAsync(role);
+
+        foreach (var claim in request.Claims)
+        {
+          await _roleManager.AddClaimAsync(role,
+         new Claim(claim, true.ToString()));
+
+        }
+
+
+        await transact.CommitAsync();
+        return MessageCenter.CrudMessage.Success;
+      }
+      catch (Exception ex)
+      {
+        await transact.RollbackAsync();
+        return MessageCenter.CrudMessage.Falied + ex.Message;
+      }
+
+
+    }
+
+    public async Task<string> UpdateRoleAsync(EditApplicationRoleRequest request)
+    {
+      var transact = await _dbContext.Database.BeginTransactionAsync();
+      try
+      {
+        var role = await _roleManager.FindByIdAsync(request.RoleId);
+
+        if (role == null)
+        {
+          return MessageCenter.CrudMessage.DoesNotExist;
+        }
+        role.Name = request.Name;
+
+
+        await _roleManager.UpdateAsync(role);
+        var RoleClaims = await _roleManager.GetClaimsAsync(role);
+        foreach (var claim in RoleClaims)
+        {
+          var removeClaimsResult = await _roleManager.RemoveClaimAsync(role, claim);
+
+        }
+
+        foreach (var claim in request.Claims)
+        {
+          await _roleManager.AddClaimAsync(role,
+         new Claim(claim, true.ToString()));
+
+        }
+
+
+        await transact.CommitAsync();
+        return MessageCenter.CrudMessage.Success;
+      }
+      catch (Exception ex)
+      {
+        await transact.RollbackAsync();
+        return MessageCenter.CrudMessage.Falied + ex.Message;
+      }
+
+
+    }
+
+    public async Task<GetActiveModelsClamisRequest> GetActiveModelsClamisAsync()
+    {
+      var respons = new GetActiveModelsClamisRequest();
+
+      var modulsIds = (await _companyModuleService.GetActiveModulesListAsync()).Select(x => x.ModuleID);
+
+      foreach (var Mid in modulsIds)
+      {
+        var model = await _moduleService.GetModuleByIdAsync(Mid);
+
+        respons.ActiveModelsClamis.Add(new ActiveModelClamis()
+        {
+          name = model.ModuleName,
+          clamis = model.ClaimList
+        });
+      }
+
+      return respons;
+    }
   }
 }

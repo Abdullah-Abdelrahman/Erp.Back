@@ -13,5 +13,10 @@ namespace Erp.Core.Features.JobType.Commands.Models
 
     public string Description { get; set; } = string.Empty;
 
+    public int? DepartmentId { get; set; }
+
+    [Required]
+    public bool IsActive { get; set; } = true;
+
   }
 }

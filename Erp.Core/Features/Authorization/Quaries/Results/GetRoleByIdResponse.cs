@@ -1,10 +1,10 @@
-﻿namespace Name.Core.Features.Authorization.Quaries.Results
+using Erp.Data.Dto.ApplicationRole;
+
+namespace Name.Core.Features.Authorization.Quaries.Results
 {
-    public class GetRoleByIdResponse
-    {
-        public string RoleId { get; set; }
+  public class GetRoleByIdResponse : GetApplicationRoleRequest
+  {
 
-        public string RoleName { get; set; }
 
-    }
+  }
 }

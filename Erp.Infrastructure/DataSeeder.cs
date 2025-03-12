@@ -1,5 +1,6 @@
 using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.Finance;
+using Erp.Data.Entities.InventoryModule;
 using Erp.Data.MetaData;
 using Microsoft.EntityFrameworkCore;
 using Name.Infrastructure.Data;
@@ -665,12 +666,39 @@ namespace Erp.Infrastructure
           Console.ResetColor();
         }
 
-
-
       }
 
 
 
+      if (!_context.voucherStatuses.Any())
+      {
+        var transact = _context.Database.BeginTransaction();
+        try
+        {
+
+
+          var Approved = new VoucherStatus()
+          {
+            Name = "Approved",
+            Description = "",
+          };
+          await _context.Set<VoucherStatus>().AddAsync(Approved);
+
+
+          await _context.SaveChangesAsync();
+
+          await transact.CommitAsync();
+
+        }
+        catch (Exception ex)
+        {
+          await transact.RollbackAsync();
+          Console.ForegroundColor = ConsoleColor.Red;
+          Console.WriteLine(MessageCenter.CrudMessage.Falied + ex.Message);
+          Console.ResetColor();
+        }
+
+      }
 
 
 

@@ -1,15 +1,16 @@
-﻿using Name.Core.Features.Authorization.Quaries.Results;
-using Microsoft.AspNetCore.Identity;
+using Erp.Data.Dto.ApplicationRole;
+using Name.Core.Features.Authorization.Quaries.Results;
 
 namespace Name.Core.Mapping.Authorization
 {
-    public partial class RoleProfile
-    {
+  public partial class RoleProfile
+  {
 
-        public void GetRoleByIdMapping()
-        {
-            CreateMap<IdentityRole, GetRoleByIdResponse>().ForMember(destnation => destnation.RoleId, opt => opt.MapFrom(src => src.Id))
-       .ForMember(destnation => destnation.RoleName, opt => opt.MapFrom(src => src.Name));
-        }
+    public void GetRoleByIdMapping()
+    {
+      CreateMap<GetApplicationRoleRequest, GetRoleByIdResponse>()
+        .ForMember(destnation => destnation.Id, opt => opt.MapFrom(src => src.Id))
+ .ForMember(destnation => destnation.Name, opt => opt.MapFrom(src => src.Name));
     }
+  }
 }

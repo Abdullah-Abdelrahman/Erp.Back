@@ -1,3 +1,5 @@
+using Erp.Core.Features.Authorization.Quaries.Models;
+using Erp.Data.Dto.ApplicationRole;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Name.Core.Bases;
@@ -9,7 +11,9 @@ using Name.Service.Abstracts;
 namespace Name.Core.Features.Authorization.Quaries.Handlers
 {
   public class ClaimsQueryHandler : ResponseHandler,
-        IRequestHandler<ManageUserClaimsQuery, Response<ManageUserClaimsResult>>
+        IRequestHandler<ManageUserClaimsQuery, Response<ManageUserClaimsResult>>,
+        IRequestHandler<GetActiveModelsClamisQuery, Response<GetActiveModelsClamisRequest>>
+
   {
 
     #region Fileds
@@ -32,6 +36,10 @@ namespace Name.Core.Features.Authorization.Quaries.Handlers
       return Success(result);
     }
 
-
+    public async Task<Response<GetActiveModelsClamisRequest>> Handle(GetActiveModelsClamisQuery request, CancellationToken cancellationToken)
+    {
+      var result = await _authorizationService.GetActiveModelsClamisAsync();
+      return Success(result);
+    }
   }
 }

@@ -6,6 +6,7 @@ namespace Erp.Core.Features.JobType.Commands.Models
 {
   public class EditJobTypeCommand : IRequest<Response<string>>
   {
+    [Required]
     public int Id { get; set; }
 
     [Required]
@@ -13,6 +14,14 @@ namespace Erp.Core.Features.JobType.Commands.Models
     public string Name { get; set; } = string.Empty;
 
     public string Description { get; set; } = string.Empty;
+
+
+    public int? DepartmentId { get; set; }
+
+
+    [Required]
+    public bool IsActive { get; set; } = true;
+
 
   }
 }

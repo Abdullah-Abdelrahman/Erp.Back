@@ -5,9 +5,10 @@ namespace Erp.Data.Dto.DeliveryVoucher
     public DateTime? DeliveryDate { get; set; }
     public string? Notes { get; set; }
     // Foreign Keys
-    public int WarehouseId { get; set; }
+    public int? WarehouseId { get; set; }
 
-
+    // Foreign Key - Account
+    public int? AccountId { get; set; }
     public List<DeliveryVoucherItemDT0> DeliveryVoucherItemDT0s { get; set; }
   }
 

@@ -233,5 +233,47 @@ namespace Erp.Service.Implementations.AccountsModule
       }
     }
 
+    public async Task<int> AddJournalEntryRetrunId(AddJournalEntryRequest JournalEntryRequest)
+    {
+      var journalEntry = new JournalEntry()
+      {
+        EntryDate = (DateTime)JournalEntryRequest.EntryDate,
+        Description = JournalEntryRequest.Description
+      };
+
+
+      var transact = _JournalEntryRepository.BeginTransaction();
+      try
+      {
+        var newJournalEntry = await _JournalEntryRepository.AddAsync(journalEntry);
+
+        foreach (var Detail in JournalEntryRequest.JournalEntryItemDT0s)
+        {
+          var JournalEntryDetail = new JournalEntryDetail()
+          {
+            JournalEntryID = newJournalEntry.JournalEntryID,
+            AccountID = Detail.AccountID,
+            Description = Detail.Description,
+            Debit = Detail.Debit,
+            Credit = Detail.Credit,
+            CostCenterId = Detail.CostCenterId,
+          };
+
+          await _JournalEntryDetailRepository.AddAsync(JournalEntryDetail);
+        }
+
+
+
+
+        await transact.CommitAsync();
+        return newJournalEntry.JournalEntryID;
+
+      }
+      catch
+      {
+        await transact.RollbackAsync();
+        return -1;
+      }
+    }
   }
 }

@@ -1,15 +1,19 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Erp.Data.Dto.TransformVoucher
 {
   public class AddTransformVoucherRequest
   {
-    public int TransformVoucherId { get; set; }
+
+    [Required]
     public DateTime TransformDate { get; set; } = DateTime.UtcNow;
     public string? Notes { get; set; }
 
     // From to
+    [Required]
     public int FromWarehouseId { get; set; }
 
-
+    [Required]
     public int ToWarehouseId { get; set; }
 
 

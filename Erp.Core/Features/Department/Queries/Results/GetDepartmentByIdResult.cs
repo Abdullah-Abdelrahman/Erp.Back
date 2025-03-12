@@ -8,5 +8,9 @@ namespace Erp.Core.Features.Department.Queries.Results
 
     public string Description { get; set; } = string.Empty;
 
+    public bool IsActive { get; set; } = true;
+
+    public int? DepartmentHeadID { get; set; }
+
   }
 }

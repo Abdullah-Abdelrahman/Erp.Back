@@ -1,5 +1,5 @@
 using Erp.Data.Entities.HumanResources.Staff;
-
+using E = Erp.Data.Entities.HumanResources.Staff;
 namespace Erp.Data.Dto.Treasury
 {
   public class GetTreasuryByIdDto
@@ -20,10 +20,10 @@ namespace Erp.Data.Dto.Treasury
     public WhoHaveType WithdrawPermission { get; set; } = WhoHaveType.None;
 
     public ICollection<Employee> employeesWhoHaveDepositPermessions { get; set; } = new List<Employee>();
-    public ICollection<ApplicationRole> RolesWhoHaveWithdrawPermessions { get; set; } = new List<ApplicationRole>();
+    public ICollection<E.ApplicationRole> RolesWhoHaveWithdrawPermessions { get; set; } = new List<E.ApplicationRole>();
     public ICollection<Employee> employeesWhoHaveWithdrawPermessions { get; set; } = new List<Employee>();
 
-    public ICollection<ApplicationRole> RolesWhoHaveDepositPermessions { get; set; } = new List<ApplicationRole>();
+    public ICollection<E.ApplicationRole> RolesWhoHaveDepositPermessions { get; set; } = new List<E.ApplicationRole>();
   }
 
 

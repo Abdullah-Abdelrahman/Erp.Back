@@ -14,7 +14,7 @@ namespace Erp.Data.Entities.Finance
     public string Description { get; set; } = string.Empty;
 
 
-    ICollection<Receipt> receipts { get; set; } = new HashSet<Receipt>();
+    ICollection<Receipt> receipts { get; set; } = new List<Receipt>();
 
     public string TenantId { get; set; } = null!;
   }

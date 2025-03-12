@@ -36,7 +36,7 @@ namespace Erp.Core.Features.PurchaseInvoice.Commands.Handlers
       }
       else
       {
-        return BadRequest<string>("Somthing bad happened");
+        return BadRequest<string>("Somthing bad happened :" + result);
       }
     }
 

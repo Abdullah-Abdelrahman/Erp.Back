@@ -40,6 +40,8 @@ namespace Erp.Service.Implementations.CustomersModule
 
     public async Task<string> AddCustomerAsync(AddCustomerRequest request)
     {
+
+      var transact = _CustomerRepository.BeginTransaction();
       try
       {
         int CustomerId;
@@ -47,23 +49,47 @@ namespace Erp.Service.Implementations.CustomersModule
         if (request.commercialOrIndividual == CommercialOrIndividual.Commercial)
         {
           var customer = new IndividualCustomer(request);
+          CustomerName = customer.FullName;
+          var acc = new SecondaryAccount()
+          {
+            AccountName = CustomerName,
+            Type = AccountType.debtor,
+            Balance = 0,
+            ParentAccountID = (await _PrimaryAccountRepository.GetTableNoTracking().Where(a => a.AccountName == "Customers").SingleOrDefaultAsync())?.AccountID,
+            IsActive = true,
+            CreatedDate = DateTime.UtcNow,
+          };
+          await _accountService.AddAccountAsync(acc);
+
+          customer.AccountId = acc.AccountID;
           var result = await _CustomerRepository.AddAsync(customer);
           CustomerId = result.CustomerId;
-          CustomerName = customer.FullName;
+
         }
         else if (request.commercialOrIndividual == CommercialOrIndividual.Individual)
         {
           var customer = new CommercialCustomer(request);
+          CustomerName = customer.CommercialName;
+
+          var acc = new SecondaryAccount()
+          {
+            AccountName = CustomerName,
+            Type = AccountType.debtor,
+            Balance = 0,
+            ParentAccountID = (await _PrimaryAccountRepository.GetTableNoTracking().Where(a => a.AccountName == "Customers").SingleOrDefaultAsync())?.AccountID,
+            IsActive = true,
+            CreatedDate = DateTime.UtcNow,
+          };
+          await _accountService.AddAccountAsync(acc);
+
+          customer.AccountId = acc.AccountID;
           var result = await _CustomerRepository.AddAsync(customer);
           CustomerId = result.CustomerId;
-          CustomerName = customer.CommercialName;
         }
         else
         {
           return "Unknown Type of Customer ";
         }
-
-
         foreach (var item in request.contactListDT0s)
         {
           var contactList = new ContactList(item, CustomerId);
@@ -71,25 +97,17 @@ namespace Erp.Service.Implementations.CustomersModule
           await _contactListRepository.AddAsync(contactList);
         }
 
-        var acc = new SecondaryAccount()
-        {
-          AccountName = CustomerName,
-          Type = AccountType.debtor,
-          Balance = 0,
-          ParentAccountID = (await _PrimaryAccountRepository.GetTableNoTracking().Where(a => a.AccountName == "Customers").SingleOrDefaultAsync())?.AccountID,
-          IsActive = true,
-          CreatedDate = DateTime.UtcNow,
-        };
-        await _accountService.AddAccountAsync(acc);
-
+        await transact.CommitAsync();
         return MessageCenter.CrudMessage.Success;
+
       }
       catch (Exception ex)
       {
-
+        await transact.RollbackAsync();
         return MessageCenter.CrudMessage.Falied + ex.Message;
-
       }
+
+
     }
 
     public async Task<CommercialCustomer?> GetCommercialCustomerByIdAsync(int id)

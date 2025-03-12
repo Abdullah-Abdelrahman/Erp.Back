@@ -1,5 +1,5 @@
+using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.InventoryModule;
-using Erp.Data.Entities.PurchasesModule;
 using E = Erp.Data.Entities.InventoryModule;
 namespace Erp.Data.Dto.ReceivingVoucher
 {
@@ -12,9 +12,9 @@ namespace Erp.Data.Dto.ReceivingVoucher
 
     public Warehouse Warehouse { get; set; }
 
-    public Supplier Supplier { get; set; } = null!;
+    public Account Account { get; set; } = null!;
 
-
+    public VoucherStatus VoucherStatus { get; set; }
     public List<ReceivingVoucherItemDto> receivingVoucherItemsDto { get; set; } = new List<ReceivingVoucherItemDto>();
   }
 

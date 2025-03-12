@@ -7,7 +7,7 @@ namespace Erp.Core.Mapping.EmploymentType
     public void EditEmploymentTypeMapping()
     {
       CreateMap<EditEmploymentTypeCommand, Entitis.EmploymentType>()
-   .ForMember(destnation => destnation.Name, opt => opt.MapFrom(src => src.Name));
+   .ForMember(destnation => destnation.ID, opt => opt.MapFrom(src => src.Id));
     }
   }
 }

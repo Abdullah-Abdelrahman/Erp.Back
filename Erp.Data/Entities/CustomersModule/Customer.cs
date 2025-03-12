@@ -1,4 +1,5 @@
 using Erp.Data.Dto.Customer;
+using Erp.Data.Entities.AccountsModule;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.CustomersModule
@@ -31,6 +32,12 @@ namespace Erp.Data.Entities.CustomersModule
     public CustomerClassification? Classification { get; set; }
 
     public string? Notes { get; set; }
+
+    public int AccountId { get; set; } // الحساب الفرعي (اختياري)
+
+    [ForeignKey("AccountId")]
+    public SecondaryAccount Account { get; set; }
+
 
     public ICollection<ContactList> ContactLists { get; set; } = new List<ContactList>();
     public string TenantId { get; set; } = null!;

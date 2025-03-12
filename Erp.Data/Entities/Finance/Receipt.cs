@@ -27,7 +27,7 @@ namespace Erp.Data.Entities.Finance
     [StringLength(255)]
     public string Description { get; set; } = string.Empty; // الوصف
 
-    public ICollection<ReceiptCategory> receiptCategories { get; set; } = new HashSet<ReceiptCategory>();
+    public ICollection<ReceiptCategory> receiptCategories { get; set; } = new List<ReceiptCategory>();
 
 
     //[Required]
@@ -39,7 +39,7 @@ namespace Erp.Data.Entities.Finance
     public int SubAccountId { get; set; } // الحساب الفرعي (اختياري)
 
     [ForeignKey(nameof(SubAccountId))]
-    public Account SubAccount { get; set; }
+    public Account SubAccount { get; set; } = null!;
 
     public int TreasuryId { get; set; } // الحساب الفرعي (اختياري)
 
@@ -48,14 +48,14 @@ namespace Erp.Data.Entities.Finance
 
     public bool IsMultiAccount { get; set; } = false; // متعدد الحسابات؟
 
-    public ICollection<MultiAccReceiptItem> multiAccReceiptItems { get; set; } = new HashSet<MultiAccReceiptItem>();
+    public ICollection<MultiAccReceiptItem> multiAccReceiptItems { get; set; } = new List<MultiAccReceiptItem>();
 
     public bool Isfrequent { get; set; } = false;  //متكرر
 
     public bool WithCostCenter { get; set; } = false;
-    public ICollection<CostCenter> CostCenters { get; set; } = new HashSet<CostCenter>();
+    public ICollection<CostCenter> CostCenters { get; set; } = new List<CostCenter>();
 
-    public ICollection<ReceiptCostCenter> ReceiptCostCenters { get; set; } = new HashSet<ReceiptCostCenter>();
+    public ICollection<ReceiptCostCenter> ReceiptCostCenters { get; set; } = new List<ReceiptCostCenter>();
 
 
 

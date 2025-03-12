@@ -1,7 +1,9 @@
 using Erp.Data.Dto.DebitNote;
+using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
+using Erp.Infrastructure.Abstracts.AccountsModule;
 using Erp.Service.Abstracts;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,16 +15,28 @@ namespace Erp.Service.Implementations
     private readonly IDebitNoteItemRepository _DebitNoteItemRepository;
     private readonly IProductService _productService;
     private readonly IWarehouseService _warehouseService;
+    private readonly IJournalEntryRepository _journalEntryRepository;
+    private readonly IJournalEntryDetailRepository _journalEntryDetailRepository;
 
+    private readonly IAccountRepository<SecondaryAccount> _SecondaryAccountRepository;
+    private readonly ISupplierService _supplierService;
 
 
     // Isupplair
-    public DebitNoteService(IDebitNoteRepository DebitNoteRepository, IProductService productService, IWarehouseService warehouseService, IDebitNoteItemRepository DebitNoteItemRepository)
+    public DebitNoteService(IDebitNoteRepository DebitNoteRepository, IProductService productService, IWarehouseService warehouseService, IDebitNoteItemRepository DebitNoteItemRepository,
+      IJournalEntryRepository journalEntryRepository,
+      IJournalEntryDetailRepository journalEntryDetailRepository,
+      IAccountRepository<SecondaryAccount> SecondaryAccountRepository,
+      ISupplierService supplierService)
     {
       _DebitNoteRepository = DebitNoteRepository;
       _DebitNoteItemRepository = DebitNoteItemRepository;
       _productService = productService;
       _warehouseService = warehouseService;
+      _journalEntryRepository = journalEntryRepository;
+      _journalEntryDetailRepository = journalEntryDetailRepository;
+      _supplierService = supplierService;
+      _SecondaryAccountRepository = SecondaryAccountRepository;
     }
     public async Task<string> AddDebitNote(AddDebitNoteRequest DebitNoteRequest)
     {
@@ -38,7 +52,22 @@ namespace Erp.Service.Implementations
       var transact = _DebitNoteRepository.BeginTransaction();
       try
       {
+
+        JournalEntry JournalEntry = new JournalEntry()
+        {
+          EntryDate = DateTime.Now,
+          Description = "Purchase Debit Note #"
+        };
+        var NewJournalEntry = await _journalEntryRepository.AddAsync(JournalEntry);
+
+        DebitNote.JournalEntryID = NewJournalEntry.JournalEntryID;
         var newDebitNote = await _DebitNoteRepository.AddAsync(DebitNote);
+
+
+        NewJournalEntry.Description += newDebitNote.DebitNoteId.ToString();
+        await _journalEntryRepository.UpdateAsync(NewJournalEntry);
+
+        decimal total = 0;
 
         foreach (var item in DebitNoteRequest.DebitNoteItemDT0s)
         {
@@ -51,12 +80,42 @@ namespace Erp.Service.Implementations
             Tax = item.Tax,
             discount = item.discount,
           };
+          total += item.Quantity * item.UnitPrice;
 
           await _DebitNoteItemRepository.AddAsync(DebitNoteItem);
         }
 
 
+        var PurAccId = (await _SecondaryAccountRepository.GetTableNoTracking()
+.Where(x => x.AccountName == "Purchases").SingleAsync()).AccountID;
 
+        await _journalEntryDetailRepository.AddAsync(new JournalEntryDetail()
+        {
+          JournalEntryID = NewJournalEntry.JournalEntryID,
+          Description = "Purchase Debit Note #" + newDebitNote.DebitNoteId.ToString(),
+
+          AccountID = PurAccId,
+          Debit = 0.00M,
+          Credit = total
+        });
+
+        var supplierAccId = (await _supplierService.GetSupplierByIdAsync(newDebitNote.SupplierId)).AccountId;
+        await _journalEntryDetailRepository.AddAsync(new JournalEntryDetail()
+        {
+          JournalEntryID = NewJournalEntry.JournalEntryID,
+
+          Description = "Purchase Debit Note #" + newDebitNote.DebitNoteId.ToString(),
+
+          AccountID = supplierAccId,
+          Debit = total,
+          Credit = 0.00M
+        });
+
+
+
+        newDebitNote.Amount = total;
+
+        await _DebitNoteRepository.UpdateAsync(newDebitNote);
 
         await transact.CommitAsync();
         return MessageCenter.CrudMessage.Success;
@@ -100,6 +159,7 @@ namespace Erp.Service.Implementations
         Notes = DebitNote.Notes,
         TotalAmount = DebitNote.Amount,
         SupplierId = DebitNote.SupplierId,
+        JournalEntryID = DebitNote.JournalEntryID,
         DebitNoteItemsDto = new List<DebitNoteItemDto>()
       };
 
@@ -128,8 +188,8 @@ namespace Erp.Service.Implementations
         InvoiceDate = x.NoteDate,
         Notes = x.Notes,
         TotalAmount = x.Amount,
-        SupplierId = x.SupplierId
-
+        SupplierId = x.SupplierId,
+        JournalEntryID = x.JournalEntryID
       }));
 
       return dtoList;

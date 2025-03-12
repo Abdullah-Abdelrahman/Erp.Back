@@ -8,6 +8,7 @@ namespace Erp.Data.Dto.Customer
     public string? Email { get; set; }
 
     public int? ClassificationId { get; set; }
+    public int AccountId { get; set; } // الحساب الفرعي (اختياري)
 
   }
 }

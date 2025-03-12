@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.HumanResources.OrganizationalStructure
 {
-  public class Department
+  public class Department : IMustHaveTenant
   {
     [Key]
     public int DepartmentID { get; set; }
@@ -24,5 +24,6 @@ namespace Erp.Data.Entities.HumanResources.OrganizationalStructure
     public int? DepartmentHeadID { get; set; }
     // Navigation properties
     public Employee? DepartmentHead { get; set; }
+    public string TenantId { get; set; } = null!;
   }
 }

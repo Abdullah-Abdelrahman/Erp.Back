@@ -137,28 +137,69 @@ namespace Name.Data.MetaData
       public const string ManageUserClaims = prefix + "ManageUserClaims/{Id}";
 
       public const string UpdateUserClaims = prefix + "UpdateUserClaims";
+
+      public const string GetActiveModelsClamis = prefix + "get-active-models-clamis";
+
     }
 
 
     public static class CategoryRouter
     {
-      public const string prefix = Rule + "Inventory/Category/";
+      public const string prefix = Rule + "inventory/category/";
 
-      public const string GetList = prefix + "List";
+      public const string GetList = prefix + "list";
 
       public const string GetById = prefix + "{Id}";
 
-      public const string Create = prefix + "Create";
+      public const string Create = prefix + "create";
 
-      public const string Edit = prefix + "Edit";
+      public const string Edit = prefix + "edit";
 
-      public const string Delete = prefix + "Delete/{Id}";
+      public const string Delete = prefix + "delete/{Id}";
+
+
+    }
+
+    public static class PriceListRouter
+    {
+      public const string prefix = Rule + "inventory/pricelist/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string AddItems = prefix + "add-items";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
 
 
     }
 
 
+    public static class StockTakingRouter
+    {
+      public const string prefix = Rule + "inventory/stock-taking/";
 
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string AddItems = prefix + "add-items";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Settlement = prefix + "settlement";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+    }
 
     public static class ReceivingVoucherRouter
     {
@@ -670,6 +711,21 @@ namespace Name.Data.MetaData
 
 
     }
+    public static class EmployeeRouter
+    {
+      public const string prefix = Rule + "HumanResources/staff/employee/";
+
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+    }
 
     public static class CompanyRouter
     {
@@ -686,7 +742,34 @@ namespace Name.Data.MetaData
       public const string Delete = prefix + "delete/{Id}";
 
     }
+    public static class ModuleRouter
+    {
+      public const string prefix = Rule + "main/module/";
 
+      public const string GetList = prefix + "list";
+
+      public const string GetById = prefix + "{Id}";
+
+      public const string Create = prefix + "create";
+
+      public const string Edit = prefix + "edit";
+
+      public const string Delete = prefix + "delete/{Id}";
+
+
+    }
+
+    public static class CompanyModuleRouter
+    {
+      public const string prefix = Rule + "main/module-manager/";
+
+      public const string GetActiveModulesList = prefix + "list";
+
+      public const string ActivateModule = prefix + "Activate/{Id}";
+
+      public const string DeActivateModule = prefix + "DeActivate/{Id}";
+
+    }
     public static class EmailRouter
     {
       public const string prefix = Rule + "Email/";

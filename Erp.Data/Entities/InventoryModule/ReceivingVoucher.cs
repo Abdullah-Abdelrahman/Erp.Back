@@ -1,4 +1,4 @@
-using Erp.Data.Entities.PurchasesModule;
+using Erp.Data.Entities.AccountsModule;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.InventoryModule
@@ -14,11 +14,14 @@ namespace Erp.Data.Entities.InventoryModule
     [ForeignKey("WarehouseId")]
     public Warehouse Warehouse { get; set; }
 
-    // Foreign Key - Supplier
-    public int SupplierId { get; set; }
-    public Supplier Supplier { get; set; } = null!;
+    // Foreign Key - Account
+    public int AccountId { get; set; }
+    [ForeignKey("AccountId")]
+    public Account Account { get; set; } = null!;
 
-
+    public int VoucherStatusId { get; set; }
+    [ForeignKey("VoucherStatusId")]
+    public VoucherStatus VoucherStatus { get; set; }
     // Navigation Property
     public ICollection<ReceivingVoucherItem> receivingVoucherItems { get; set; } = new List<ReceivingVoucherItem>();
 

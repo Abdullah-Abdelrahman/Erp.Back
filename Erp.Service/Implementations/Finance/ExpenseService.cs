@@ -124,7 +124,8 @@ IMultiAccExpenseItemRepository multiAccExpenseItemRepository)
             var expenseCostCenterItem = new MultiAccExpenseItem()
             {
               ExpenseId = newExpense.Id,
-              SecondaryAccountId = newExpense.SubAccountId == null ? SubAccId : newExpense.SubAccountId,
+              SecondaryAccountId = item.SecondaryAccountId == null ? SubAccId :
+              (int)item.SecondaryAccountId,
               CostCenterId = item.CostCenterId,
               Amount = item.Amount,
               Tax = item.Tax
@@ -172,7 +173,8 @@ IMultiAccExpenseItemRepository multiAccExpenseItemRepository)
 
     public async Task<GetExpenseByIdDto> GetExpenseByIdAsync(int id)
     {
-      var Expense = await _ExpenseRepository.GetTableNoTracking().Where(x => x.Id == id)
+      var Expense = await _ExpenseRepository.GetTableNoTracking()
+        .Where(x => x.Id == id)
         .Include(x => x.Supplier)
         .Include(x => x.expenseCategories)
         .Include(x => x.SubAccount)
@@ -347,6 +349,8 @@ IMultiAccExpenseItemRepository multiAccExpenseItemRepository)
         {
           total = 0;
           await _multiAccExpenseItemRepository.GetTableAsTracking().Where(x => x.ExpenseId == Expense.Id).ExecuteDeleteAsync();
+
+
           foreach (var item in ExpenseRequest.multiAccExpenseItems)
           {
             var expenseCostCenterItem = new MultiAccExpenseItem()

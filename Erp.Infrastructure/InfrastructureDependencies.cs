@@ -42,6 +42,8 @@ namespace Name.Infrastructure
 
       services.AddTransient<IProductRepository, ProductRepository>();
       services.AddTransient<ICategoryRepository, CategoryRepository>();
+      services.AddTransient<IPriceListRepository, PriceListRepository>();
+      services.AddTransient<IStockTakingRepository, StockTakingRepository>();
       services.AddTransient<IStockTransactionRepository, StockTransactionRepository>();
       services.AddTransient<IDeliveryVoucherRepository, DeliveryVoucherRepository>();
       services.AddTransient<IReceivingVoucherRepository, ReceivingVoucherRepository>();
@@ -50,6 +52,8 @@ namespace Name.Infrastructure
       services.AddTransient<IDeliveryVoucherItemRepository, DeliveryVoucherItemRepository>();
       services.AddTransient<ITransformVoucherRepository, TransformVoucherRepository>();
       services.AddTransient<ITransformVoucherItemRepository, TransformVoucherItemRepository>();
+      services.AddTransient<IVoucherStatusRepository, VoucherStatusRepository>();
+
 
 
       services.AddTransient<ISupplierRepository, SupplierRepository>();
@@ -152,6 +156,12 @@ namespace Name.Infrastructure
       services.AddTransient<ICompanyRepository, CompanyRepository>();
 
       services.AddTransient<IApplicationRoleRepository, ApplicationRoleRepository>();
+
+      services.AddTransient<IModuleRepository, ModuleRepository>();
+      services.AddTransient<ICompanyModuleRepository, CompanyModuleRepository>();
+      services.AddTransient<ISubscriptionRepository, SubscriptionRepository>();
+      services.AddTransient<ICompanySubscriptionRepository, CompanySubscriptionRepository>();
+
 
 
 

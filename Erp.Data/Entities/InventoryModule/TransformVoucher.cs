@@ -9,11 +9,11 @@ namespace Erp.Data.Entities.InventoryModule
     public string? Notes { get; set; }
 
     // From to
-    public int? FromWarehouseId { get; set; }
+    public int FromWarehouseId { get; set; }
     [ForeignKey("FromWarehouseId")]
     public Warehouse FromWarehouse { get; set; }
 
-    public int? ToWarehouseId { get; set; }
+    public int ToWarehouseId { get; set; }
     [ForeignKey("ToWarehouseId")]
     public Warehouse ToWarehouse { get; set; }
 

@@ -8,5 +8,7 @@ namespace Erp.Core.Features.EmploymentLevel.Queries.Results
 
     public string Description { get; set; } = string.Empty;
 
+    public bool IsActive { get; set; }
+
   }
 }
