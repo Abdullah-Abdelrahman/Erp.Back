@@ -1,5 +1,6 @@
 using Erp.Service.Abstracts;
 using Erp.Service.Abstracts.AccountsModule;
+using Erp.Service.Abstracts.CommonUse;
 using Erp.Service.Abstracts.CostCentersModule;
 using Erp.Service.Abstracts.CustomersModule;
 using Erp.Service.Abstracts.Finance;
@@ -10,6 +11,7 @@ using Erp.Service.Abstracts.MainModule;
 using Erp.Service.Abstracts.SalesModule;
 using Erp.Service.Implementations;
 using Erp.Service.Implementations.AccountsModule;
+using Erp.Service.Implementations.CommonUse;
 using Erp.Service.Implementations.CostCentersModule;
 using Erp.Service.Implementations.CustomersModule;
 using Erp.Service.Implementations.Finance;
@@ -103,8 +105,6 @@ namespace Name.Service
       services.AddTransient<IRecurringInvoiceService, RecurringInvoiceService>();
       services.AddTransient<IRecurringInvoiceItemService, RecurringInvoiceItemService>();
 
-      services.AddTransient<ICustomerPaymentService, CustomerPaymentService>();
-
 
 
 
@@ -144,6 +144,7 @@ namespace Name.Service
 
 
 
+      services.AddTransient<IPaymentService, PaymentService>();
 
       //to make it the same instance for the life time of a request
 

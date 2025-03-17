@@ -18,7 +18,14 @@ namespace Erp.Data.Entities.PurchasesModule
 
 
     // Navigation Properties
+
     public ICollection<PurchaseInvoice> PurchaseInvoices { get; set; } = new List<PurchaseInvoice>();
+
+    public ICollection<PurchaseReturn> PurchaseReturns { get; set; } = new List<PurchaseReturn>();
+    public ICollection<DebitNote> DebitNotes { get; set; } = new List<DebitNote>();
+
+    public ICollection<SupplierPayment> supplierPayments { get; set; } = new List<SupplierPayment>();
+
     public string TenantId { get; set; } = null!;
   }
 

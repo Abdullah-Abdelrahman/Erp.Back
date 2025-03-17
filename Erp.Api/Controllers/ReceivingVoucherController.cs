@@ -57,5 +57,22 @@ namespace Erp.Api.Controllers
     }
 
 
+    [HttpPut(Router.ReceivingVoucherRouter.Confirm)]
+    public async Task<IActionResult> ConfirmReceivingVoucherById([FromRoute] int Id)
+    {
+      var response = await Mediator.Send(new ConfirmReceivingVoucherCommand(Id));
+
+      return NewResult(response);
+    }
+
+
+    [HttpPut(Router.ReceivingVoucherRouter.Reject)]
+    public async Task<IActionResult> RejectReceivingVoucherById([FromRoute] int Id)
+    {
+      var response = await Mediator.Send(new RejectReceivingVoucherCommand(Id));
+
+      return NewResult(response);
+    }
+
   }
 }

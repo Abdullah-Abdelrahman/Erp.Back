@@ -16,5 +16,7 @@ namespace Erp.Service.Abstracts
     public Task<string> UpdateAsync(UpdateProductRequest Product);
 
     public Task<string> DeleteAsync(Product Product);
+
+    public Task UpdateProductQuantatiyAsync(int ProId, int Qua);
   }
 }

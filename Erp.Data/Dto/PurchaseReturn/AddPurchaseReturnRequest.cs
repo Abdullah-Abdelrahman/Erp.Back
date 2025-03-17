@@ -8,6 +8,9 @@ namespace Erp.Data.Dto.PurchaseReturn
 
     public int SupplierId { get; set; }
 
+    public bool AlreadyPaid { get; set; }
+
+    public decimal AmountPaid { get; set; }
     public List<PurchaseReturnItemDT0> PurchaseReturnItemDT0s { get; set; } = new List<PurchaseReturnItemDT0>();
   }
 

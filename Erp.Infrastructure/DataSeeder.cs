@@ -1,3 +1,4 @@
+using Erp.Data.Entities;
 using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.Finance;
 using Erp.Data.Entities.InventoryModule;
@@ -566,7 +567,7 @@ namespace Erp.Infrastructure
 
           var otherDebtorsAcc = new SecondaryAccount
           {
-            AccountName = "Other Debtors",
+            AccountName = "Other Receivables",
             Type = AccountType.debtor,
             ParentAccountID = receivablesAcc.AccountID,
             TenantId = tenantId
@@ -593,14 +594,14 @@ namespace Erp.Infrastructure
           };
           await _context.Set<PrimaryAccount>().AddAsync(shippingCompaniesAcc);
 
-          var otherCreditorsAcc = new SecondaryAccount
+          var OtherPayablesAcc = new SecondaryAccount
           {
-            AccountName = "Other Creditors",
+            AccountName = "Other Payables",
             Type = AccountType.creditor,
             ParentAccountID = payablesAcc.AccountID,
             TenantId = tenantId
           };
-          await _context.Set<SecondaryAccount>().AddAsync(otherCreditorsAcc);
+          await _context.Set<SecondaryAccount>().AddAsync(OtherPayablesAcc);
           #endregion
 
           await _context.SaveChangesAsync();
@@ -644,10 +645,12 @@ namespace Erp.Infrastructure
           Console.ForegroundColor = ConsoleColor.Green; // Change text color to Green
           Console.WriteLine("Seeeeeeeeeeeeeeeeeeeeeeeeeeeding data... : " + tenantId);
           Console.ResetColor();
-
+          var aacId = (await _context.Set<SecondaryAccount>().IgnoreQueryFilters()
+            .Where(x => x.TenantId == tenantId && x.AccountName == "Main Treasury").SingleAsync()).AccountID;
           var mainT = new Treasury()
           {
             Name = "Main Treasury",
+            AccountId = aacId,
             TenantId = tenantId
           };
           await _context.Set<Treasury>().AddAsync(mainT);
@@ -677,13 +680,28 @@ namespace Erp.Infrastructure
         {
 
 
-          var Approved = new VoucherStatus()
+          var Accepted = new VoucherStatus()
           {
-            Name = "Approved",
+            Name = "Accepted",
             Description = "",
           };
-          await _context.Set<VoucherStatus>().AddAsync(Approved);
+          await _context.Set<VoucherStatus>().AddAsync(Accepted);
 
+          var UnderDelivery = new VoucherStatus()
+          {
+            Name = "Under Delivery",
+            Description = "",
+          };
+          await _context.Set<VoucherStatus>().AddAsync(UnderDelivery);
+
+
+
+          var Rejected = new VoucherStatus()
+          {
+            Name = "Rejected",
+            Description = "",
+          };
+          await _context.Set<VoucherStatus>().AddAsync(Rejected);
 
           await _context.SaveChangesAsync();
 
@@ -700,6 +718,53 @@ namespace Erp.Infrastructure
 
       }
 
+
+
+
+      if (!_context.paymentStatuses.Any())
+      {
+        var transact = _context.Database.BeginTransaction();
+        try
+        {
+
+
+          var Paid = new PaymentStatus()
+          {
+            Name = "Paid",
+            Description = "",
+          };
+          await _context.Set<PaymentStatus>().AddAsync(Paid);
+
+          var PartiallyPaid = new PaymentStatus()
+          {
+            Name = "Partially Paid",
+            Description = "",
+          };
+          await _context.Set<PaymentStatus>().AddAsync(PartiallyPaid);
+
+
+
+          var Unpaid = new PaymentStatus()
+          {
+            Name = "Unpaid",
+            Description = "",
+          };
+          await _context.Set<PaymentStatus>().AddAsync(Unpaid);
+
+          await _context.SaveChangesAsync();
+
+          await transact.CommitAsync();
+
+        }
+        catch (Exception ex)
+        {
+          await transact.RollbackAsync();
+          Console.ForegroundColor = ConsoleColor.Red;
+          Console.WriteLine(MessageCenter.CrudMessage.Falied + ex.Message);
+          Console.ResetColor();
+        }
+
+      }
 
 
 

@@ -10,7 +10,9 @@ namespace Erp.Service.Abstracts
 
     public Task<GetReceivingVoucherByIdDto> GetReceivingVoucherByIdAsync(int id);
 
-    public Task<string> AddReceivingVoucher(AddReceivingVoucherRequest ReceivingVoucher);
+    public Task<string> AddReceivingVoucherAsync(AddReceivingVoucherRequest ReceivingVoucher, int VoucherStatusId = 1);
+    public Task<string> ConfirmReceivingVoucherAsync(int ReceivingVoucherId);
+    public Task<string> RejectReceivingVoucherAsync(int ReceivingVoucherId);
 
     public Task<string> UpdateAsync(UpdateReceivingVoucherRequest ReceivingVoucher);
 

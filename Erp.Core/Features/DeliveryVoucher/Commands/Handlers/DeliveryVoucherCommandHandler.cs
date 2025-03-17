@@ -11,7 +11,11 @@ namespace Erp.Core.Features.DeliveryVoucher.Commands.Handlers
   public class DeliveryVoucherCommandHandler : ResponseHandler,
     IRequestHandler<AddDeliveryVoucherCommand, Response<string>>,
     IRequestHandler<EditDeliveryVoucherCommand, Response<string>>,
-  IRequestHandler<DeleteDeliveryVoucherCommand, Response<string>>
+  IRequestHandler<DeleteDeliveryVoucherCommand, Response<string>>,
+  IRequestHandler<ConfirmDeliveryVoucherCommand, Response<string>>,
+  IRequestHandler<RejectDeliveryVoucherCommand, Response<string>>
+
+
 
 
   {
@@ -28,7 +32,7 @@ namespace Erp.Core.Features.DeliveryVoucher.Commands.Handlers
     public async Task<Response<string>> Handle(AddDeliveryVoucherCommand request, CancellationToken cancellationToken)
     {
       var AddDeliveryVoucherRequestMapper = _mapper.Map<AddDeliveryVoucherRequest>(request);
-      var result = await _DeliveryVoucherService.AddDeliveryVoucher(AddDeliveryVoucherRequestMapper);
+      var result = await _DeliveryVoucherService.AddDeliveryVoucherAsync(AddDeliveryVoucherRequestMapper);
 
       if (result == MessageCenter.CrudMessage.Success)
       {
@@ -78,7 +82,35 @@ namespace Erp.Core.Features.DeliveryVoucher.Commands.Handlers
 
     }
 
+    public async Task<Response<string>> Handle(ConfirmDeliveryVoucherCommand request, CancellationToken cancellationToken)
+    {
+      var result = await _DeliveryVoucherService.ConfirmDeliveryVoucherAsync(request.Id);
+
+      if (result == MessageCenter.CrudMessage.Success)
+      {
+        return Success<string>("Confirmed");
+      }
+      else
+      {
+        return BadRequest<string>(result);
+      }
 
 
+    }
+
+    public async Task<Response<string>> Handle(RejectDeliveryVoucherCommand request, CancellationToken cancellationToken)
+    {
+      var result = await _DeliveryVoucherService.RejectDeliveryVoucherAsync(request.Id);
+
+      if (result == MessageCenter.CrudMessage.Success)
+      {
+        return Success<string>("Rejected");
+      }
+      else
+      {
+        return BadRequest<string>(result);
+      }
+
+    }
   }
 }

@@ -8,7 +8,7 @@ namespace Erp.Core.Mapping.Account
     public void GetSecondaryAccountMapping()
     {
       CreateMap<SecondaryAccount, GetSecondaryAccountByIdResult>()
-                .ForMember(dest => dest.journalEntryDetails, opt => opt.MapFrom(src => src.journalEntryDetails)).ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type));
+                .ForMember(dest => dest.journalEntrys, opt => opt.MapFrom(src => src.journalEntrys)).ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type));
     }
   }
 }

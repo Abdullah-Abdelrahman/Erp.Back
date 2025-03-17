@@ -84,7 +84,15 @@ namespace Erp.Service.Implementations
 
     public async Task<Supplier> GetSupplierByIdAsync(int id)
     {
-      var Supplier = _SupplierRepository.GetTableNoTracking().Where(x => x.SupplierId == id).SingleOrDefault();
+      var Supplier = _SupplierRepository.GetTableNoTracking()
+        .Where(x => x.SupplierId == id)
+        .Include(x => x.Account).ThenInclude(a => a.journalEntrys).ThenInclude(j => j.details)
+        .Include(x => x.supplierPayments)
+        .Include(x => x.PurchaseReturns)
+        .Include(x => x.DebitNotes)
+        .Include(x => x.PurchaseInvoices)
+        .ThenInclude(x => x.paymentStatus)
+        .SingleOrDefault();
 
       return Supplier;
     }

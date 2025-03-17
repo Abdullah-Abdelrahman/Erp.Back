@@ -8,6 +8,12 @@ namespace Erp.Data.Dto.PurchaseInvoice
 
     public int SupplierId { get; set; }
 
+    public decimal? Discount { get; set; }
+
+    public bool AlreadyPaid { get; set; }
+
+    public decimal AmountPaid { get; set; }
+
     public List<PurchaseInvoiceItemDT0> PurchaseInvoiceItemDT0s { get; set; } = new List<PurchaseInvoiceItemDT0>();
   }
 

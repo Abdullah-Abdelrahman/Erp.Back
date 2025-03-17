@@ -15,6 +15,16 @@ namespace Erp.Data.Dto.ReceivingVoucher
     public Account Account { get; set; } = null!;
 
     public VoucherStatus VoucherStatus { get; set; }
+
+    public int? SupplierId { get; set; }
+
+    public int JournalEntryID { get; set; }
+
+    //لو معموله من خلال فاتوره مشتريات
+    public int? purchaseInvoiceId { get; set; }
+
+
+
     public List<ReceivingVoucherItemDto> receivingVoucherItemsDto { get; set; } = new List<ReceivingVoucherItemDto>();
   }
 

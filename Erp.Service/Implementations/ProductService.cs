@@ -25,6 +25,14 @@ namespace Erp.Service.Implementations
       _categoryRepository = categoryRepository;
     }
 
+    public async Task UpdateProductQuantatiyAsync(int ProId, int Qua)
+    {
+      var pro = await _productRepository.GetProductByIdAsync(ProId);
+      pro.StockQuantity += Qua;
+      await _productRepository.UpdateAsync(pro);
+      return;
+    }
+
     public async Task<string> AddProductAsync(AddProductRequest ProductReq, IFormFile? ImageFile, string? webRootPath)
     {
       var product = new Product()

@@ -1,3 +1,4 @@
+using Erp.Data.Entities.AccountsModule;
 using System.Text.Json.Serialization;
 
 namespace Erp.Data.Entities.InventoryModule
@@ -7,6 +8,10 @@ namespace Erp.Data.Entities.InventoryModule
     public int WarehouseId { get; set; }
     public string WarehouseName { get; set; } = null!;
     public string? Address { get; set; }
+
+    public int AccountId { get; set; }
+
+    public SecondaryAccount Account { get; set; } = null!;
 
     public bool IsPrimary { get; set; } = false;
 

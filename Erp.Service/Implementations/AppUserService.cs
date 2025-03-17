@@ -28,6 +28,7 @@ namespace Name.Service.Implementations
     }
     public async Task<string> AddUserAsync(UserBase UserBase, string password)
     {
+
       var transact = _dbContext.Database.BeginTransaction();
       try
       {

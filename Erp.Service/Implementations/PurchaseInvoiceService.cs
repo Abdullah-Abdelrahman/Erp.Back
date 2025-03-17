@@ -1,11 +1,16 @@
 using Erp.Data.Dto.PurchaseInvoice;
+using Erp.Data.Dto.ReceivingVoucher;
 using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.MetaData;
 using Erp.Infrastructure.Abstracts;
 using Erp.Infrastructure.Abstracts.AccountsModule;
+using Erp.Infrastructure.Abstracts.Finance;
 using Erp.Service.Abstracts;
+using Erp.Service.Abstracts.CommonUse;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Erp.Service.Implementations
 {
@@ -17,12 +22,16 @@ namespace Erp.Service.Implementations
     private readonly IWarehouseService _warehouseService;
     private readonly IJournalEntryRepository _journalEntryRepository;
     private readonly IJournalEntryDetailRepository _journalEntryDetailRepository;
-
     private readonly IAccountRepository<SecondaryAccount> _SecondaryAccountRepository;
     private readonly ISupplierService _supplierService;
+    private readonly IReceivingVoucherService _receivingVoucherService;
 
 
-    // Isupplair
+    private readonly IPaymentService _paymentService;
+
+    private readonly ITreasuryRepository _treasuryRepository;
+
+    private readonly IHttpContextAccessor _httpContextAccessor;
     public PurchaseInvoiceService(
       IPurchaseInvoiceRepository PurchaseInvoiceRepository,
       IProductService productService,
@@ -31,7 +40,11 @@ namespace Erp.Service.Implementations
       IJournalEntryRepository journalEntryRepository,
       IJournalEntryDetailRepository journalEntryDetailRepository,
       IAccountRepository<SecondaryAccount> SecondaryAccountRepository,
-      ISupplierService supplierService)
+      ISupplierService supplierService,
+      IReceivingVoucherService receivingVoucherService,
+      IPaymentService paymentService,
+      ITreasuryRepository treasuryRepository,
+      IHttpContextAccessor httpContextAccessor)
     {
       _PurchaseInvoiceRepository = PurchaseInvoiceRepository;
       _PurchaseInvoiceItemRepository = PurchaseInvoiceItemRepository;
@@ -42,7 +55,65 @@ namespace Erp.Service.Implementations
       _supplierService = supplierService;
       _journalEntryRepository = journalEntryRepository;
       _journalEntryDetailRepository = journalEntryDetailRepository;
+      _receivingVoucherService = receivingVoucherService;
+
+
+      _paymentService = paymentService;
+      _treasuryRepository = treasuryRepository;
+      _httpContextAccessor = httpContextAccessor;
     }
+
+    public async Task<AddReceivingVoucherRequest> CreateAddReceivingVoucherRequestAsync(
+      DateTime InvoiceDate,
+      int SupplierId,
+      List<PurchaseInvoiceItem> invoiceItems,
+      int PurchaseInvoiceId)
+    {
+      var ReceivingVoucherRequest = new AddReceivingVoucherRequest()
+      {
+        ReceivingDate = InvoiceDate,
+        SupplierId = SupplierId,
+        purchaseInvoiceId = PurchaseInvoiceId,
+        receivingVoucherItemDT0s = invoiceItems.Select(x => new ReceivingVoucherItemDT0()
+        {
+          ProductId = x.ProductId,
+          Quantity = x.Quantity,
+          UnitPrice = x.UnitPrice,
+
+        }).ToList()
+      };
+
+      return ReceivingVoucherRequest;
+    }
+
+
+    public async Task CreateSupplierPaymentAsync(bool AlreadyPaid,
+      int SupplierId, int PInvoiceId, decimal Total, decimal amount = 0)
+    {
+      var MainTreasuryId = (await _treasuryRepository.GetTableNoTracking().FirstAsync()).Id;
+      var user = _httpContextAccessor.HttpContext?.User;
+      var userId = user?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+      var SupplierPayment = new SupplierPayment()
+      {
+        Amount = amount,
+        CreatedDate = DateTime.Now,
+        AddedById = userId,
+        treasuryId = MainTreasuryId,
+        Currency = "",
+        SupplierId = SupplierId,
+        PurchaseInvoiceId = PInvoiceId
+      };
+      if (AlreadyPaid == true)
+      {
+        SupplierPayment.Amount = Total;
+      }
+
+
+      await _paymentService.AddSupplierPaymentAsync(SupplierPayment);
+
+    }
+
     public async Task<string> AddPurchaseInvoice(AddPurchaseInvoiceRequest PurchaseInvoiceRequest)
     {
       var PurchaseInvoice = new PurchaseInvoice()
@@ -65,6 +136,26 @@ namespace Erp.Service.Implementations
         var NewJournalEntry = await _journalEntryRepository.AddAsync(JournalEntry);
 
         PurchaseInvoice.JournalEntryID = NewJournalEntry.JournalEntryID;
+        //Add Purchase Payment Status
+
+        if (PurchaseInvoiceRequest.AlreadyPaid == true)
+        {
+          PurchaseInvoice.paymentStatusId = 1;
+
+
+        }
+        else if (PurchaseInvoiceRequest.AmountPaid > 0)
+        {
+          PurchaseInvoice.paymentStatusId = 2;
+
+        }
+        else
+        {
+          PurchaseInvoice.paymentStatusId = 3;
+
+        }
+
+
         var newPurchaseInvoice = await _PurchaseInvoiceRepository.AddAsync(PurchaseInvoice);
 
 
@@ -120,7 +211,22 @@ namespace Erp.Service.Implementations
 
         await _PurchaseInvoiceRepository.UpdateAsync(newPurchaseInvoice);
 
+
         await transact.CommitAsync();
+
+
+        var ReceivingVoucherRequest = await CreateAddReceivingVoucherRequestAsync(newPurchaseInvoice.InvoiceDate,
+          newPurchaseInvoice.SupplierId,
+          _PurchaseInvoiceItemRepository.GetTableNoTracking()
+          .Where(x => x.PurchaseInvoiceId == newPurchaseInvoice.PurchaseInvoiceId).ToList(),
+          newPurchaseInvoice.PurchaseInvoiceId);
+
+
+        await _receivingVoucherService.AddReceivingVoucherAsync(ReceivingVoucherRequest, 2);
+
+        await CreateSupplierPaymentAsync(PurchaseInvoiceRequest.AlreadyPaid, PurchaseInvoiceRequest.SupplierId, newPurchaseInvoice.PurchaseInvoiceId, total, PurchaseInvoiceRequest.AmountPaid);
+
+
         return MessageCenter.CrudMessage.Success;
 
       }
@@ -129,6 +235,9 @@ namespace Erp.Service.Implementations
         await transact.RollbackAsync();
         return MessageCenter.CrudMessage.Falied + ex.Message;
       }
+
+
+
 
     }
 
@@ -153,7 +262,16 @@ namespace Erp.Service.Implementations
 
     public async Task<GetPurchaseInvoiceByIdDto> GetPurchaseInvoiceByIdAsync(int id)
     {
-      var PurchaseInvoice = _PurchaseInvoiceRepository.GetTableNoTracking().Where(x => x.PurchaseInvoiceId == id).Include(x => x.Supplier).Include(x => x.Items).ThenInclude(r => r.Product).SingleOrDefault();
+      var PurchaseInvoice = _PurchaseInvoiceRepository.GetTableNoTracking().Where(x => x.PurchaseInvoiceId == id)
+        .Include(x => x.Supplier)
+        .Include(x => x.paymentStatus)
+        .Include(x => x.payments)
+        .Include(x => x.Items).ThenInclude(r => r.Product).SingleOrDefault();
+
+      if (PurchaseInvoice == null)
+      {
+        return new GetPurchaseInvoiceByIdDto();
+      }
 
       var dto = new GetPurchaseInvoiceByIdDto()
       {
@@ -163,6 +281,7 @@ namespace Erp.Service.Implementations
         TotalAmount = PurchaseInvoice.TotalAmount,
         SupplierId = PurchaseInvoice.SupplierId,
         JournalEntryID = PurchaseInvoice.JournalEntryID,
+        paymentStatus = PurchaseInvoice.paymentStatus.Name,
         PurchaseInvoiceItemsDto = new List<PurchaseInvoiceItemDto>()
       };
 
@@ -175,13 +294,21 @@ namespace Erp.Service.Implementations
         ProductId = x.ProductId
 
       }));
+      dto.supplierPaymentDtos.AddRange(PurchaseInvoice.payments.Select(x => new SupplierPaymentDto
+      {
+        Id = x.Id,
+        Amount = x.Amount,
+        SupplierName = PurchaseInvoice.Supplier.SupplierName,
+        PaymentMethod = x.PaymentMethod,
+        CreatedDate = x.CreatedDate
 
+      }));
       return dto;
     }
 
     public async Task<List<GetPurchaseInvoiceByIdDto>> GetPurchaseInvoicesListAsync()
     {
-      var PurchaseInvoices = _PurchaseInvoiceRepository.GetTableNoTracking().Include(x => x.Supplier).ToList();
+      var PurchaseInvoices = _PurchaseInvoiceRepository.GetTableNoTracking().Include(x => x.Supplier).Include(x => x.paymentStatus).ToList();
 
       var dtoList = new List<GetPurchaseInvoiceByIdDto>();
 
@@ -192,7 +319,8 @@ namespace Erp.Service.Implementations
         Notes = x.Notes,
         TotalAmount = x.TotalAmount,
         SupplierId = x.SupplierId,
-        JournalEntryID = x.JournalEntryID
+        JournalEntryID = x.JournalEntryID,
+        paymentStatus = x.paymentStatus.Name
 
       }));
 

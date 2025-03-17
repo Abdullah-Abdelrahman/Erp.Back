@@ -1,4 +1,5 @@
 using Erp.Data.Dto.DebitNote;
+using Erp.Data.Dto.DeliveryVoucher;
 using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.PurchasesModule;
 using Erp.Data.MetaData;
@@ -20,14 +21,15 @@ namespace Erp.Service.Implementations
 
     private readonly IAccountRepository<SecondaryAccount> _SecondaryAccountRepository;
     private readonly ISupplierService _supplierService;
-
+    private readonly IDeliveryVoucherService _deliveryVoucherService;
 
     // Isupplair
     public DebitNoteService(IDebitNoteRepository DebitNoteRepository, IProductService productService, IWarehouseService warehouseService, IDebitNoteItemRepository DebitNoteItemRepository,
       IJournalEntryRepository journalEntryRepository,
       IJournalEntryDetailRepository journalEntryDetailRepository,
       IAccountRepository<SecondaryAccount> SecondaryAccountRepository,
-      ISupplierService supplierService)
+      ISupplierService supplierService,
+      IDeliveryVoucherService deliveryVoucherService)
     {
       _DebitNoteRepository = DebitNoteRepository;
       _DebitNoteItemRepository = DebitNoteItemRepository;
@@ -37,6 +39,29 @@ namespace Erp.Service.Implementations
       _journalEntryDetailRepository = journalEntryDetailRepository;
       _supplierService = supplierService;
       _SecondaryAccountRepository = SecondaryAccountRepository;
+      _deliveryVoucherService = deliveryVoucherService;
+    }
+
+    public async Task<AddDeliveryVoucherRequest> CreateAddDeliveryVoucherRequestAsync(
+DateTime InvoiceDate,
+int SupplierId,
+List<DebitNoteItem> invoiceItems,
+int PurchaseReturnId)
+    {
+      var DeliveryVoucherRequest = new AddDeliveryVoucherRequest()
+      {
+        DeliveryDate = InvoiceDate,
+        purchaseReturnId = PurchaseReturnId,
+        DeliveryVoucherItemDT0s = invoiceItems.Select(x => new DeliveryVoucherItemDT0()
+        {
+          ProductId = x.ProductId,
+          Quantity = x.Quantity,
+          UnitPrice = x.UnitPrice,
+
+        }).ToList()
+      };
+
+      return DeliveryVoucherRequest;
     }
     public async Task<string> AddDebitNote(AddDebitNoteRequest DebitNoteRequest)
     {
@@ -61,6 +86,8 @@ namespace Erp.Service.Implementations
         var NewJournalEntry = await _journalEntryRepository.AddAsync(JournalEntry);
 
         DebitNote.JournalEntryID = NewJournalEntry.JournalEntryID;
+        DebitNote.paymentStatusId = 1;
+
         var newDebitNote = await _DebitNoteRepository.AddAsync(DebitNote);
 
 
@@ -118,6 +145,16 @@ namespace Erp.Service.Implementations
         await _DebitNoteRepository.UpdateAsync(newDebitNote);
 
         await transact.CommitAsync();
+
+
+        var DeliveryVoucherRequest = await CreateAddDeliveryVoucherRequestAsync(newDebitNote.NoteDate,
+        newDebitNote.SupplierId,
+      _DebitNoteItemRepository.GetTableNoTracking()
+      .Where(x => x.DebitNoteId == newDebitNote.DebitNoteId).ToList(),
+      newDebitNote.DebitNoteId);
+
+
+        await _deliveryVoucherService.AddDeliveryVoucherAsync(DeliveryVoucherRequest, 2);
         return MessageCenter.CrudMessage.Success;
 
       }

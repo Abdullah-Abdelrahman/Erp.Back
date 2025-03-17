@@ -1,5 +1,6 @@
 using Erp.Data.Entities.AccountsModule;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Erp.Data.Entities.PurchasesModule
 {
@@ -16,12 +17,21 @@ namespace Erp.Data.Entities.PurchasesModule
 
     // Navigation Properties
     public int SupplierId { get; set; }
+    [JsonIgnore]
     public Supplier Supplier { get; set; }
 
     public int JournalEntryID { get; set; }
     [ForeignKey("JournalEntryID")]
     public JournalEntry JournalEntry { get; set; }
+
+
+    public int paymentStatusId { get; set; }
+    [ForeignKey("paymentStatusId")]
+    public PaymentStatus paymentStatus { get; set; }
     public ICollection<PurchaseInvoiceItem> Items { get; set; } = new List<PurchaseInvoiceItem>();
+
+    [JsonIgnore]
+    public ICollection<SupplierPayment> payments { get; set; } = new List<SupplierPayment>();
     public string TenantId { get; set; } = null!;
 
   }

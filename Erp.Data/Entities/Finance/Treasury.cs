@@ -1,5 +1,7 @@
+using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.HumanResources.Staff;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.Finance
 {
@@ -16,6 +18,11 @@ namespace Erp.Data.Entities.Finance
     public bool IsActive { get; set; } = true;
 
     public string Type { get; } = "Treasury";
+
+    public int AccountId { get; set; } // الحساب الفرعي (اختياري)
+
+    [ForeignKey("AccountId")]
+    public SecondaryAccount Account { get; set; }
 
 
     public string TenantId { get; set; } = null!;

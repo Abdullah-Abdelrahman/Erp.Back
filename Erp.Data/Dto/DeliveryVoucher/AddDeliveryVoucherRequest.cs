@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Erp.Data.Dto.DeliveryVoucher
 {
   public class AddDeliveryVoucherRequest
@@ -9,6 +11,17 @@ namespace Erp.Data.Dto.DeliveryVoucher
 
     // Foreign Key - Account
     public int? AccountId { get; set; }
+
+    public int? CustomerId { get; set; }
+
+    //مبيتعرض في الفرونت
+    [JsonIgnore]
+    public int? purchaseReturnId { get; set; }
+
+    [JsonIgnore]
+    public int? debitNoteId { get; set; }
+
+
     public List<DeliveryVoucherItemDT0> DeliveryVoucherItemDT0s { get; set; }
   }
 

@@ -53,6 +53,11 @@ namespace Name.Infrastructure.Data
 
     public DbSet<CompanySubscription> companySubscriptions { get; set; }
 
+    // For all Models//
+    public DbSet<PaymentStatus> paymentStatuses { get; set; }
+
+    public DbSet<Payment> payments { get; set; }
+    public DbSet<SupplierPayment> supplierPayments { get; set; }// المنتجات
 
 
     // -------------------Inventory Module-----------------------//
@@ -163,7 +168,7 @@ namespace Name.Infrastructure.Data
     public DbSet<RecurringInvoiceItem> recurringInvoiceItems { get; set; }
     public DbSet<CreditNote> CreditNotes { get; set; }
     public DbSet<CreditNoteItem> creditNoteItems { get; set; }
-    public DbSet<CustomerPayment> CustomerPayments { get; set; }
+    public DbSet<ClientPayment> clientPayments { get; set; }// 
 
     #endregion
     // -------------------Finance Module-----------------------//
@@ -363,6 +368,12 @@ namespace Name.Infrastructure.Data
 
       modelBuilder.Entity<StockTakingItem>()
         .HasKey(p => new { p.StockTakingId, p.ProductId });
+
+      modelBuilder.Entity<Warehouse>()
+    .HasOne(w => w.Account)
+    .WithMany() // use WithMany() insted of with one beacuse it create 2 forgin key when i use it.
+    .HasForeignKey(w => w.AccountId) // This tells EF to use AccountId as the foreign key.
+    .OnDelete(DeleteBehavior.Restrict);
       #endregion
 
 
@@ -378,6 +389,19 @@ namespace Name.Infrastructure.Data
       modelBuilder.Entity<Supplier>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<PurchaseInoviceSettings>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
 
+
+      modelBuilder.Entity<SupplierPayment>()
+       .HasOne(cp => cp.PurchaseInvoice)
+       .WithMany(i => i.payments)
+       .HasForeignKey(cp => cp.PurchaseInvoiceId)
+       .OnDelete(DeleteBehavior.Restrict);
+
+
+      modelBuilder.Entity<SupplierPayment>()
+      .HasOne(cp => cp.Supplier)
+      .WithMany(i => i.supplierPayments)
+      .HasForeignKey(cp => cp.SupplierId)
+      .OnDelete(DeleteBehavior.Restrict);
       #endregion
 
       // -------------------Accounts Module-----------------------//
@@ -455,7 +479,6 @@ namespace Name.Infrastructure.Data
       modelBuilder.Entity<RecurringInvoiceItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<CreditNote>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
       modelBuilder.Entity<CreditNoteItem>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
-      modelBuilder.Entity<CustomerPayment>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
 
       modelBuilder.Entity<Invoice>().
           HasMany(po => po.Items).
@@ -498,7 +521,7 @@ namespace Name.Infrastructure.Data
           .WithMany()
           .HasForeignKey(poi => poi.productID);
 
-      modelBuilder.Entity<CustomerPayment>()
+      modelBuilder.Entity<ClientPayment>()
         .HasOne(cp => cp.Invoice)
         .WithMany(i => i.payments)
         .HasForeignKey(cp => cp.InvoiceId)
@@ -617,7 +640,11 @@ namespace Name.Infrastructure.Data
        .HasForeignKey(cp => cp.SubAccountId)
        .OnDelete(DeleteBehavior.Restrict);
 
-
+      modelBuilder.Entity<Treasury>()
+ .HasOne(w => w.Account)
+ .WithMany() // use WithMany() insted of with one beacuse it create 2 forgin key when i use it.
+ .HasForeignKey(w => w.AccountId) // This tells EF to use AccountId as the foreign key.
+ .OnDelete(DeleteBehavior.Restrict);
       #endregion
 
       // -------------------HumanResources Module-----------------------//
@@ -627,6 +654,14 @@ namespace Name.Infrastructure.Data
 
       #endregion
 
+
+      // ---------------------For More Than one Modul
+      modelBuilder.Entity<Payment>().HasQueryFilter(p => p.TenantId == CurrentTenantId);
+
+      modelBuilder.Entity<Payment>()
+         .HasDiscriminator<string>("PaymentType")
+         .HasValue<SupplierPayment>("SupplierPayment")
+         .HasValue<ClientPayment>("ClientPayment");
     }
 
 

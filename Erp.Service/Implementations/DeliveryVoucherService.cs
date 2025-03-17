@@ -19,6 +19,10 @@ namespace Erp.Service.Implementations
     private readonly IAccountRepository<SecondaryAccount> _accountRepository;
     private readonly IVoucherStatusRepository _voucherStatusRepository;
 
+    private readonly IJournalEntryRepository _journalEntryRepository;
+    private readonly IJournalEntryDetailRepository _journalEntryDetailRepository;
+    private readonly ISupplierService _supplierService;
+
 
 
     // Isupplair
@@ -28,7 +32,10 @@ namespace Erp.Service.Implementations
       IWarehouseRepository warehouseRepository,
       IDeliveryVoucherItemRepository DeliveryVoucherItemRepository,
        IAccountRepository<SecondaryAccount> accountRepository,
-      IVoucherStatusRepository voucherStatusRepository)
+      IVoucherStatusRepository voucherStatusRepository,
+        IJournalEntryRepository journalEntryRepository,
+      IJournalEntryDetailRepository journalEntryDetailRepository,
+      ISupplierService supplierService)
     {
       _DeliveryVoucherRepository = DeliveryVoucherRepository;
       _DeliveryVoucherItemRepository = DeliveryVoucherItemRepository;
@@ -36,11 +43,14 @@ namespace Erp.Service.Implementations
       _warehouseRepository = warehouseRepository;
       _accountRepository = accountRepository;
       _voucherStatusRepository = voucherStatusRepository;
+      _journalEntryRepository = journalEntryRepository;
+      _supplierService = supplierService;
+      _journalEntryDetailRepository = journalEntryDetailRepository;
     }
     private async Task<int> GetDefaultSubAccountId()
     {
       var Acc = (await _accountRepository.GetTableNoTracking().
-        Where(a => a.AccountName == "Other Debtors").SingleOrDefaultAsync());
+        Where(a => a.AccountName == "Other Receivables").SingleOrDefaultAsync());
       if (Acc == null)
       {
         return 0;
@@ -57,11 +67,53 @@ namespace Erp.Service.Implementations
       }
       return warehouse.WarehouseId;
     }
+    private async Task AddJournalEntry(int warehouseAccId,
+    int accId,
+    string DeliveryVoucherId,
+    int JournalEntryID,
+    decimal total)
+    {
+      await _journalEntryDetailRepository.AddAsync(new JournalEntryDetail()
+      {
+        JournalEntryID = JournalEntryID,
+        Description = "Outbound Requisition - Outbound Requisition #" + DeliveryVoucherId,
+        AccountID = accId,
+        Debit = total,
+        Credit = 0.00M
+      });
 
-    public async Task<string> AddDeliveryVoucher(AddDeliveryVoucherRequest DeliveryVoucherRequest)
+
+      await _journalEntryDetailRepository.AddAsync(new JournalEntryDetail()
+      {
+        JournalEntryID = JournalEntryID,
+
+        Description = "Outbound Requisition - Outbound Requisition #" + DeliveryVoucherId,
+
+        AccountID = warehouseAccId,
+        Debit = 0.00M,
+        Credit = total
+      });
+
+    }
+
+
+    private async Task UpdateProductsQuantatiyAsync(int VoucherId)
+    {
+      var DeliveryVoucher = _DeliveryVoucherRepository.GetTableNoTracking()
+        .Where(x => x.DeliveryVoucherId == VoucherId)
+        .Include(x => x.deliveryVoucherItems).ThenInclude(r => r.Product).SingleOrDefault();
+
+      foreach (var item in DeliveryVoucher.deliveryVoucherItems)
+      {
+        await _productService.UpdateProductQuantatiyAsync(item.ProductId, item.Quantity * -1);
+      }
+    }
+
+
+    public async Task<string> AddDeliveryVoucherAsync(AddDeliveryVoucherRequest DeliveryVoucherRequest, int VoucherStatusId = 1)
     {
       var accId = await GetDefaultSubAccountId();
-      var PrimaryWarhouseId = await GetDefaultSubAccountId();
+      var PrimaryWarhouseId = await GetDefaultWarehouseId();
       var DeliveryVoucher = new DeliveryVoucher()
       {
         DeliveryDate = (DateTime)DeliveryVoucherRequest.DeliveryDate,
@@ -70,15 +122,31 @@ namespace Erp.Service.Implementations
         (int)DeliveryVoucherRequest.WarehouseId,
         AccountId = DeliveryVoucherRequest.AccountId is null ? accId :
         (int)DeliveryVoucherRequest.AccountId,
-        VoucherStatusId = 1
+        VoucherStatusId = VoucherStatusId,
+        CustomerId = DeliveryVoucherRequest.CustomerId,
+        purchaseReturnId = DeliveryVoucherRequest.purchaseReturnId,
+        debitNoteId = DeliveryVoucherRequest.debitNoteId
       };
 
 
       var transact = _DeliveryVoucherRepository.BeginTransaction();
       try
       {
+        JournalEntry JournalEntry = new JournalEntry()
+        {
+          EntryDate = DateTime.Now,
+          Description = "Outbound Requisition - Outbound Requisition #"
+        };
+        var NewJournalEntry = await _journalEntryRepository.AddAsync(JournalEntry);
+
+        DeliveryVoucher.JournalEntryID = NewJournalEntry.JournalEntryID;
         var newDeliveryVoucher = await _DeliveryVoucherRepository.AddAsync(DeliveryVoucher);
 
+        NewJournalEntry.Description += newDeliveryVoucher.DeliveryVoucherId.ToString();
+        await _journalEntryRepository.UpdateAsync(NewJournalEntry);
+
+
+        decimal total = 0;
         foreach (var item in DeliveryVoucherRequest.DeliveryVoucherItemDT0s)
         {
           var DeliveryVoucherItem = new DeliveryVoucherItem()
@@ -88,10 +156,34 @@ namespace Erp.Service.Implementations
             UnitPrice = item.UnitPrice,
             ProductId = item.ProductId
           };
+          total += item.Quantity * item.UnitPrice;
 
           await _DeliveryVoucherItemRepository.AddAsync(DeliveryVoucherItem);
         }
 
+        var PurAccId = accId;
+
+
+
+        var warehouseAccId = (await _warehouseRepository.GetByIdAsync(newDeliveryVoucher.WarehouseId)).AccountId;
+
+
+        if (VoucherStatusId == 1)
+        {
+          await AddJournalEntry(
+            warehouseAccId,
+            PurAccId,
+            newDeliveryVoucher.DeliveryVoucherId.ToString(),
+            NewJournalEntry.JournalEntryID,
+          total);
+
+          await UpdateProductsQuantatiyAsync(newDeliveryVoucher.DeliveryVoucherId);
+
+
+        }
+
+
+        await _DeliveryVoucherRepository.UpdateAsync(newDeliveryVoucher);
 
 
 
@@ -143,6 +235,9 @@ namespace Erp.Service.Implementations
         Warehouse = DeliveryVoucher.Warehouse,
         Account = DeliveryVoucher.Account,
         VoucherStatus = DeliveryVoucher.VoucherStatus,
+        JournalEntryID = DeliveryVoucher.JournalEntryID,
+        purchaseReturnId = DeliveryVoucher.purchaseReturnId,
+        debitNoteId = DeliveryVoucher.debitNoteId,
         deliveryVoucherItemDto = new List<DeliveryVoucherItemDto>()
       };
 
@@ -177,8 +272,9 @@ namespace Erp.Service.Implementations
         Warehouse = x.Warehouse,
         Account = x.Account,
         VoucherStatus = x.VoucherStatus,
-
-
+        JournalEntryID = x.JournalEntryID,
+        purchaseReturnId = x.purchaseReturnId,
+        debitNoteId = x.debitNoteId
       }));
 
       return dtoList;
@@ -269,7 +365,85 @@ namespace Erp.Service.Implementations
       }
     }
 
+    public async Task<string> ConfirmDeliveryVoucherAsync(int DeliveryVoucherId)
+    {
+      var transact = _DeliveryVoucherRepository.BeginTransaction();
+      try
+      {
 
+        var DeliveryVoucher = await _DeliveryVoucherRepository
+          .GetTableAsTracking()
+          .Where(x => x.DeliveryVoucherId == DeliveryVoucherId).Include(x => x.deliveryVoucherItems).FirstOrDefaultAsync();
+
+
+
+        decimal total = 0;
+
+        foreach (var item in DeliveryVoucher.deliveryVoucherItems)
+        {
+          total += item.Quantity * item.UnitPrice;
+
+        }
+
+        var PurAccId = await GetDefaultSubAccountId();
+
+
+
+        var warehouseAccId = (await _warehouseRepository.GetByIdAsync(DeliveryVoucher.WarehouseId)).AccountId;
+
+
+
+        await AddJournalEntry(
+          warehouseAccId,
+          PurAccId,
+          DeliveryVoucher.DeliveryVoucherId.ToString(),
+          DeliveryVoucher.JournalEntryID,
+          total);
+
+        await UpdateProductsQuantatiyAsync(DeliveryVoucher.DeliveryVoucherId);
+
+
+        DeliveryVoucher.VoucherStatusId = 1;
+        await _DeliveryVoucherRepository.UpdateAsync(DeliveryVoucher);
+
+
+        await transact.CommitAsync();
+        return MessageCenter.CrudMessage.Success;
+
+      }
+      catch
+      {
+        await transact.RollbackAsync();
+        return MessageCenter.CrudMessage.Falied;
+      }
+    }
+
+    public async Task<string> RejectDeliveryVoucherAsync(int DeliveryVoucherId)
+    {
+      var transact = _DeliveryVoucherRepository.BeginTransaction();
+      try
+      {
+
+        var DeliveryVoucher = await _DeliveryVoucherRepository.GetByIdAsync(DeliveryVoucherId);
+
+
+        //var journalEntity = await _journalEntryRepository.GetByIdAsync(ReceivingVoucher.JournalEntryID);
+        //await _journalEntryRepository.DeleteAsync(journalEntity);
+        //Cant delete becuse the journalEntity is Required in ReceivingVoucher
+        DeliveryVoucher.VoucherStatusId = 3;
+        await _DeliveryVoucherRepository.UpdateAsync(DeliveryVoucher);
+
+
+        await transact.CommitAsync();
+        return MessageCenter.CrudMessage.Success;
+
+      }
+      catch
+      {
+        await transact.RollbackAsync();
+        return MessageCenter.CrudMessage.Falied;
+      }
+    }
 
   }
 

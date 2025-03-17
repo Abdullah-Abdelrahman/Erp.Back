@@ -4,7 +4,7 @@ using Name.Core.Bases;
 
 namespace Erp.Core.Features.Supplier.Queries.Models
 {
-  public class GetSupplierListQuery : IRequest<Response<List<GetSupplierByIdResult>>>
+  public class GetSupplierListQuery : IRequest<Response<List<GetSupplierListResult>>>
   {
   }
 }

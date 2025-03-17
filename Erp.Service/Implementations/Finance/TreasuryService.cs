@@ -117,7 +117,6 @@ namespace Erp.Service.Implementations.Finance
             break;
         }
 
-        await _TreasuryRepository.UpdateAsync(newTreasury);
 
         var acc = new SecondaryAccount()
         {
@@ -129,6 +128,10 @@ namespace Erp.Service.Implementations.Finance
           CreatedDate = DateTime.UtcNow,
         };
         await _accountService.AddAccountAsync(acc);
+        newTreasury.AccountId = acc.AccountID;
+
+
+        await _TreasuryRepository.UpdateAsync(newTreasury);
 
         await transact.CommitAsync();
         return MessageCenter.CrudMessage.Success;

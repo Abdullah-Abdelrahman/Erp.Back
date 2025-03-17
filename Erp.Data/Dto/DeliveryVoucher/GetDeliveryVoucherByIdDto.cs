@@ -14,6 +14,15 @@ namespace Erp.Data.Dto.DeliveryVoucher
     public Account Account { get; set; } = null!;
 
     public VoucherStatus VoucherStatus { get; set; }
+
+    public int? CustomerId { get; set; }
+
+    public int JournalEntryID { get; set; }
+
+    //لو معموله من خلال فاتوره مشتريات
+    public int? purchaseReturnId { get; set; }
+
+    public int? debitNoteId { get; set; }
     public List<DeliveryVoucherItemDto> deliveryVoucherItemDto { get; set; } = new List<DeliveryVoucherItemDto>();
   }
 

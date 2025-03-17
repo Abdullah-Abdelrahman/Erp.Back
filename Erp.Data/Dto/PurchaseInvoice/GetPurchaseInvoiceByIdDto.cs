@@ -11,7 +11,10 @@ namespace Erp.Data.Dto.PurchaseInvoice
 
     public int JournalEntryID { get; set; }
 
+    public string paymentStatus { get; set; } = null!;
     public List<PurchaseInvoiceItemDto> PurchaseInvoiceItemsDto { get; set; } = new List<PurchaseInvoiceItemDto>();
+
+    public List<SupplierPaymentDto> supplierPaymentDtos { get; set; } = new List<SupplierPaymentDto>();
   }
 
   public class PurchaseInvoiceItemDto
@@ -26,4 +29,15 @@ namespace Erp.Data.Dto.PurchaseInvoice
     public decimal TotalPrice { get; set; }
   }
 
+
+  public class SupplierPaymentDto
+  {
+    public int Id { get; set; }
+    public string SupplierName { get; set; }
+    public string PaymentMethod { get; set; }
+
+    public decimal Amount { get; set; } = 0.0M;
+
+    public DateTime? CreatedDate { get; set; }
+  }
 }

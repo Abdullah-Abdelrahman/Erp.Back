@@ -215,6 +215,11 @@ namespace Name.Data.MetaData
 
       public const string Delete = prefix + "Delete/{Id}";
 
+      public const string Reject = prefix + "Reject/{Id}";
+
+      public const string Confirm = prefix + "Confirm/{Id}";
+
+
 
 
     }
@@ -234,6 +239,9 @@ namespace Name.Data.MetaData
       public const string Delete = prefix + "Delete/{Id}";
 
 
+      public const string Reject = prefix + "Reject/{Id}";
+
+      public const string Confirm = prefix + "Confirm/{Id}";
 
     }
 
@@ -439,9 +447,9 @@ namespace Name.Data.MetaData
     {
       public const string prefix = Rule + "Payment/";
 
-      public const string GetList = prefix + "List";
+      public const string SupplierPaymentList = prefix + "supplier-payment/List";
 
-      public const string GetById = prefix + "{Id}";
+      public const string GetSupplierPaymentById = prefix + "supplier-payment/{Id}";
 
       public const string Create = prefix + "Create";
 

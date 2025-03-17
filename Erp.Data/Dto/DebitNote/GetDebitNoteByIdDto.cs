@@ -10,6 +10,7 @@ namespace Erp.Data.Dto.DebitNote
     public int SupplierId { get; set; }
 
     public int JournalEntryID { get; set; }
+    public string paymentStatus { get; set; } = null!;
 
     public List<DebitNoteItemDto> DebitNoteItemsDto { get; set; } = new List<DebitNoteItemDto>();
   }

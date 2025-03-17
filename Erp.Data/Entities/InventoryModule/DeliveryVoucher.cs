@@ -1,4 +1,6 @@
 using Erp.Data.Entities.AccountsModule;
+using Erp.Data.Entities.CustomersModule;
+using Erp.Data.Entities.PurchasesModule;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Erp.Data.Entities.InventoryModule
@@ -22,6 +24,25 @@ namespace Erp.Data.Entities.InventoryModule
     public int VoucherStatusId { get; set; }
     [ForeignKey("VoucherStatusId")]
     public VoucherStatus VoucherStatus { get; set; }
+
+
+
+    public int? CustomerId { get; set; }
+    [ForeignKey("CustomerId")]
+    public Customer? Customer { get; set; }
+
+    public int JournalEntryID { get; set; }
+    [ForeignKey("JournalEntryID")]
+    public JournalEntry JournalEntry { get; set; }
+
+    public int? purchaseReturnId { get; set; }
+    [ForeignKey("purchaseReturnId")]
+    public PurchaseReturn? purchaseReturn { get; set; }
+
+
+    public int? debitNoteId { get; set; }
+    [ForeignKey("debitNoteId")]
+    public DebitNote? debitNote { get; set; }
     // Navigation Property
     public ICollection<DeliveryVoucherItem> deliveryVoucherItems { get; set; } = new List<DeliveryVoucherItem>();
     public string TenantId { get; set; } = null!;

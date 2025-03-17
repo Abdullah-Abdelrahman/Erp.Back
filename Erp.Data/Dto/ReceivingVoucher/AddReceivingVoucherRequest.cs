@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Erp.Data.Dto.ReceivingVoucher
 {
   public class AddReceivingVoucherRequest
@@ -9,6 +11,12 @@ namespace Erp.Data.Dto.ReceivingVoucher
 
     // Foreign Key - Account
     public int? AccountId { get; set; }
+    public int? SupplierId { get; set; }
+
+    //مبيتعرض في الفرونت
+    [JsonIgnore]
+    public int? purchaseInvoiceId { get; set; }
+
 
     public List<ReceivingVoucherItemDT0> receivingVoucherItemDT0s { get; set; } = new List<ReceivingVoucherItemDT0>();
   }

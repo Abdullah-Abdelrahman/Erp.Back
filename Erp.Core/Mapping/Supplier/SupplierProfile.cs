@@ -9,7 +9,7 @@ namespace Erp.Core.Mapping.Supplier
       AddSupplierMapping();
       EditSupplierMapping();
 
-
+      GetSupplierListMapping();
       GetSupplierByIdMapping();
     }
   }

@@ -1,3 +1,5 @@
+using Erp.Data.Dto.PurchaseInvoice;
+
 namespace Erp.Data.Dto.PurchaseReturn
 {
   public class GetPurchaseReturnByIdDto
@@ -10,8 +12,11 @@ namespace Erp.Data.Dto.PurchaseReturn
     public int SupplierId { get; set; }
 
     public int JournalEntryID { get; set; }
+    public string paymentStatus { get; set; } = null!;
 
     public List<PurchaseReturnItemDto> PurchaseReturnItemsDto { get; set; } = new List<PurchaseReturnItemDto>();
+
+    public List<SupplierPaymentDto> supplierPaymentDtos { get; set; } = new List<SupplierPaymentDto>();
   }
 
   public class PurchaseReturnItemDto

@@ -24,6 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\Accounts\" />
+    <Folder Include="Controllers\Customers\" />
+    <Folder Include="Controllers\Finance\" />
+    <Folder Include="Controllers\Sales\" />
+    <Folder Include="Controllers\Purchases\" />
     <Folder Include="Files\" />
   </ItemGroup>
 

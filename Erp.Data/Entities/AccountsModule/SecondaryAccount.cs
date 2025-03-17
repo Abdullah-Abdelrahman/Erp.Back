@@ -4,6 +4,6 @@ namespace Erp.Data.Entities.AccountsModule
   {
 
     // Foreign key relationship
-    public ICollection<JournalEntryDetail> journalEntryDetails { get; set; } = new List<JournalEntryDetail>();
+    public ICollection<JournalEntry> journalEntrys { get; set; } = new List<JournalEntry>();
   }
 }

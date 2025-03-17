@@ -26,7 +26,7 @@ namespace Erp.Data.Entities.AccountsModule
     // public Company Company { get; set; } = null!;
 
     [ForeignKey("ParentAccountID")]
-    public Account? ParentAccount { get; set; }
+    public PrimaryAccount? ParentAccount { get; set; }
 
     public ICollection<Expense> expenses { get; set; } = new List<Expense>();
 

@@ -7,7 +7,8 @@ namespace Erp.Core.Mapping.Product
     public void AddProductMapping()
     {
       CreateMap<AddProductCommand, Entitis.InventoryModule.Product>()
-        .ForMember(destnation => destnation.Description, opt => opt.MapFrom(src => src.Description));
+        .ForMember(destnation => destnation.Description, opt => opt.MapFrom(src => src.Description))
+        .ForMember(destnation => destnation.Name, opt => opt.MapFrom(src => src.ProductName));
     }
   }
 }

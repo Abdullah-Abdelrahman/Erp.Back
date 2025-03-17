@@ -1,8 +1,12 @@
+using Erp.Data.Entities;
 using Erp.Data.Entities.AccountsModule;
 using Erp.Data.Entities.CustomersModule;
 using Erp.Data.Entities.InventoryModule;
+using Erp.Data.Entities.PurchasesModule;
+using Erp.Data.Entities.SalesModule;
 using Erp.Infrastructure.Abstracts;
 using Erp.Infrastructure.Abstracts.AccountsModule;
+using Erp.Infrastructure.Abstracts.CommonUse;
 using Erp.Infrastructure.Abstracts.CostCentersModule;
 using Erp.Infrastructure.Abstracts.CustomersModule;
 using Erp.Infrastructure.Abstracts.Finance;
@@ -13,6 +17,7 @@ using Erp.Infrastructure.Abstracts.MainModule;
 using Erp.Infrastructure.Abstracts.SalesModule;
 using Erp.Infrastructure.Repositories;
 using Erp.Infrastructure.Repositories.AccountsModule;
+using Erp.Infrastructure.Repositories.CommonUse;
 using Erp.Infrastructure.Repositories.CostCentersModule;
 using Erp.Infrastructure.Repositories.CustomersModule;
 using Erp.Infrastructure.Repositories.Finance;
@@ -115,8 +120,6 @@ namespace Name.Infrastructure
       services.AddTransient<IRecurringInvoiceRepository, RecurringInvoiceRepository>();
       services.AddTransient<IRecurringInvoiceItemRepository, RecurringInvoiceItemRepository>();
 
-      services.AddTransient<ICustomerPaymentRepository, CustomerPaymentRepository>();
-
 
 
 
@@ -163,6 +166,9 @@ namespace Name.Infrastructure
       services.AddTransient<ICompanySubscriptionRepository, CompanySubscriptionRepository>();
 
 
+      services.AddTransient<IPaymentRepository<Payment>, PaymentRepository<Payment>>();
+      services.AddTransient<IPaymentRepository<SupplierPayment>, PaymentRepository<SupplierPayment>>();
+      services.AddTransient<IPaymentRepository<ClientPayment>, PaymentRepository<ClientPayment>>();
 
 
       services.AddScoped<ITenantRepository, TenantRepository>();

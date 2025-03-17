@@ -13,17 +13,20 @@ namespace Erp.Service.Implementations.AccountsModule
     private readonly IAccountRepository<SecondaryAccount> _secondaryAccountRepository;
 
     private readonly IJournalEntryDetailRepository _JournalEntryDetailRepository;
+    private readonly IJournalEntryRepository _JournalEntryRepository;
 
 
     // Constructor that injects the repository
     public AccountService(IAccountRepository<Account> accountRepository, IAccountRepository<PrimaryAccount> primaryAccountRepository,
-            IAccountRepository<SecondaryAccount> secondaryAccountRepository, IJournalEntryDetailRepository journalEntryDetailRepository)
+            IAccountRepository<SecondaryAccount> secondaryAccountRepository, IJournalEntryDetailRepository journalEntryDetailRepository,
+            IJournalEntryRepository journalEntryRepository)
     {
       _accountRepository = accountRepository;
 
       _primaryAccountRepository = primaryAccountRepository;
       _secondaryAccountRepository = secondaryAccountRepository;
       _JournalEntryDetailRepository = journalEntryDetailRepository;
+      _JournalEntryRepository = journalEntryRepository;
     }
 
     public async Task<string> AddAccountAsync(Account account)
@@ -112,9 +115,15 @@ namespace Erp.Service.Implementations.AccountsModule
     {
       try
       {
-        var result = await _secondaryAccountRepository.GetTableNoTracking().Where(x => x.AccountID == id).Include(x => x.journalEntryDetails).SingleOrDefaultAsync();
+        var result = await _secondaryAccountRepository.GetTableNoTracking()
+          .Where(x => x.AccountID == id)
+          .Include(x => x.journalEntrys).SingleOrDefaultAsync();
 
-        result.journalEntryDetails = await _JournalEntryDetailRepository.GetTableNoTracking().Where(x => x.AccountID == result.AccountID).Include(x => x.Account).Include(x => x.CostCenter).ToListAsync();
+        result.journalEntrys = await _JournalEntryRepository.GetTableNoTracking()
+          .Where(x => x.details.Any(d => d.AccountID == result.AccountID))
+          .Include(x => x.details).ThenInclude(x => x.Account)
+          .Include(x => x.details).ThenInclude(x => x.CostCenter)
+          .ToListAsync();
 
 
         return result;

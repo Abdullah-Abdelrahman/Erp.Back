@@ -11,9 +11,9 @@ namespace Erp.Core.Features.ReceivingVoucher.Commands.Handlers
   public class ReceivingVoucherCommandHandler : ResponseHandler,
     IRequestHandler<AddReceivingVoucherCommand, Response<string>>,
     IRequestHandler<EditReceivingVoucherCommand, Response<string>>,
-  IRequestHandler<DeleteReceivingVoucherCommand, Response<string>>
-
-
+  IRequestHandler<DeleteReceivingVoucherCommand, Response<string>>,
+  IRequestHandler<RejectReceivingVoucherCommand, Response<string>>,
+  IRequestHandler<ConfirmReceivingVoucherCommand, Response<string>>
   {
 
     private readonly IReceivingVoucherService _receivingVoucherService;
@@ -28,7 +28,7 @@ namespace Erp.Core.Features.ReceivingVoucher.Commands.Handlers
     public async Task<Response<string>> Handle(AddReceivingVoucherCommand request, CancellationToken cancellationToken)
     {
       var AddReceivingVoucherRequestMapper = _mapper.Map<AddReceivingVoucherRequest>(request);
-      var result = await _receivingVoucherService.AddReceivingVoucher(AddReceivingVoucherRequestMapper);
+      var result = await _receivingVoucherService.AddReceivingVoucherAsync(AddReceivingVoucherRequestMapper);
 
       if (result == MessageCenter.CrudMessage.Success)
       {
@@ -36,7 +36,7 @@ namespace Erp.Core.Features.ReceivingVoucher.Commands.Handlers
       }
       else
       {
-        return BadRequest<string>("Somthing bad happened");
+        return BadRequest<string>("Somthing bad happened :" + result);
       }
     }
 
@@ -78,7 +78,32 @@ namespace Erp.Core.Features.ReceivingVoucher.Commands.Handlers
 
     }
 
+    public async Task<Response<string>> Handle(RejectReceivingVoucherCommand request, CancellationToken cancellationToken)
+    {
+      var result = await _receivingVoucherService.RejectReceivingVoucherAsync(request.Id);
 
+      if (result == MessageCenter.CrudMessage.Success)
+      {
+        return Success<string>("Rejected");
+      }
+      else
+      {
+        return BadRequest<string>(result);
+      }
+    }
 
+    public async Task<Response<string>> Handle(ConfirmReceivingVoucherCommand request, CancellationToken cancellationToken)
+    {
+      var result = await _receivingVoucherService.ConfirmReceivingVoucherAsync(request.Id);
+
+      if (result == MessageCenter.CrudMessage.Success)
+      {
+        return Success<string>("Confirmed");
+      }
+      else
+      {
+        return BadRequest<string>(result);
+      }
+    }
   }
 }

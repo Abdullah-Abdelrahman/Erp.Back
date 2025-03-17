@@ -21,6 +21,6 @@ namespace Erp.Core.Features.Account.Queries.Results
 
     // --- JournalEntry  ---- 
 
-    public ICollection<Entitis.AccountsModule.JournalEntryDetail>? journalEntryDetails { get; set; } = new List<Entitis.AccountsModule.JournalEntryDetail>();
+    public ICollection<Entitis.AccountsModule.JournalEntry>? journalEntrys { get; set; } = new List<Entitis.AccountsModule.JournalEntry>();
   }
 }
