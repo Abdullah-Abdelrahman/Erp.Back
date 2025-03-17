@@ -117,7 +117,7 @@ namespace Erp.Service.Implementations.AccountsModule
       {
         var result = await _secondaryAccountRepository.GetTableNoTracking()
           .Where(x => x.AccountID == id)
-          .Include(x => x.journalEntrys).SingleOrDefaultAsync();
+          .SingleOrDefaultAsync();
 
         result.journalEntrys = await _JournalEntryRepository.GetTableNoTracking()
           .Where(x => x.details.Any(d => d.AccountID == result.AccountID))

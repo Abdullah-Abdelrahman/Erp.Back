@@ -41,34 +41,41 @@ namespace Erp.Core.Features.Supplier.Queries.Handlers
         var SupplierMapper = _mapper.Map<GetSupplierByIdResult>(Supplier);
         SupplierMapper.BalanceDue = Supplier.Account.Balance;
 
-        decimal pre = 0;
+        decimal pre = 0, total = 0, AmountPaid = 0;
         foreach (var item in Supplier.Account.journalEntrys)
         {
-          var journalEn = await _journalEntryService.GetJournalEntryByIdAsync(item.JournalEntryID);
+
           decimal amount = 0;
           foreach (var detail in item.details)
           {
-            if (detail.AccountID == Supplier.SupplierId)
+            if (detail.AccountID == Supplier.AccountId)
             {
               if (detail.Credit > 0)
               {
                 amount = detail.Credit;
+                total += detail.Credit;
               }
               else
               {
                 amount = -detail.Debit;
+                AmountPaid += detail.Debit;
               }
             }
           }
           pre += amount;
           SupplierMapper.transactionDtos.Add(new TransactionDto()
           {
-            DateTime = journalEn.EntryDate,
-            Transaction = journalEn.Description,
+            DateTime = item.EntryDate,
+            Transaction = item.Description,
             Amount = amount,
             BalanceDue = pre,
+            Id = int.Parse(item.Description.Split('#')[1]),
+            Type = item.Description.Split('#')[0]
           });
         }
+        SupplierMapper.Total = total;
+        SupplierMapper.PaidToDate = AmountPaid;
+
 
         return Success(SupplierMapper);
       }

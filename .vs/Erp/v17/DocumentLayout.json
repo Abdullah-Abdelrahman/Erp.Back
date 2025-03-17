@@ -3,18 +3,6 @@
   "WorkspaceRootPath": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D986B1F8-EB22-4B6D-BD00-6FC34B9990BE}|Erp.Service\\Erp.Service.csproj|e:\\all_of_my_projrcts\\graduationproject\\graduation-project\\backend\\erp\\erp.service\\implementations\\supplierservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D986B1F8-EB22-4B6D-BD00-6FC34B9990BE}|Erp.Service\\Erp.Service.csproj|solutionrelative:erp.service\\implementations\\supplierservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|e:\\all_of_my_projrcts\\graduationproject\\graduation-project\\backend\\erp\\erp.core\\features\\supplier\\queries\\handlers\\supplierqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|solutionrelative:erp.core\\features\\supplier\\queries\\handlers\\supplierqueryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|e:\\all_of_my_projrcts\\graduationproject\\graduation-project\\backend\\erp\\erp.core\\features\\supplier\\queries\\results\\getsupplierbyidresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4A60A851-90E8-4270-AFF3-451BBD8779C2}|Erp.Core\\Erp.Core.csproj|solutionrelative:erp.core\\features\\supplier\\queries\\results\\getsupplierbyidresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B8A12357-3646-4357-9BC1-E62B4F81A58B}|Erp.Infrastructure\\Erp.Infrastructure.csproj|e:\\all_of_my_projrcts\\graduationproject\\graduation-project\\backend\\erp\\erp.infrastructure\\context\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B8A12357-3646-4357-9BC1-E62B4F81A58B}|Erp.Infrastructure\\Erp.Infrastructure.csproj|solutionrelative:erp.infrastructure\\context\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -67,51 +55,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SupplierService.cs",
-              "DocumentMoniker": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Service\\Implementations\\SupplierService.cs",
-              "RelativeDocumentMoniker": "Erp.Service\\Implementations\\SupplierService.cs",
-              "ToolTip": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Service\\Implementations\\SupplierService.cs",
-              "RelativeToolTip": "Erp.Service\\Implementations\\SupplierService.cs",
-              "ViewState": "AQIAAEYAAAAAAAAAAAA7wF8AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-17T00:38:19.067Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SupplierQueryHandler.cs",
-              "DocumentMoniker": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\Supplier\\Queries\\Handlers\\SupplierQueryHandler.cs",
-              "RelativeDocumentMoniker": "Erp.Core\\Features\\Supplier\\Queries\\Handlers\\SupplierQueryHandler.cs",
-              "ToolTip": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\Supplier\\Queries\\Handlers\\SupplierQueryHandler.cs",
-              "RelativeToolTip": "Erp.Core\\Features\\Supplier\\Queries\\Handlers\\SupplierQueryHandler.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAA2wEQAAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T23:59:07.603Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GetSupplierByIdResult.cs",
-              "DocumentMoniker": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\Supplier\\Queries\\Results\\GetSupplierByIdResult.cs",
-              "RelativeDocumentMoniker": "Erp.Core\\Features\\Supplier\\Queries\\Results\\GetSupplierByIdResult.cs",
-              "ToolTip": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Core\\Features\\Supplier\\Queries\\Results\\GetSupplierByIdResult.cs",
-              "RelativeToolTip": "Erp.Core\\Features\\Supplier\\Queries\\Results\\GetSupplierByIdResult.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAA5wBcAAABeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T22:22:07.663Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "ApplicationDBContext.cs",
               "DocumentMoniker": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Infrastructure\\Context\\ApplicationDBContext.cs",
               "RelativeDocumentMoniker": "Erp.Infrastructure\\Context\\ApplicationDBContext.cs",
               "ToolTip": "E:\\All_of_my_projrcts\\GraduationProject\\Graduation-Project\\Backend\\Erp\\Erp.Infrastructure\\Context\\ApplicationDBContext.cs",
               "RelativeToolTip": "Erp.Infrastructure\\Context\\ApplicationDBContext.cs",
-              "ViewState": "AQIAAKQCAAAAAAAAAIAywLECAAAEAAAA",
+              "ViewState": "AQIAABQAAAAAAAAAAAAkwA0AAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-05T18:02:33.813Z",
               "EditorCaption": ""

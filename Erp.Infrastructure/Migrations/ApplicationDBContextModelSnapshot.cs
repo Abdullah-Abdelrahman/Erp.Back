@@ -182,7 +182,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("ParentAccountID");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
 
                     b.HasDiscriminator<string>("AccountType").HasValue("Account");
 
@@ -226,7 +226,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("PrimaryCostCenterCostCenterId");
 
-                    b.ToTable("costCenters", (string)null);
+                    b.ToTable("costCenters");
 
                     b.HasDiscriminator<string>("CostCenterType").HasValue("CostCenter");
 
@@ -255,7 +255,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("JournalEntryID");
 
-                    b.ToTable("journalEntries", (string)null);
+                    b.ToTable("journalEntries");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.AccountsModule.JournalEntryDetail", b =>
@@ -284,9 +284,6 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<int>("JournalEntryID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SecondaryAccountAccountID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("SecondaryCostCenterCostCenterId")
                         .HasColumnType("int");
 
@@ -302,11 +299,9 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("JournalEntryID");
 
-                    b.HasIndex("SecondaryAccountAccountID");
-
                     b.HasIndex("SecondaryCostCenterCostCenterId");
 
-                    b.ToTable("journalEntryDetails", (string)null);
+                    b.ToTable("journalEntryDetails");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.CustomersModule.ContactList", b =>
@@ -343,7 +338,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("contactLists", (string)null);
+                    b.ToTable("contactLists");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.CustomersModule.Customer", b =>
@@ -408,7 +403,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("ClassificationId");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
 
                     b.HasDiscriminator<string>("CustomerType").HasValue("Customer");
 
@@ -433,7 +428,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("customerClassifications", (string)null);
+                    b.ToTable("customerClassifications");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.ExpenseCostCenter", b =>
@@ -454,7 +449,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("CostCenterId");
 
-                    b.ToTable("ExpenseCostCenter", (string)null);
+                    b.ToTable("ExpenseCostCenter");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.Finance.BankAccount", b =>
@@ -500,7 +495,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("BankAccountID");
 
-                    b.ToTable("BankAccounts", (string)null);
+                    b.ToTable("BankAccounts");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.Finance.Expense", b =>
@@ -562,7 +557,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("TreasuryId");
 
-                    b.ToTable("Expenses", (string)null);
+                    b.ToTable("Expenses");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.Finance.ExpenseCategory", b =>
@@ -588,7 +583,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExpenseCategories", (string)null);
+                    b.ToTable("ExpenseCategories");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.Finance.MultiAccReceiptItem", b =>
@@ -626,7 +621,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("receiptId");
 
-                    b.ToTable("multiAccReceiptItems", (string)null);
+                    b.ToTable("multiAccReceiptItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.Finance.Receipt", b =>
@@ -683,7 +678,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("TreasuryId");
 
-                    b.ToTable("Receipts", (string)null);
+                    b.ToTable("Receipts");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.Finance.ReceiptCategory", b =>
@@ -714,7 +709,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("ReceiptId");
 
-                    b.ToTable("ReceiptCategories", (string)null);
+                    b.ToTable("ReceiptCategories");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.Finance.ReceiptCostCenter", b =>
@@ -735,7 +730,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("CostCenterId");
 
-                    b.ToTable("ReceiptCostCenter", (string)null);
+                    b.ToTable("ReceiptCostCenter");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.Finance.Treasury", b =>
@@ -774,7 +769,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Treasuries", (string)null);
+                    b.ToTable("Treasuries");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.HumanResources.OrganizationalStructure.Department", b =>
@@ -812,7 +807,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("DepartmentHeadID");
 
-                    b.ToTable("departments", (string)null);
+                    b.ToTable("departments");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.HumanResources.OrganizationalStructure.EmploymentLevel", b =>
@@ -841,7 +836,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("employmentLevels", (string)null);
+                    b.ToTable("employmentLevels");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.HumanResources.OrganizationalStructure.EmploymentType", b =>
@@ -870,7 +865,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("employmentTypes", (string)null);
+                    b.ToTable("employmentTypes");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.HumanResources.OrganizationalStructure.JobType", b =>
@@ -904,7 +899,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("jobTypes", (string)null);
+                    b.ToTable("jobTypes");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.HumanResources.Staff.ApplicationRole", b =>
@@ -1048,7 +1043,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("RoleID");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Category", b =>
@@ -1082,7 +1077,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("ProductAndServiceBaseProductId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.DeliveryVoucher", b =>
@@ -1140,7 +1135,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("purchaseReturnId");
 
-                    b.ToTable("DeliveryVouchers", (string)null);
+                    b.ToTable("DeliveryVouchers");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.DeliveryVoucherItem", b =>
@@ -1173,7 +1168,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("deliveryVoucherId");
 
-                    b.ToTable("deliveryVoucherItems", (string)null);
+                    b.ToTable("deliveryVoucherItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.PriceList", b =>
@@ -1197,7 +1192,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("priceLists", (string)null);
+                    b.ToTable("priceLists");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.PriceListItem", b =>
@@ -1219,7 +1214,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("priceListItems", (string)null);
+                    b.ToTable("priceListItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.ProductAndServiceBase", b =>
@@ -1268,7 +1263,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("productAndServiceBases", (string)null);
+                    b.ToTable("productAndServiceBases");
 
                     b.HasDiscriminator<string>("ProductOrService").HasValue("ProductAndServiceBase");
 
@@ -1325,7 +1320,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("purchaseInvoiceId");
 
-                    b.ToTable("ReceivingVouchers", (string)null);
+                    b.ToTable("ReceivingVouchers");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.ReceivingVoucherItem", b =>
@@ -1358,7 +1353,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("receivingVoucherId");
 
-                    b.ToTable("receivingVoucherItems", (string)null);
+                    b.ToTable("receivingVoucherItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.StockTaking", b =>
@@ -1382,7 +1377,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("stockTakings", (string)null);
+                    b.ToTable("stockTakings");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.StockTakingItem", b =>
@@ -1410,7 +1405,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("stockTakingItems", (string)null);
+                    b.ToTable("stockTakingItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.StockTransaction", b =>
@@ -1447,7 +1442,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("WarehouseId");
 
-                    b.ToTable("StockTransactions", (string)null);
+                    b.ToTable("StockTransactions");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.TransformVoucher", b =>
@@ -1480,7 +1475,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("ToWarehouseId");
 
-                    b.ToTable("transformVouchers", (string)null);
+                    b.ToTable("transformVouchers");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.TransformVoucherItem", b =>
@@ -1510,7 +1505,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("transformVoucherId");
 
-                    b.ToTable("transformVoucherItems", (string)null);
+                    b.ToTable("transformVoucherItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.VoucherStatus", b =>
@@ -1531,7 +1526,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("voucherStatuses", (string)null);
+                    b.ToTable("voucherStatuses");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.InventoryModule.Warehouse", b =>
@@ -1563,7 +1558,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Warehouses", (string)null);
+                    b.ToTable("Warehouses");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.Company", b =>
@@ -1598,7 +1593,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("CompanyID");
 
-                    b.ToTable("companies", (string)null);
+                    b.ToTable("companies");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.CompanyModule", b =>
@@ -1616,7 +1611,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("ModuleId");
 
-                    b.ToTable("companyModules", (string)null);
+                    b.ToTable("companyModules");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.CompanySubscription", b =>
@@ -1642,7 +1637,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("companySubscriptions", (string)null);
+                    b.ToTable("companySubscriptions");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.Module", b =>
@@ -1673,7 +1668,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("ModuleID");
 
-                    b.ToTable("modules", (string)null);
+                    b.ToTable("modules");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.Subscription", b =>
@@ -1703,7 +1698,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("subscriptions", (string)null);
+                    b.ToTable("subscriptions");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.MainModule.UserBase", b =>
@@ -1828,7 +1823,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("SecondaryAccountId");
 
-                    b.ToTable("multiAccExpenseItems", (string)null);
+                    b.ToTable("multiAccExpenseItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.Payment", b =>
@@ -1881,7 +1876,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("treasuryId");
 
-                    b.ToTable("payments", (string)null);
+                    b.ToTable("payments");
 
                     b.HasDiscriminator<string>("PaymentType").HasValue("Payment");
 
@@ -1906,7 +1901,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("paymentStatuses", (string)null);
+                    b.ToTable("paymentStatuses");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.DebitNote", b =>
@@ -1947,7 +1942,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("paymentStatusId");
 
-                    b.ToTable("DebitNotes", (string)null);
+                    b.ToTable("DebitNotes");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.DebitNoteItem", b =>
@@ -1986,7 +1981,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("DebitNoteItems", (string)null);
+                    b.ToTable("DebitNoteItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.PurchaseInoviceSettings", b =>
@@ -2003,7 +1998,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasKey("PurchaseInoviceSettingsId");
 
-                    b.ToTable("purchaseInoviceSettings", (string)null);
+                    b.ToTable("purchaseInoviceSettings");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.PurchaseInvoice", b =>
@@ -2050,7 +2045,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("paymentStatusId");
 
-                    b.ToTable("PurchaseInvoices", (string)null);
+                    b.ToTable("PurchaseInvoices");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.PurchaseInvoiceItem", b =>
@@ -2089,7 +2084,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("PurchaseInvoiceId");
 
-                    b.ToTable("PurchaseInvoiceItems", (string)null);
+                    b.ToTable("PurchaseInvoiceItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.PurchaseReturn", b =>
@@ -2130,7 +2125,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("supplierId");
 
-                    b.ToTable("PurchaseReturns", (string)null);
+                    b.ToTable("PurchaseReturns");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.PurchaseReturnItem", b =>
@@ -2172,7 +2167,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("PurchaseReturnId");
 
-                    b.ToTable("PurchaseReturnItems", (string)null);
+                    b.ToTable("PurchaseReturnItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.Supplier", b =>
@@ -2204,7 +2199,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Suppliers", (string)null);
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.SalesModule.CreditNote", b =>
@@ -2241,7 +2236,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("CustomerID");
 
-                    b.ToTable("CreditNotes", (string)null);
+                    b.ToTable("CreditNotes");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.SalesModule.CreditNoteItem", b =>
@@ -2287,7 +2282,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("productID");
 
-                    b.ToTable("creditNoteItems", (string)null);
+                    b.ToTable("creditNoteItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.SalesModule.Invoice", b =>
@@ -2330,7 +2325,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("CustomerID");
 
-                    b.ToTable("invoices", (string)null);
+                    b.ToTable("invoices");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.SalesModule.InvoiceItem", b =>
@@ -2376,7 +2371,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("productID");
 
-                    b.ToTable("InvoiceItems", (string)null);
+                    b.ToTable("InvoiceItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.SalesModule.Quotation", b =>
@@ -2416,7 +2411,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Quotations", (string)null);
+                    b.ToTable("Quotations");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.SalesModule.QuotationItem", b =>
@@ -2462,7 +2457,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("QuotationId");
 
-                    b.ToTable("QuotationItems", (string)null);
+                    b.ToTable("QuotationItems");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.SalesModule.RecurringInvoice", b =>
@@ -2521,7 +2516,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("RecurringInvoices", (string)null);
+                    b.ToTable("RecurringInvoices");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.SalesModule.RecurringInvoiceItem", b =>
@@ -2567,7 +2562,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("productID");
 
-                    b.ToTable("recurringInvoiceItems", (string)null);
+                    b.ToTable("recurringInvoiceItems");
                 });
 
             modelBuilder.Entity("ExpenseExpenseCategory", b =>
@@ -2582,7 +2577,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("expenseCategoriesId");
 
-                    b.ToTable("ExpenseExpenseCategory", (string)null);
+                    b.ToTable("ExpenseExpenseCategory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -2799,7 +2794,7 @@ namespace Erp.Infrastructure.Migrations
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PurchaseInvoiceId")
+                    b.Property<int?>("PurchaseInvoiceId")
                         .HasColumnType("int");
 
                     b.Property<int?>("PurchaseReturnId")
@@ -2860,7 +2855,7 @@ namespace Erp.Infrastructure.Migrations
 
                     b.HasIndex("InvoiceId");
 
-                    b.ToTable("payments", null, t =>
+                    b.ToTable("payments", t =>
                         {
                             t.Property("City")
                                 .HasColumnName("ClientPayment_City");
@@ -3041,10 +3036,6 @@ namespace Erp.Infrastructure.Migrations
                         .HasForeignKey("JournalEntryID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("Erp.Data.Entities.AccountsModule.SecondaryAccount", null)
-                        .WithMany("journalEntryDetails")
-                        .HasForeignKey("SecondaryAccountAccountID");
 
                     b.HasOne("Erp.Data.Entities.AccountsModule.SecondaryCostCenter", null)
                         .WithMany("journalEntryDetails")
@@ -3636,7 +3627,7 @@ namespace Erp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Erp.Data.Entities.PurchasesModule.Supplier", "Supplier")
-                        .WithMany()
+                        .WithMany("DebitNotes")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -3734,7 +3725,7 @@ namespace Erp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Erp.Data.Entities.PurchasesModule.Supplier", "supplier")
-                        .WithMany()
+                        .WithMany("PurchaseReturns")
                         .HasForeignKey("supplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -3980,10 +3971,9 @@ namespace Erp.Infrastructure.Migrations
                     b.HasOne("Erp.Data.Entities.PurchasesModule.PurchaseInvoice", "PurchaseInvoice")
                         .WithMany("payments")
                         .HasForeignKey("PurchaseInvoiceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Erp.Data.Entities.PurchasesModule.PurchaseReturn", null)
+                    b.HasOne("Erp.Data.Entities.PurchasesModule.PurchaseReturn", "PurchaseReturn")
                         .WithMany("payments")
                         .HasForeignKey("PurchaseReturnId");
 
@@ -3994,6 +3984,8 @@ namespace Erp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("PurchaseInvoice");
+
+                    b.Navigation("PurchaseReturn");
 
                     b.Navigation("Supplier");
                 });
@@ -4136,7 +4128,11 @@ namespace Erp.Infrastructure.Migrations
 
             modelBuilder.Entity("Erp.Data.Entities.PurchasesModule.Supplier", b =>
                 {
+                    b.Navigation("DebitNotes");
+
                     b.Navigation("PurchaseInvoices");
+
+                    b.Navigation("PurchaseReturns");
 
                     b.Navigation("supplierPayments");
                 });
@@ -4166,11 +4162,6 @@ namespace Erp.Infrastructure.Migrations
             modelBuilder.Entity("Erp.Data.Entities.AccountsModule.PrimaryAccount", b =>
                 {
                     b.Navigation("ChildAccounts");
-                });
-
-            modelBuilder.Entity("Erp.Data.Entities.AccountsModule.SecondaryAccount", b =>
-                {
-                    b.Navigation("journalEntryDetails");
                 });
 
             modelBuilder.Entity("Erp.Data.Entities.AccountsModule.PrimaryCostCenter", b =>
